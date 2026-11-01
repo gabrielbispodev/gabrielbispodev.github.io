@@ -280,7 +280,21 @@
   </main>
 
   <footer class="rodape">
-    <p data-en="Gabriel Bispo — Web Developer">Gabriel Bispo — Desenvolvedor Web</p>
+    <div class="rodape__luz" aria-hidden="true"></div>
+    <div class="rodape__dentro">
+      <!-- Eu em pixel art digitando: cada clique é mais trabalho empilhado na mesa; a pilha cheia vira um deploy -->
+      <button class="trabalho" type="button" aria-label="Gabriel Bispo digitando. Clique para ele trabalhar mais" data-en-aria-label="Gabriel Bispo typing. Click to make him work more">
+        <canvas class="trabalho__tela" width="120" height="100"></canvas>
+      </button>
+      <p class="trabalho__dica" data-en="Click me to get more work done">Clique em mim para eu trabalhar mais</p>
+      <p class="trabalho__placar" aria-live="polite"></p>
+      <nav class="rodape__social" aria-label="Contato" data-en-aria-label="Contact">
+        <a href="https://wa.me/5519999801423" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3Z"/><path d="M9 8.5c0 3.6 2.9 6.5 6.5 6.5l1-1.6-2-1-1 1a4.6 4.6 0 0 1-2.4-2.4l1-1-1-2Z"/></svg></a>
+        <a href="mailto:gabriel@seeall.app.br" aria-label="E-mail"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></svg></a>
+      </nav>
+      <p class="rodape__direitos" data-en="Copyright © 2026 Gabriel Bispo. All rights reserved.">Direitos autorais © 2026 Gabriel Bispo. Todos os direitos reservados.</p>
+    </div>
   </footer>
+  <button class="voltar-topo" type="button" aria-label="Voltar ao topo" data-en-aria-label="Back to top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
 </body>
 </html>

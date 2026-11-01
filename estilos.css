@@ -410,7 +410,35 @@ img.projeto__img { display: block; width: 100%; height: auto; object-fit: cover;
 .canais { display: grid; gap: 1rem; }
 @media (min-width: 768px) { .canais { grid-template-columns: repeat(2, 1fr); } }
 
-.rodape { border-top: 1px solid var(--borda); padding: 2rem 1rem; text-align: center; color: var(--suave); font-size: .9rem; }
+/* Rodapé: fio na cor de destaque, luz ambiente embaixo, eu em pixel art no centro, contatos e direitos */
+.rodape {
+  position: relative; overflow: hidden; text-align: center; color: var(--suave); font-size: .9rem;
+  border-top: 1px solid rgba(var(--acento-rgb), .35); padding: 2.5rem 1rem 2.25rem;
+}
+.rodape__luz { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(60% 80% at 50% 100%, rgba(var(--acento-rgb), .12), transparent 70%); }
+.rodape__dentro { position: relative; display: grid; justify-items: center; gap: .75rem; }
+.trabalho { padding: 0; border: 0; background: none; cursor: pointer; border-radius: 1rem; -webkit-tap-highlight-color: transparent; transition: transform .15s; }
+.trabalho:active { transform: scale(.97); }
+.trabalho__tela { display: block; width: min(26rem, 88vw); height: auto; aspect-ratio: 120 / 100; image-rendering: pixelated; }
+.trabalho__dica { font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--acento); }
+.trabalho__placar { font-size: .85rem; font-variant-numeric: tabular-nums; min-height: 1.3em; }
+.rodape__social { display: flex; gap: .75rem; margin-top: .5rem; }
+.rodape__social a {
+  display: grid; place-items: center; width: 2.6rem; height: 2.6rem; border-radius: 50%;
+  border: 1px solid var(--borda); background: var(--painel); color: var(--texto); transition: border-color .2s, color .2s, box-shadow .2s;
+}
+.rodape__social a:hover, .rodape__social a:focus-visible { border-color: rgba(var(--acento-rgb), .5); color: var(--acento); box-shadow: 0 0 1rem rgba(var(--acento-rgb), .25); }
+.rodape__social svg, .voltar-topo svg { width: 1.15rem; height: 1.15rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.rodape__direitos { font-weight: 600; font-size: .85rem; }
+/* Voltar ao topo: aparece depois de rolar, círculo na cor de destaque com brilho */
+.voltar-topo {
+  position: fixed; right: 1.25rem; bottom: 1.25rem; z-index: 9; width: 3rem; height: 3rem; border-radius: 50%; border: 0; cursor: pointer;
+  display: grid; place-items: center; background: var(--acento); color: var(--sobre-acento);
+  box-shadow: 0 .5rem 1.5rem rgba(var(--acento-rgb), .35);
+  opacity: 0; transform: translateY(1rem); pointer-events: none; transition: opacity .3s, transform .3s var(--curva), box-shadow .2s;
+}
+.voltar-topo.visivel { opacity: 1; transform: none; pointer-events: auto; }
+.voltar-topo:hover { box-shadow: 0 .5rem 2rem rgba(var(--acento-rgb), .55); }
 
 /* Entrada ao rolar: só esconde quando o JS rodou, para o conteúdo nunca sumir sem ele */
 .js .revelar { opacity: 0; transform: translateY(1.5rem); transition: opacity .6s, transform .6s; }
@@ -420,5 +448,6 @@ img.projeto__img { display: block; width: 100%; height: auto; object-fit: cover;
   html { scroll-behavior: auto; }
   .hero__fundo, .hero__foto, .cursor, .disponivel__ponto { animation: none; }
   .projeto:has(h3 a):hover, .projeto:has(h3 a):hover .projeto__capa .projeto__img { transform: none; }
+  .voltar-topo { transition: opacity .3s; transform: none; }
   .js .revelar { opacity: 1; transform: none; transition: none; }
 }

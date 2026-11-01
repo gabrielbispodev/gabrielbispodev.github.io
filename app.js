@@ -53,6 +53,7 @@ function aplicarPrefs() {
   raiz.lang = prefs.idioma === 'en' ? 'en' : 'pt-BR';
   traduziveis.forEach(el => { el.innerHTML = el.dataset[prefs.idioma]; });
   rotulosAria.forEach(el => el.setAttribute('aria-label', prefs.idioma === 'en' ? el.dataset.enAriaLabel : el.dataset.ptAriaLabel));
+  document.dispatchEvent(new Event('frame:prefs')); // o placar do rodapé troca de idioma
   document.title = META[prefs.idioma].titulo;
   document.querySelector('meta[name="description"]').content = META[prefs.idioma].descricao;
   painel.querySelectorAll('button').forEach(b => {
@@ -250,3 +251,163 @@ filtros.forEach(botao => botao.addEventListener('click', () => {
     p.hidden = tipo !== 'todos' && p.dataset.tipo !== tipo;
   });
 }));
+
+// Voltar ao topo: aparece depois de rolar uma tela
+const voltar = document.querySelector('.voltar-topo');
+const mostrarVoltar = () => voltar.classList.toggle('visivel', scrollY > innerHeight * .8);
+addEventListener('scroll', mostrarVoltar, { passive: true });
+mostrarVoltar();
+voltar.addEventListener('click', () => scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }));
+
+// Rodapé: eu em pixel art digitando numa mesa. Cada clique é uma tarefa: digito mais rápido, sai código do
+// notebook e um trabalho pronto cai na pilha (papel, pasta ou janela). Pilha cheia = deploy: ela sobe como
+// foguete, conta um projeto entregue e o café é reposto. Parado por um tempo, eu cochilo.
+(() => {
+  const botao = document.querySelector('.trabalho');
+  const tela = botao.querySelector('canvas');
+  const placar = document.querySelector('.trabalho__placar');
+  const c = tela.getContext('2d');
+  const parado = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const W = 120, H = 100, MESA = 72, OX = 40, OY = MESA - 21, MAX = 18;
+  const COR = {
+    H: '#141010', h: '#2e221a', f: '#5a4436', S: '#c48c62', s: '#a0704c', E: '#1b120c', e: '#ffffff', M: '#2e1d12',
+    T: '#f4efe8', P: '#141417', p: '#2a2a31', C: '#cdb88f', B: '#6b4a32', b: '#4e3523', d: '#3a281b',
+    L: '#3a3d46', l: '#2a2c33', X: '#ece8df', x: '#b8b2a6', K: '#e8e4dc', k: '#4a2c1a', V: '#8fd3ff',
+  };
+  // eu de frente, da cintura para cima (a mesa cobre o resto): cabelo crespo com degradê, bigode, polo preta de gola bege
+  const EU = [
+    '........hHhhHh........', '......hHHhHHhHHh......', '.....hHHHhHHHhHHh.....', '.....HHHHHHHHHHHH.....',
+    '.....fHHHHHHHHHHf.....', '.....fSSSSSSSSSSf.....', '....sSSMMSSSSMMSSs....', '....sSSEsSSSSEsSSs....',
+    '.....SSSSSsSSSSSS.....', '.....SSSSSssSSSSS.....', '.....SSSMMMMMMSSS.....', '.....sSSSTTTTSSSs.....',
+    '......sSSSSSSSSs......', '.......sSSSSSSs.......', '........CsSSsC........', '....PPPPCCPPCCPPPP....',
+    '...PPPPPPCPPCPPPPPP...', '..PPpPPPPPPPPPPPPpPP..', '..PPpPPPPPPPPPPPPpPP..', '.PPPpPPPPPPPPPPPPpPPP.',
+  ];
+  const GLIFOS = {
+    '<': ['..#', '.#.', '#..', '.#.', '..#'], '>': ['#..', '.#.', '..#', '.#.', '#..'], '/': ['..#', '..#', '.#.', '#..', '#..'],
+    '{': ['.##', '.#.', '#..', '.#.', '.##'], '}': ['##.', '.#.', '..#', '.#.', '##.'], ';': ['.#.', '...', '.#.', '.#.', '#..'],
+    z: ['###', '..#', '.#.', '#..', '###'], ok: ['....#', '...#.', '#.#..', '.#...'],
+  };
+  const CODIGO = ['<', '>', '/', '{', '}', ';'];
+  const est = { tarefas: 0, entregues: 0, pilha: [], energia: 0, cafe: 1, quadro: 0, proxQuadro: 0, ultimo: performance.now(), deploy: 0, part: [] };
+  let acento = '#e4e4e7';
+  const lerAcento = () => { acento = getComputedStyle(raiz).getPropertyValue('--acento').trim() || acento; };
+
+  const px = (x, y, cor) => { c.fillStyle = cor; c.fillRect(x, y, 1, 1); };
+  const ret = (x, y, w, h, cor) => { c.fillStyle = cor; c.fillRect(x, y, w, h); };
+  const glifo = (g, x, y, cor) => GLIFOS[g].forEach((l, j) => [...l].forEach((ch, i) => ch === '#' && px(x + i, y + j, cor)));
+
+  function item(tipo, x, y) { // um trabalho pronto, 16 x 3
+    if (tipo === 0) { ret(x, y, 16, 2, COR.X); ret(x + 2, y, 9, 1, COR.x); }             // papel com texto
+    else if (tipo === 1) { ret(x, y, 16, 2, acento); ret(x, y, 5, 1, COR.K); }           // pasta
+    else { ret(x, y, 16, 2, COR.l); ret(x, y, 16, 1, acento); px(x + 1, y, COR.l); }     // janela de navegador
+    ret(x + 1, y + 2, 15, 1, 'rgba(0,0,0,.45)');                                         // sombra entre os itens
+  }
+
+  function desenhar(t) {
+    c.clearRect(0, 0, W, H);
+    const dormindo = !parado && t - est.ultimo > 9000 && !est.deploy;
+    // mesa redonda de pedestal
+    ret(16, MESA, 88, 2, COR.B); ret(18, MESA + 2, 84, 1, COR.b);
+    ret(56, MESA + 3, 8, 21, COR.b); ret(57, MESA + 3, 2, 21, COR.d);
+    ret(44, MESA + 24, 32, 3, COR.b); ret(40, MESA + 27, 40, 1, 'rgba(0,0,0,.35)');
+    // eu (balanço de 1 px na cabeça quando estou acelerado)
+    const bob = est.energia > .5 && est.quadro ? 1 : 0;
+    EU.forEach((l, j) => [...l].forEach((ch, i) => {
+      if (ch === '.') return;
+      if (dormindo && j === 7 && i > 5 && i < 16 && ch !== 'S') ch = 'M'; // olhos fechados
+      px(OX + i, OY + j + (j < 14 ? bob : 0), COR[ch]);
+    }));
+    // luz da tela no rosto (a tampa está virada para mim)
+    c.globalAlpha = .1 + est.energia * .18;
+    ret(OX + 5, OY + 8 + bob, 12, 6, acento);
+    c.globalAlpha = 1;
+    // mãos digitando: uma no teclado, outra no ar, alternando
+    const [ye, yd] = dormindo ? [19, 19] : est.quadro ? [18, 19] : [19, 18];
+    ret(OX + 3, OY + ye, 2, 1, COR.S); ret(OX + 17, OY + yd, 2, 1, COR.S);
+    // notebook: traseira da tampa com o logo </> aceso na cor de destaque
+    ret(OX + 5, OY + 13, 12, 8, COR.l); ret(OX + 6, OY + 14, 10, 6, COR.L);
+    c.globalAlpha = .55 + est.energia * .45;
+    glifo('<', OX + 7, OY + 15, acento); glifo('/', OX + 10, OY + 15, acento); glifo('>', OX + 13, OY + 15, acento);
+    c.globalAlpha = 1;
+    // suor quando estou no gás
+    if (est.energia > .7 && !dormindo) { px(OX + 18, OY + 5 + bob, COR.V); px(OX + 18, OY + 6 + bob, COR.V); }
+    // café: o nível baixa a cada tarefa; com café, sai vapor
+    ret(24, MESA - 6, 6, 6, COR.K); ret(30, MESA - 5, 2, 1, COR.K); ret(31, MESA - 4, 1, 2, COR.K); ret(30, MESA - 2, 2, 1, COR.K);
+    const nivel = Math.round(est.cafe * 4);
+    if (nivel) ret(25, MESA - 1 - nivel, 4, nivel, COR.k);
+    if (est.cafe > 0 && !parado) {
+      const v = Math.floor(t / 300) % 2;
+      ret(26 + v, MESA - 9, 1, 2, 'rgba(255,255,255,.35)'); ret(28 - v, MESA - 11, 1, 2, 'rgba(255,255,255,.35)');
+    }
+    // pilha de trabalho pronto (no deploy, sobe como foguete deixando rastro de fogo)
+    est.pilha.forEach((p, i) => {
+      const base = MESA - 3 * (i + 1);
+      let y = base - p.cai;
+      if (est.deploy) {
+        const d = Math.max(0, t - est.deploy - i * 30);
+        y -= d * d / 2500;
+        if (y < base - 1) ret(81, y + 3, 6, 3, `rgba(255,170,60,${Math.random() * .6 + .3})`);
+      }
+      if (y > -4) item(p.tipo, 76, Math.round(y));
+    });
+    // partículas: código saindo do notebook, confete do deploy, "z" do cochilo
+    est.part.forEach(p => {
+      c.globalAlpha = Math.max(0, p.vida);
+      if (p.g) glifo(p.g, Math.round(p.x), Math.round(p.y), p.cor); else px(Math.round(p.x), Math.round(p.y), p.cor);
+    });
+    c.globalAlpha = 1;
+    return dormindo;
+  }
+
+  function passo(t, dt) {
+    est.energia = Math.max(0, est.energia - dt / 4000);
+    if (t >= est.proxQuadro) { est.quadro ^= 1; est.proxQuadro = t + 420 - est.energia * 340; }
+    est.pilha.forEach(p => { if (p.cai > 0) p.cai = Math.max(0, p.cai - dt * .12); });
+    est.part.forEach(p => { p.x += p.vx * dt; p.y += p.vy * dt; if (!p.g) p.vy += .00015 * dt; p.vida -= dt / p.dura; });
+    est.part = est.part.filter(p => p.vida > 0);
+    if (est.deploy && t - est.deploy > 1400) { est.deploy = 0; est.pilha = []; est.entregues++; est.cafe = 1; atualizarPlacar(); }
+  }
+
+  function atualizarPlacar() {
+    placar.textContent = prefs.idioma === 'en'
+      ? `Tasks: ${est.tarefas} · Projects shipped: ${est.entregues}`
+      : `Tarefas: ${est.tarefas} · Projetos entregues: ${est.entregues}`;
+  }
+
+  botao.addEventListener('click', () => {
+    const t = performance.now();
+    est.ultimo = t;
+    if (est.deploy) return; // durante o deploy a pilha está voando
+    est.tarefas++;
+    est.energia = Math.min(1, est.energia + .22);
+    est.cafe = Math.max(0, est.cafe - .06);
+    est.quadro ^= 1;
+    est.pilha.push({ tipo: est.tarefas % 3, cai: parado ? 0 : 30 });
+    if (!parado) est.part.push({ g: CODIGO[est.tarefas % 6], x: OX + 8 + Math.random() * 6, y: OY + 10, vx: (Math.random() - .5) * .02, vy: -.03, vida: 1, dura: 900, cor: acento });
+    if (est.pilha.length >= MAX) {
+      if (parado) { est.pilha = []; est.entregues++; est.cafe = 1; }
+      else {
+        est.deploy = t;
+        for (let i = 0; i < 40; i++) est.part.push({ x: 84, y: MESA - 3 * MAX, vx: (Math.random() - .5) * .12, vy: -Math.random() * .1, vida: 1, dura: 1300, cor: i % 2 ? acento : ['#ffd166', '#06d6a0', '#ef476f', '#ffffff'][i % 4] });
+        est.part.push({ g: 'ok', x: 82, y: 20, vx: 0, vy: -.01, vida: 1, dura: 1600, cor: '#22c55e' });
+      }
+    }
+    atualizarPlacar();
+    if (parado) desenhar(t);
+  });
+  document.addEventListener('frame:prefs', () => { lerAcento(); atualizarPlacar(); desenhar(performance.now()); });
+
+  lerAcento();
+  atualizarPlacar();
+  desenhar(performance.now());
+  if (parado) return;
+  let ativo = false, antes = 0, proxZ = 0;
+  function laco(t) {
+    if (!ativo) return;
+    const dt = Math.min(64, t - (antes || t)); antes = t;
+    passo(t, dt);
+    if (desenhar(t) && t > proxZ) { est.part.push({ g: 'z', x: OX + 18, y: OY + 2, vx: .006, vy: -.01, vida: 1, dura: 1800, cor: '#a9a6b3' }); proxZ = t + 1200; }
+    requestAnimationFrame(laco);
+  }
+  new IntersectionObserver(([e]) => { ativo = e.isIntersecting; if (ativo) { antes = 0; requestAnimationFrame(laco); } }).observe(tela);
+})();
