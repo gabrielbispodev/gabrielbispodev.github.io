@@ -419,7 +419,7 @@ img.projeto__img { display: block; width: 100%; height: auto; object-fit: cover;
 .rodape__dentro { position: relative; display: grid; justify-items: center; gap: .75rem; }
 .trabalho { padding: 0; border: 0; background: none; cursor: pointer; border-radius: 1rem; -webkit-tap-highlight-color: transparent; transition: transform .15s; }
 .trabalho:active { transform: scale(.97); }
-.trabalho__tela { display: block; width: min(26rem, 88vw); height: auto; aspect-ratio: 120 / 100; image-rendering: pixelated; }
+.trabalho__tela { display: block; width: min(30rem, 92vw); height: auto; aspect-ratio: 160 / 100; image-rendering: pixelated; }
 .trabalho__dica { font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--acento); }
 .trabalho__placar { font-size: .85rem; font-variant-numeric: tabular-nums; min-height: 1.3em; }
 .rodape__social { display: flex; gap: .75rem; margin-top: .5rem; }

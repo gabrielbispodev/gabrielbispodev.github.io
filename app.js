@@ -259,29 +259,24 @@ addEventListener('scroll', mostrarVoltar, { passive: true });
 mostrarVoltar();
 voltar.addEventListener('click', () => scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }));
 
-// Rodapé: eu em pixel art digitando numa mesa. Cada clique é uma tarefa: digito mais rápido, sai código do
-// notebook e um trabalho pronto cai na pilha (papel, pasta ou janela). Pilha cheia = deploy: ela sobe como
-// foguete, conta um projeto entregue e o café é reposto. Parado por um tempo, eu cochilo.
+// Rodapé: eu em pixel art (eu-mesa.webp, de terno no banquinho) digitando na mesa. Cada clique é uma tarefa:
+// digito mais rápido, sai código do notebook e um trabalho pronto cai nas pilhas do chão (papel, pasta ou janela).
+// Pilhas cheias = deploy: sobem como foguete, conta um projeto entregue e o café é reposto. Parado, eu cochilo.
 (() => {
   const botao = document.querySelector('.trabalho');
   const tela = botao.querySelector('canvas');
   const placar = document.querySelector('.trabalho__placar');
   const c = tela.getContext('2d');
   const parado = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const W = 120, H = 100, MESA = 72, OX = 40, OY = MESA - 21, MAX = 18;
-  const COR = {
-    H: '#141010', h: '#2e221a', f: '#5a4436', S: '#c48c62', s: '#a0704c', E: '#1b120c', e: '#ffffff', M: '#2e1d12',
-    T: '#f4efe8', P: '#141417', p: '#2a2a31', C: '#cdb88f', B: '#6b4a32', b: '#4e3523', d: '#3a281b',
-    L: '#3a3d46', l: '#2a2c33', X: '#ece8df', x: '#b8b2a6', K: '#e8e4dc', k: '#4a2c1a', V: '#8fd3ff',
-  };
-  // eu de frente, da cintura para cima (a mesa cobre o resto): cabelo crespo com degradê, bigode, polo preta de gola bege
-  const EU = [
-    '........hHhhHh........', '......hHHhHHhHHh......', '.....hHHHhHHHhHHh.....', '.....HHHHHHHHHHHH.....',
-    '.....fHHHHHHHHHHf.....', '.....fSSSSSSSSSSf.....', '....sSSMMSSSSMMSSs....', '....sSSEsSSSSEsSSs....',
-    '.....SSSSSsSSSSSS.....', '.....SSSSSssSSSSS.....', '.....SSSMMMMMMSSS.....', '.....sSSSTTTTSSSs.....',
-    '......sSSSSSSSSs......', '.......sSSSSSSs.......', '........CsSSsC........', '....PPPPCCPPCCPPPP....',
-    '...PPPPPPCPPCPPPPPP...', '..PPpPPPPPPPPPPPPpPP..', '..PPpPPPPPPPPPPPPpPP..', '.PPPpPPPPPPPPPPPPpPPP.',
-  ];
+  // a tela tem 480 x 300 px e desenha em unidades de 3 px (160 x 100); a imagem mantém a resolução dela
+  const ESC = 3, W = 160, H = 100;
+  const EU = { x: 4, y: 10, w: 92.3, h: 88 };   // onde a imagem entra
+  const TAMPO = 49, CHAO = 98;                   // altura do tampo da mesa e do chão
+  const ROSTO = { x: 13, y: 12, w: 20, h: 22 };  // luz da tela no rosto
+  const MAOS = { x: 33, y: 39, w: 13, h: 8 };    // mãos no teclado (balançam ao digitar)
+  const LOGO = { x: 54, y: 41 };                 // logo na tampa do notebook
+  const COL = 9, PILHAS = [102, 121, 140], MAX = COL * PILHAS.length;
+  const COR = { X: '#ece8df', x: '#b8b2a6', K: '#e8e4dc', k: '#4a2c1a', l: '#2a2c33', V: '#8fd3ff' };
   const GLIFOS = {
     '<': ['..#', '.#.', '#..', '.#.', '..#'], '>': ['#..', '.#.', '..#', '.#.', '#..'], '/': ['..#', '..#', '.#.', '#..', '#..'],
     '{': ['.##', '.#.', '#..', '.#.', '.##'], '}': ['##.', '.#.', '..#', '.#.', '##.'], ';': ['.#.', '...', '.#.', '.#.', '#..'],
@@ -291,6 +286,11 @@ voltar.addEventListener('click', () => scrollTo({ top: 0, behavior: matchMedia('
   const est = { tarefas: 0, entregues: 0, pilha: [], energia: 0, cafe: 1, quadro: 0, proxQuadro: 0, ultimo: performance.now(), deploy: 0, part: [] };
   let acento = '#e4e4e7';
   const lerAcento = () => { acento = getComputedStyle(raiz).getPropertyValue('--acento').trim() || acento; };
+  const eu = new Image();
+  eu.src = 'eu-mesa.webp';
+  eu.onload = () => desenhar(performance.now());
+  // recorte da imagem que corresponde a uma área da cena (para redesenhar só as mãos)
+  const fonte = r => [(r.x - EU.x) / EU.w * eu.naturalWidth, (r.y - EU.y) / EU.h * eu.naturalHeight, r.w / EU.w * eu.naturalWidth, r.h / EU.h * eu.naturalHeight];
 
   const px = (x, y, cor) => { c.fillStyle = cor; c.fillRect(x, y, 1, 1); };
   const ret = (x, y, w, h, cor) => { c.fillStyle = cor; c.fillRect(x, y, w, h); };
@@ -304,51 +304,48 @@ voltar.addEventListener('click', () => scrollTo({ top: 0, behavior: matchMedia('
   }
 
   function desenhar(t) {
-    c.clearRect(0, 0, W, H);
+    c.setTransform(1, 0, 0, 1, 0, 0);
+    c.clearRect(0, 0, tela.width, tela.height);
+    c.setTransform(ESC, 0, 0, ESC, 0, 0);
+    c.imageSmoothingEnabled = false;
     const dormindo = !parado && t - est.ultimo > 9000 && !est.deploy;
-    // mesa redonda de pedestal
-    ret(16, MESA, 88, 2, COR.B); ret(18, MESA + 2, 84, 1, COR.b);
-    ret(56, MESA + 3, 8, 21, COR.b); ret(57, MESA + 3, 2, 21, COR.d);
-    ret(44, MESA + 24, 32, 3, COR.b); ret(40, MESA + 27, 40, 1, 'rgba(0,0,0,.35)');
-    // eu (balanço de 1 px na cabeça quando estou acelerado)
-    const bob = est.energia > .5 && est.quadro ? 1 : 0;
-    EU.forEach((l, j) => [...l].forEach((ch, i) => {
-      if (ch === '.') return;
-      if (dormindo && j === 7 && i > 5 && i < 16 && ch !== 'S') ch = 'M'; // olhos fechados
-      px(OX + i, OY + j + (j < 14 ? bob : 0), COR[ch]);
-    }));
-    // luz da tela no rosto (a tampa está virada para mim)
-    c.globalAlpha = .1 + est.energia * .18;
-    ret(OX + 5, OY + 8 + bob, 12, 6, acento);
-    c.globalAlpha = 1;
-    // mãos digitando: uma no teclado, outra no ar, alternando
-    const [ye, yd] = dormindo ? [19, 19] : est.quadro ? [18, 19] : [19, 18];
-    ret(OX + 3, OY + ye, 2, 1, COR.S); ret(OX + 17, OY + yd, 2, 1, COR.S);
-    // notebook: traseira da tampa com o logo </> aceso na cor de destaque
-    ret(OX + 5, OY + 13, 12, 8, COR.l); ret(OX + 6, OY + 14, 10, 6, COR.L);
-    c.globalAlpha = .55 + est.energia * .45;
-    glifo('<', OX + 7, OY + 15, acento); glifo('/', OX + 10, OY + 15, acento); glifo('>', OX + 13, OY + 15, acento);
+    if (eu.complete && eu.naturalWidth) {
+      c.drawImage(eu, EU.x, EU.y, EU.w, EU.h);
+      // luz da tela no rosto: só pinta onde já tem imagem
+      c.globalCompositeOperation = 'source-atop';
+      const g = c.createRadialGradient(ROSTO.x + ROSTO.w, ROSTO.y + ROSTO.h * .6, 1, ROSTO.x + ROSTO.w, ROSTO.y + ROSTO.h * .6, ROSTO.w);
+      g.addColorStop(0, acento); g.addColorStop(1, 'transparent');
+      c.globalAlpha = dormindo ? .06 : .14 + est.energia * .22;
+      c.fillStyle = g; c.fillRect(ROSTO.x, ROSTO.y, ROSTO.w + 8, ROSTO.h);
+      c.globalAlpha = 1; c.globalCompositeOperation = 'source-over';
+      // mãos digitando: o trecho das mãos sobe 1 px nos quadros alternados
+      if (est.quadro && !dormindo) c.drawImage(eu, ...fonte(MAOS), MAOS.x, MAOS.y - 1 / ESC * 2, MAOS.w, MAOS.h);
+    }
+    // logo da tampa acende na cor de destaque
+    c.globalAlpha = .25 + est.energia * .6;
+    ret(LOGO.x, LOGO.y, 2, 2, acento);
     c.globalAlpha = 1;
     // suor quando estou no gás
-    if (est.energia > .7 && !dormindo) { px(OX + 18, OY + 5 + bob, COR.V); px(OX + 18, OY + 6 + bob, COR.V); }
-    // café: o nível baixa a cada tarefa; com café, sai vapor
-    ret(24, MESA - 6, 6, 6, COR.K); ret(30, MESA - 5, 2, 1, COR.K); ret(31, MESA - 4, 1, 2, COR.K); ret(30, MESA - 2, 2, 1, COR.K);
+    if (est.energia > .7 && !dormindo) { px(34, 16, COR.V); px(34, 17, COR.V); }
+    // café no tampo: o nível baixa a cada tarefa; com café, sai vapor
+    const mx = 68, my = TAMPO - 6;
+    ret(mx, my, 6, 6, COR.K); ret(mx + 6, my + 1, 2, 1, COR.K); ret(mx + 7, my + 2, 1, 2, COR.K); ret(mx + 6, my + 4, 2, 1, COR.K);
     const nivel = Math.round(est.cafe * 4);
-    if (nivel) ret(25, MESA - 1 - nivel, 4, nivel, COR.k);
+    if (nivel) ret(mx + 1, my + 5 - nivel, 4, nivel, COR.k);
     if (est.cafe > 0 && !parado) {
       const v = Math.floor(t / 300) % 2;
-      ret(26 + v, MESA - 9, 1, 2, 'rgba(255,255,255,.35)'); ret(28 - v, MESA - 11, 1, 2, 'rgba(255,255,255,.35)');
+      ret(mx + 2 + v, my - 3, 1, 2, 'rgba(255,255,255,.35)'); ret(mx + 4 - v, my - 5, 1, 2, 'rgba(255,255,255,.35)');
     }
-    // pilha de trabalho pronto (no deploy, sobe como foguete deixando rastro de fogo)
+    // pilhas de trabalho pronto no chão (no deploy, sobem como foguete deixando rastro de fogo)
     est.pilha.forEach((p, i) => {
-      const base = MESA - 3 * (i + 1);
+      const x = PILHAS[Math.floor(i / COL)], base = CHAO - 3 * (i % COL + 1);
       let y = base - p.cai;
       if (est.deploy) {
-        const d = Math.max(0, t - est.deploy - i * 30);
+        const d = Math.max(0, t - est.deploy - (i % COL) * 30);
         y -= d * d / 2500;
-        if (y < base - 1) ret(81, y + 3, 6, 3, `rgba(255,170,60,${Math.random() * .6 + .3})`);
+        if (y < base - 1) ret(x + 5, y + 3, 6, 3, `rgba(255,170,60,${Math.random() * .6 + .3})`);
       }
-      if (y > -4) item(p.tipo, 76, Math.round(y));
+      if (y > -4) item(p.tipo, x, Math.round(y));
     });
     // partículas: código saindo do notebook, confete do deploy, "z" do cochilo
     est.part.forEach(p => {
@@ -377,19 +374,19 @@ voltar.addEventListener('click', () => scrollTo({ top: 0, behavior: matchMedia('
   botao.addEventListener('click', () => {
     const t = performance.now();
     est.ultimo = t;
-    if (est.deploy) return; // durante o deploy a pilha está voando
+    if (est.deploy) return; // durante o deploy as pilhas estão voando
     est.tarefas++;
     est.energia = Math.min(1, est.energia + .22);
-    est.cafe = Math.max(0, est.cafe - .06);
+    est.cafe = Math.max(0, est.cafe - .04);
     est.quadro ^= 1;
     est.pilha.push({ tipo: est.tarefas % 3, cai: parado ? 0 : 30 });
-    if (!parado) est.part.push({ g: CODIGO[est.tarefas % 6], x: OX + 8 + Math.random() * 6, y: OY + 10, vx: (Math.random() - .5) * .02, vy: -.03, vida: 1, dura: 900, cor: acento });
+    if (!parado) est.part.push({ g: CODIGO[est.tarefas % 6], x: 55 + Math.random() * 8, y: 30, vx: (Math.random() - .5) * .02, vy: -.03, vida: 1, dura: 900, cor: acento });
     if (est.pilha.length >= MAX) {
       if (parado) { est.pilha = []; est.entregues++; est.cafe = 1; }
       else {
         est.deploy = t;
-        for (let i = 0; i < 40; i++) est.part.push({ x: 84, y: MESA - 3 * MAX, vx: (Math.random() - .5) * .12, vy: -Math.random() * .1, vida: 1, dura: 1300, cor: i % 2 ? acento : ['#ffd166', '#06d6a0', '#ef476f', '#ffffff'][i % 4] });
-        est.part.push({ g: 'ok', x: 82, y: 20, vx: 0, vy: -.01, vida: 1, dura: 1600, cor: '#22c55e' });
+        for (let i = 0; i < 50; i++) est.part.push({ x: PILHAS[i % 3] + 8, y: CHAO - 3 * COL, vx: (Math.random() - .5) * .12, vy: -Math.random() * .1, vida: 1, dura: 1300, cor: i % 2 ? acento : ['#ffd166', '#06d6a0', '#ef476f', '#ffffff'][i % 4] });
+        est.part.push({ g: 'ok', x: 128, y: 40, vx: 0, vy: -.01, vida: 1, dura: 1600, cor: '#22c55e' });
       }
     }
     atualizarPlacar();
@@ -406,7 +403,7 @@ voltar.addEventListener('click', () => scrollTo({ top: 0, behavior: matchMedia('
     if (!ativo) return;
     const dt = Math.min(64, t - (antes || t)); antes = t;
     passo(t, dt);
-    if (desenhar(t) && t > proxZ) { est.part.push({ g: 'z', x: OX + 18, y: OY + 2, vx: .006, vy: -.01, vida: 1, dura: 1800, cor: '#a9a6b3' }); proxZ = t + 1200; }
+    if (desenhar(t) && t > proxZ) { est.part.push({ g: 'z', x: 32, y: 8, vx: .006, vy: -.01, vida: 1, dura: 1800, cor: '#a9a6b3' }); proxZ = t + 1200; }
     requestAnimationFrame(laco);
   }
   new IntersectionObserver(([e]) => { ativo = e.isIntersecting; if (ativo) { antes = 0; requestAnimationFrame(laco); } }).observe(tela);
