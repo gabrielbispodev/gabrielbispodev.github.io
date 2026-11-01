@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- GB: iniciais de Gabriel Bispo em traço geométrico, G claro e B cinza (os dois tons dos títulos do site) -->
+  <rect width="64" height="64" rx="14" fill="#000"/>
+  <rect x=".75" y=".75" width="62.5" height="62.5" rx="13.25" fill="none" stroke="#ffffff" stroke-opacity=".14" stroke-width="1.5"/>
+  <g fill="none" stroke-width="6">
+    <path stroke="#f2f0ea" d="M27.5 23.5A12 12 0 1 0 31 32H21"/>
+    <path stroke="#a9a6b3" d="M42 20v24M39 20h10a6 6 0 0 1 0 12H42M39 32h11a6 6 0 0 1 0 12H39"/>
+  </g>
+</svg>
