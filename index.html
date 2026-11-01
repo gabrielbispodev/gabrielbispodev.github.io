@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gabriel Bispo — Desenvolvedor Web</title>
+  <meta name="description" content="Portfólio — texto provisório.">
+  <meta name="color-scheme" content="dark light">
+  <!-- Aplica tema e cor salvos antes da página aparecer (evita piscar no tema errado) -->
+  <script>try { const p = JSON.parse(localStorage.getItem('frame-preferencias')) || {}; if (p.tema) document.documentElement.dataset.tema = p.tema; if (p.cor) document.documentElement.dataset.cor = p.cor; } catch (e) {}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap">
+  <link rel="stylesheet" href="estilos.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="pular" href="#conteudo" data-en="Skip to content">Pular para o conteúdo</a>
+
+  <header class="topo">
+    <nav class="nav" aria-label="Principal" data-en-aria-label="Main">
+      <button class="nav__abrir" type="button" aria-expanded="false" aria-controls="nav-links">
+        <span class="sr" data-en="Open menu">Abrir menu</span><span class="nav__icone" aria-hidden="true"></span>
+      </button>
+      <ul class="nav__links" id="nav-links">
+        <li><a href="#inicio" data-en="Home">Início</a></li>
+        <li><a href="#sobre" data-en="About">Sobre</a></li>
+        <li><a href="#servicos" data-en="Pricing">Preços</a></li>
+        <li><a href="#processo" data-en="Process">Processo</a></li>
+        <li><a href="#projetos" data-en="Projects">Projetos</a></li>
+        <li><a href="#contato" data-en="Contact">Contato</a></li>
+      </ul>
+      <div class="config">
+        <button class="config__abrir" type="button" aria-expanded="false" aria-controls="config-painel" aria-label="Configurações" data-en-aria-label="Settings">
+          <!-- ícone de engrenagem (Lucide "settings", licença ISC) -->
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+          <span class="config__bolinha" aria-hidden="true"></span>
+        </button>
+        <div class="config__painel" id="config-painel" hidden>
+          <p class="config__titulo" id="cfg-tema" data-en="Theme">Tema</p>
+          <div class="config__grupo" role="group" aria-labelledby="cfg-tema">
+            <button type="button" data-tema="escuro" aria-pressed="true"><span class="config__icone" aria-hidden="true">☾</span><span data-en="Dark">Escuro</span></button>
+            <button type="button" data-tema="claro" aria-pressed="false"><span class="config__icone" aria-hidden="true">☀</span><span data-en="Light">Claro</span></button>
+          </div>
+          <p class="config__titulo" id="cfg-cor" data-en="Colors">Cores</p>
+          <div class="config__grupo" role="group" aria-labelledby="cfg-cor">
+            <button type="button" data-cor="laranja" aria-pressed="false"><span class="config__amostra" style="--a:#ff8a1f" aria-hidden="true"></span><span data-en="Orange">Laranja</span></button>
+            <button type="button" data-cor="azul" aria-pressed="false"><span class="config__amostra" style="--a:#2f6bff" aria-hidden="true"></span><span data-en="Blue">Azul</span></button>
+            <button type="button" data-cor="verde" aria-pressed="false"><span class="config__amostra" style="--a:#22c55e" aria-hidden="true"></span><span data-en="Green">Verde</span></button>
+            <button type="button" data-cor="zinco" aria-pressed="true"><span class="config__amostra" style="--a:#e4e4e7" aria-hidden="true"></span><span data-en="Zinc">Zinco</span></button>
+            <button type="button" data-cor="vermelho" aria-pressed="false"><span class="config__amostra" style="--a:#e11d48" aria-hidden="true"></span><span data-en="Red">Vermelho</span></button>
+            <button type="button" data-cor="rosa" aria-pressed="false"><span class="config__amostra" style="--a:#ec4899" aria-hidden="true"></span><span data-en="Pink">Rosa</span></button>
+            <button type="button" data-cor="lilas" aria-pressed="false"><span class="config__amostra" style="--a:#a78bfa" aria-hidden="true"></span><span data-en="Lilac">Lilás</span></button>
+          </div>
+          <p class="config__titulo" id="cfg-idioma" data-en="Language">Idioma</p>
+          <div class="config__grupo" role="group" aria-labelledby="cfg-idioma">
+            <button type="button" data-idioma="en" aria-pressed="false" lang="en"><svg class="config__bandeira" viewBox="0 0 19 10" preserveAspectRatio="xMinYMid slice" aria-hidden="true"><rect width="19" height="10" fill="#fff"/><path d="M0 0h19v.77H0zm0 1.54h19v.77H0zm0 1.54h19v.77H0zm0 1.54h19v.77H0zm0 1.54h19v.77H0zm0 1.54h19v.77H0zm0 1.54h19v.77H0z" fill="#b22234"/><rect width="7.6" height="5.38" fill="#3c3b6e"/><g fill="#fff"><circle cx="1.3" cy="1" r=".3"/><circle cx="3.1" cy="1" r=".3"/><circle cx="4.9" cy="1" r=".3"/><circle cx="6.6" cy="1" r=".3"/><circle cx="2.2" cy="2.1" r=".3"/><circle cx="4" cy="2.1" r=".3"/><circle cx="5.8" cy="2.1" r=".3"/><circle cx="1.3" cy="3.2" r=".3"/><circle cx="3.1" cy="3.2" r=".3"/><circle cx="4.9" cy="3.2" r=".3"/><circle cx="6.6" cy="3.2" r=".3"/><circle cx="2.2" cy="4.3" r=".3"/><circle cx="4" cy="4.3" r=".3"/><circle cx="5.8" cy="4.3" r=".3"/></g></svg>English</button>
+            <button type="button" data-idioma="pt" aria-pressed="true" lang="pt-BR"><svg class="config__bandeira" viewBox="0 0 20 14" aria-hidden="true"><rect width="20" height="14" fill="#009c3b"/><path d="M10 1.3 18.4 7 10 12.7 1.6 7z" fill="#ffdf00"/><circle cx="10" cy="7" r="3.5" fill="#002776"/><path d="M6.6 6.2a8 8 0 0 1 6.8 1.9l-.2.6a7.4 7.4 0 0 0-6.7-1.8z" fill="#fff"/></svg>Português</button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main id="conteudo">
+    <section class="hero" id="inicio">
+      <div class="hero__fundo" aria-hidden="true"></div>
+      <canvas class="hero__haki" aria-hidden="true"></canvas>
+      <figure class="hero__foto retrato">
+        <span class="retrato__anel" aria-hidden="true"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="49"/></svg></span>
+        <img class="retrato__pessoa" src="pessoa.webp" alt="Gabriel Bispo" width="640" height="640">
+        <span class="retrato__luz" aria-hidden="true"></span>
+      </figure>
+      <div class="hero__texto">
+        <p class="rotulo" data-en="Portfolio">Portfólio</p>
+        <h1>Gabriel Bispo<span class="cursor" aria-hidden="true">_</span></h1>
+        <p class="hero__cargo" data-en="Web Developer">Desenvolvedor Web</p>
+        <p class="hero__intro" data-en="I build custom websites and landing pages — fast, and designed to turn visitors into customers.">Crio sites e landing pages sob medida, rápidos e pensados para transformar visitantes em clientes.</p>
+        <a class="botao" href="#projetos" data-en="See projects">Ver projetos</a>
+      </div>
+    </section>
+
+    <section class="secao" id="sobre">
+      <header class="secao__cab revelar">
+        <p class="rotulo" data-en="About">Sobre</p>
+        <h2 data-en='Who <span class="contorno">I am</span>'>Quem <span class="contorno">sou eu</span></h2>
+        <p class="secao__desc" data-en="Web developer and creator of SeeAll.">Desenvolvedor web e criador do SeeAll.</p>
+      </header>
+      <div class="sobre revelar">
+        <figure class="sobre__foto retrato">
+          <span class="retrato__anel" aria-hidden="true"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="49"/></svg></span>
+          <img class="retrato__pessoa" src="pessoa-retrato.webp" alt="Gabriel Bispo" width="512" height="640" loading="lazy">
+          <span class="retrato__luz" aria-hidden="true"></span>
+        </figure>
+        <div>
+          <p data-en="I'm Gabriel Bispo, a web developer. I build custom websites and landing pages for people who want to be found online and turn visits into customers — from the copy that presents your offer to the button that takes the conversation straight to WhatsApp. I work with AI agents to move faster, but the product, the rules and the review of every screen before it goes live stay with me.">Sou Gabriel Bispo, desenvolvedor web. Crio sites e landing pages sob medida para quem quer ser encontrado na internet e transformar visitas em clientes — do texto que apresenta a sua oferta ao botão que leva a conversa direto para o WhatsApp. Trabalho com agentes de IA para ganhar velocidade, mas o produto, as regras e a revisão de cada tela antes de publicar ficam comigo.</p>
+          <p data-en='My main project is &lt;a href="https://seeall.app.br" target="_blank" rel="noopener"&gt;SeeAll&lt;/a&gt;, a complete finance app for anyone who wants to understand their money without the hassle — from everyday people to entrepreneurs keeping track of their business cash flow. Its standout feature: it automatically reads your bank&apos;s transaction notifications and imports every entry on its own, with no typing. It also reads statements in PDF, CSV, OFX or from a photo and sorts income and spending by category. The reading happens on your own phone, so your data never has to be sent to a server. It works as an Android app and right in the browser. Every project starts by understanding what your business really needs; the code comes after.'>Meu projeto principal é o <a href="https://seeall.app.br" target="_blank" rel="noopener">SeeAll</a>, um app completo de finanças para quem quer entender o próprio dinheiro sem complicação — de pessoas comuns a empreendedores que precisam acompanhar o caixa do negócio. O ponto forte: ele lê automaticamente as notificações de transação do banco e importa cada movimentação sozinho, sem você digitar nada. Também lê extratos em PDF, CSV, OFX ou por foto e organiza entradas e gastos por categoria. A leitura acontece no próprio celular, então seus dados não precisam ser enviados a um servidor. Funciona como app Android e também direto no navegador. Todo projeto começa entendendo o que o seu negócio precisa de verdade; só depois vem o código.</p>
+          <dl class="numeros">
+            <div><dt data-en="Projects">Projetos</dt><dd>20+</dd></div>
+            <div><dt data-en="Support">Suporte</dt><dd>24/7</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="secao" id="servicos">
+      <header class="secao__cab revelar">
+        <p class="rotulo" data-en="Services &amp; pricing">Serviços e preços</p>
+        <h2 data-en='Services <span class="contorno">&amp; pricing</span>'>Serviços <span class="contorno">e preços</span></h2>
+        <p class="secao__desc" data-en="Pick the format that fits your business and see exactly what each one includes.">Escolha o formato que combina com o seu negócio e veja o que está incluído em cada um.</p>
+      </header>
+
+      <ol class="planos revelar">
+        <li class="plano">
+          <div class="plano__topo"><h3>Landing Page</h3><span class="plano__num" aria-hidden="true">01</span></div>
+          <p class="plano__desc" data-en="A sales page for one product, service or campaign.">Página comercial para um produto, serviço ou campanha.</p>
+          <div class="plano__preco">
+            <span class="plano__rot" data-en="Reference price">Valor de referência</span>
+            <strong>R$ 890</strong>
+            <small data-en="for the scope below">para o escopo abaixo</small>
+          </div>
+          <ul class="plano__itens">
+            <li data-en="Custom design">Design personalizado</li>
+            <li data-en="Responsive on any screen">Responsividade</li>
+            <li data-en="Sales-focused calls to action">CTAs comerciais</li>
+            <li data-en="Simple form or WhatsApp">Formulário simples ou WhatsApp</li>
+            <li data-en="Basic technical SEO">SEO técnico básico</li>
+            <li data-en="Initial publishing within the agreed scope">Publicação inicial dentro do escopo acordado</li>
+          </ul>
+          <a class="plano__cta" href="#contato"><span data-en="Request a quote">Pedir orçamento</span> <span aria-hidden="true">→</span></a>
+        </li>
+        <li class="plano">
+          <div class="plano__topo"><h3 data-en="Business Website">Site Institucional</h3><span class="plano__num" aria-hidden="true">02</span></div>
+          <p class="plano__desc" data-en="Presents your company and services, with your contact details in one place.">Apresenta a sua empresa e os seus serviços, com as informações de contato num só lugar.</p>
+          <div class="plano__preco">
+            <span class="plano__rot" data-en="Reference price">Valor de referência</span>
+            <strong>R$ 1.490</strong>
+            <small data-en="for the scope below">para o escopo abaixo</small>
+          </div>
+          <ul class="plano__itens">
+            <li data-en="Up to five pages">Até cinco páginas</li>
+            <li data-en="Custom design">Design personalizado</li>
+            <li data-en="Responsive on any screen">Responsividade</li>
+            <li data-en="Company, services and contact information">Apresentação da empresa, serviços e contato</li>
+            <li data-en="Simple WhatsApp integration">Integração simples com WhatsApp</li>
+            <li data-en="Basic technical SEO">SEO técnico básico</li>
+            <li data-en="Initial publishing within the agreed scope">Publicação inicial dentro do escopo acordado</li>
+          </ul>
+          <a class="plano__cta" href="#contato"><span data-en="Request a quote">Pedir orçamento</span> <span aria-hidden="true">→</span></a>
+        </li>
+        <li class="plano">
+          <div class="plano__topo"><h3 data-en="Custom Website">Site sob medida</h3><span class="plano__num" aria-hidden="true">03</span></div>
+          <p class="plano__desc" data-en="For projects with extra pages, requirements or features.">Para projetos com páginas, requisitos ou funcionalidades adicionais.</p>
+          <div class="plano__preco">
+            <span class="plano__rot" data-en="Starting at">A partir de</span>
+            <strong>R$ 2.490</strong>
+            <small data-en="final price after scope review">preço final após análise do escopo</small>
+          </div>
+          <ul class="plano__itens">
+            <li data-en="Scope review before the quote">Análise do escopo antes do orçamento</li>
+            <li data-en="Proposal stating what is and isn't included">Proposta com o que está e o que não está incluído</li>
+            <li data-en="Extra features quoted separately">Cada funcionalidade extra é orçada à parte</li>
+          </ul>
+          <a class="plano__cta" href="#contato"><span data-en="Talk about the project">Conversar sobre o projeto</span> <span aria-hidden="true">→</span></a>
+        </li>
+        <li class="plano">
+          <div class="plano__topo"><h3 data-en="Maintenance">Manutenção</h3><span class="plano__num" aria-hidden="true">04</span></div>
+          <p class="plano__desc" data-en="Optional, for after your site is live. Limited scope, agreed in advance.">Opcional, para depois que o site está no ar. Escopo limitado e combinado antes.</p>
+          <div class="plano__preco">
+            <span class="plano__rot" data-en="Starting at">A partir de</span>
+            <strong>R$ 99<span data-en="/month">/mês</span></strong>
+            <small data-en="optional">opcional</small>
+          </div>
+          <ul class="plano__itens">
+            <li data-en="Simple updates">Atualizações simples</li>
+            <li data-en="Support under the terms agreed in advance">Suporte conforme as condições combinadas</li>
+            <li class="plano__fora" data-en="Does not include hosting, third-party costs or unlimited development">Não inclui hospedagem, custos de terceiros nem desenvolvimento ilimitado</li>
+          </ul>
+          <a class="plano__cta" href="#contato"><span data-en="Ask about maintenance">Perguntar sobre manutenção</span> <span aria-hidden="true">→</span></a>
+        </li>
+      </ol>
+
+      <div class="extras revelar">
+        <h3 class="extras__titulo" data-en="Add-on services">Serviços complementares</h3>
+        <ul class="extras__lista">
+          <li>
+            <div><h4 data-en="Publishing and setup">Publicação e configuração</h4><p data-en="Putting the site online and setting up the essentials. The initial publishing is part of the plans.">Colocar o site no ar e configurar o essencial. A publicação inicial faz parte dos planos.</p></div>
+            <span class="etiqueta etiqueta--incluso" data-en="Included">Incluído</span>
+          </li>
+          <li>
+            <div><h4 data-en="Domain and hosting">Domínio e hospedagem</h4><p data-en="Your address (yourbusiness.com) and the server where the site lives. Registered in your name and paid directly to the provider.">O endereço (seunegocio.com.br) e o servidor onde o site fica. Contratados em seu nome e pagos direto ao provedor.</p></div>
+            <span class="etiqueta etiqueta--custo" data-en="Extra cost">Custo à parte</span>
+          </li>
+          <li>
+            <div><h4 data-en="Technical SEO and performance">SEO técnico e desempenho</h4><p data-en="Titles, descriptions, sitemap, indexing and a page structure Google can read, plus pages that load fast. It helps Google understand the site; it does not guarantee a ranking or a timeframe.">Títulos, descrições, sitemap, indexação e uma estrutura de página que o Google consegue ler, com páginas que carregam rápido. Ajuda o Google a entender o site; não garante posição nem prazo para aparecer.</p></div>
+            <span class="etiqueta etiqueta--incluso" data-en="Basic included">Básico incluído</span>
+          </li>
+          <li>
+            <div><h4>Google Search Console</h4><p data-en="Ownership verification, indexing check and sitemap submission when it applies. You can then follow impressions, clicks and indexing issues yourself.">Verificação da propriedade, inspeção da indexação e envio do sitemap quando aplicável. Depois você acompanha impressões, cliques e problemas de indexação.</p></div>
+            <span class="etiqueta etiqueta--incluso" data-en="Included at launch">Incluído na publicação</span>
+          </li>
+          <li>
+            <div><h4 data-en="Google Business Profile">Perfil da Empresa no Google</h4><p data-en="For eligible local businesses to show up on Google Search and Maps — useful for shops, clinics and anyone who serves customers locally.">Para negócios locais elegíveis aparecerem na Pesquisa Google e no Maps — útil para comércios, clínicas e quem atende presencialmente.</p></div>
+            <span class="etiqueta etiqueta--custo" data-en="Separate quote">Orçamento à parte</span>
+          </li>
+          <li>
+            <div><h4 data-en="Google Ads">Google Ads</h4><p data-en="Setting up campaigns to appear in the sponsored spots of search results. The ad budget is paid directly to Google, separate from my service.">Criação e configuração de campanhas para aparecer nos espaços patrocinados da pesquisa. A verba dos anúncios é paga direto ao Google, separada do meu serviço.</p></div>
+            <span class="etiqueta etiqueta--custo" data-en="Separate quote">Orçamento à parte</span>
+          </li>
+          <li>
+            <div><h4 data-en="Ongoing SEO">SEO contínuo</h4><p data-en="Improving organic visibility over time, after the site is live.">Trabalho de visibilidade orgânica ao longo do tempo, depois que o site está no ar.</p></div>
+            <span class="etiqueta etiqueta--opcional" data-en="Monthly plan">Plano mensal à parte</span>
+          </li>
+          <li>
+            <div><h4 data-en="Simple integrations">Integrações simples</h4><p data-en="WhatsApp and a simple form, depending on the plan. Other tools only when they apply and are tested, with a quote.">WhatsApp e formulário simples, conforme o plano. Outras ferramentas só quando aplicáveis e testadas, com orçamento.</p></div>
+            <span class="etiqueta etiqueta--opcional" data-en="Depends on plan">Conforme o plano</span>
+          </li>
+          <li>
+            <div><h4 data-en="Maintenance and support">Manutenção e suporte</h4><p data-en="Simple adjustments after delivery, for a monthly fee agreed in advance.">Ajustes simples depois da entrega, por uma mensalidade combinada antes.</p></div>
+            <span class="etiqueta etiqueta--opcional" data-en="Optional">Opcional</span>
+          </li>
+        </ul>
+        <p class="extras__nota" data-en="Your site ready for Google: I set up the technical structure, the metadata and the indexing tools so your business has a solid foundation to be found online. Showing up on Google is not the same as showing up at the top — SEO builds organic visibility over time, while Google Ads buys advertising space.">Seu site pronto para o Google: configuro a estrutura técnica, os metadados e as ferramentas de indexação para que o seu negócio tenha uma base sólida para ser encontrado. Aparecer no Google não é o mesmo que aparecer no topo — o SEO trabalha a visibilidade orgânica ao longo do tempo, e o Google Ads compra espaço publicitário.</p>
+        <p class="extras__nota" data-en="Prices are references for the scopes described; extra features require a quote. Delivery time depends on the project's complexity and on receiving the needed materials (copy, photos, logo, access).">Os valores são referências para os escopos descritos; funcionalidades adicionais exigem orçamento. O prazo depende da complexidade do projeto e do recebimento dos materiais necessários (textos, fotos, logo, acessos).</p>
+      </div>
+    </section>
+
+    <section class="secao" id="processo">
+      <header class="secao__cab revelar">
+        <p class="rotulo" data-en="How I work">Como trabalho</p>
+        <h2 data-en='From idea <span class="contorno">to live site</span>'>Da ideia <span class="contorno">ao site no ar</span></h2>
+        <p class="secao__desc" data-en="Four steps, the same for a landing page or a custom website — only the size of each one changes.">Quatro etapas, iguais para uma landing page ou um site sob medida — só muda o tamanho de cada uma.</p>
+      </header>
+      <ol class="etapas revelar">
+        <li class="etapa"><span class="etapa__num" aria-hidden="true">01</span><h3 data-en="Conversation">Conversa</h3><p data-en="I get to know your business, who your customer is and what the page needs to do for you.">Entendo o seu negócio, quem é o seu cliente e o que a página precisa fazer por você.</p></li>
+        <li class="etapa"><span class="etapa__num" aria-hidden="true">02</span><h3 data-en="Proposal">Proposta</h3><p data-en="You get the scope in writing: what's included, what's left out and the price. No surprises later.">Você recebe o escopo por escrito: o que está incluído, o que fica de fora e o valor. Sem surpresa depois.</p></li>
+        <li class="etapa"><span class="etapa__num" aria-hidden="true">03</span><h3 data-en="Build">Criação</h3><p data-en="Design and development with previews along the way, so you can follow along and ask for changes before it goes live.">Design e desenvolvimento com prévias no caminho, para você acompanhar e pedir ajustes antes de publicar.</p></li>
+        <li class="etapa"><span class="etapa__num" aria-hidden="true">04</span><h3 data-en="Launch">Publicação</h3><p data-en="I put the site online, set up the essentials and check every screen on phone and desktop. Maintenance afterwards only if you want it.">Coloco o site no ar, configuro o essencial e confiro cada tela no celular e no computador. Manutenção depois, só se você quiser.</p></li>
+      </ol>
+
+      <div class="missao revelar">
+        <p class="rotulo" data-en="Mission">Missão</p>
+        <p class="missao__frase" data-en='A website that <span class="missao__apagado">works</span> while you take care of your business.'>Um site que <span class="missao__apagado">trabalha</span> enquanto você cuida do seu negócio.</p>
+        <p class="missao__texto" data-en="Clear copy, a fast page and a button that takes the conversation straight to you. No wild promises: what's in the scope gets delivered and tested.">Texto claro, página rápida e um botão que leva a conversa direto até você. Sem promessas mirabolantes: o que está no escopo é entregue e testado.</p>
+        <a class="missao__cta" href="#contato"><span data-en="Start a project">Iniciar projeto</span> <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <section class="secao" id="projetos">
+      <header class="secao__cab revelar">
+        <p class="rotulo" data-en="Work">Trabalhos</p>
+        <h2 data-en='Recent <span class="contorno">projects</span>'>Projetos <span class="contorno">recentes</span></h2>
+      </header>
+      <div class="filtro revelar" role="group" aria-label="Filtrar projetos" data-en-aria-label="Filter projects">
+        <button type="button" data-filtro="todos" aria-pressed="true" data-en="All">Todos</button>
+        <button type="button" data-filtro="web" aria-pressed="false">Web</button>
+        <button type="button" data-filtro="app" aria-pressed="false">App</button>
+      </div>
+      <ul class="projetos revelar">
+        <li class="projeto" data-tipo="web"><img class="projeto__img" src="vida-selvagem-capa.jpg" alt="" width="1024" height="640" loading="lazy"><span class="selo">Web</span><h3><a href="vida-selvagem/" target="_blank" rel="noopener">Vida Selvagem</a></h3><p data-en="Project with the award-winning photos of Wildlife Photographer of the Year 2026: flip cards, carousels and background videos.">Projeto com as fotos premiadas do Wildlife Photographer of the Year 2026: cartões que giram, carrosséis e vídeos de fundo.</p></li>
+        <li class="projeto" data-tipo="app"><img class="projeto__img" src="seeall.png" alt="" width="1024" height="500" loading="lazy"><span class="selo">App</span><h3><a href="https://seeall.app.br" target="_blank" rel="noopener">SeeAll</a></h3><p data-en="Finance app that reads your bank notifications and statements and sorts your spending on its own. Android and web.">App de finanças que lê as notificações e os extratos do banco e organiza seus gastos sozinho. Android e navegador.</p></li>
+        <li class="projeto" data-tipo="web"><div class="projeto__img" aria-hidden="true"></div><span class="selo">Web</span><h3 data-en="Project three">Projeto três</h3><p data-en="Short description.">Descrição curta.</p></li>
+      </ul>
+    </section>
+
+    <section class="secao" id="contato">
+      <header class="secao__cab revelar">
+        <p class="rotulo" data-en="Contact">Contato</p>
+        <h2 data-en='Let&apos;s <span class="contorno">talk</span>'>Vamos <span class="contorno">conversar</span></h2>
+        <p class="secao__desc" data-en="Pick the channel that works best for you.">Escolha o canal mais fácil para você.</p>
+      </header>
+      <ul class="canais revelar">
+        <li><a class="card" href="mailto:gabriel@seeall.app.br"><h3>E-mail</h3><p>gabriel@seeall.app.br</p></a></li>
+        <li><a class="card" href="https://wa.me/5519999801423" target="_blank" rel="noopener"><h3>WhatsApp</h3><p>+55 19 99980-1423</p></a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <p data-en="Gabriel Bispo — Web Developer">Gabriel Bispo — Desenvolvedor Web</p>
+  </footer>
+</body>
+</html>

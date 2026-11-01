@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- pôr do sol na savana: céu em degradê, sol e a silhueta de uma acácia com o chão -->
+  <defs>
+    <linearGradient id="ceu" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f7c46c"/>
+      <stop offset=".55" stop-color="#ec8a3c"/>
+      <stop offset="1" stop-color="#c2452a"/>
+    </linearGradient>
+    <clipPath id="borda"><rect width="64" height="64" rx="14"/></clipPath>
+  </defs>
+  <g clip-path="url(#borda)">
+    <rect width="64" height="64" fill="url(#ceu)"/>
+    <circle cx="36" cy="36" r="13" fill="#ffe3a3" opacity=".9"/>
+    <g fill="#1c130d">
+      <!-- copa achatada, em camadas -->
+      <path d="M8 30.5c1-4 5.5-6 10-5 2.2-3.8 8-5 12.2-2.8 3.4-3 10-3.2 13.6-.2 4.4-1.2 9.4.8 11.6 4.6 1.8 2.6.2 4.4-3 4.4H11.5c-2.6 0-4-.4-3.5-1z"/>
+      <!-- tronco que se abre em galhos -->
+      <path d="M29.6 53c.4-6 .6-11-.6-15.2-2.2-3-5.8-4.6-9-6l1.4-1c3.2 1.2 6 2.6 8.2 4.6.3-2 .7-3.6 1.2-4.8l1.5.1c-.4 1.5-.6 3.1-.5 4.8 2.2-2.2 5.4-3.6 8.8-4.4l.7 1c-3.4 1.2-6.6 3-8.6 5.8-.8 4-.6 9 .2 15.1z"/>
+      <!-- chão -->
+      <path d="M0 51c12-3 22 2 32 1s20-4 32-2v14H0z"/>
+    </g>
+  </g>
+</svg>
