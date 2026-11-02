@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Sabores de Campinas</title>
+  <meta name="description" content="Comida tradicional de Campinas e do interior paulista: pratos, salgados e doces feitos do jeito de casa.">
+  <meta name="theme-color" content="#18100b">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Sabores de Campinas">
+  <meta property="og:description" content="Comida tradicional de Campinas e do interior paulista: pratos, salgados e doces feitos do jeito de casa.">
+  <meta property="og:url" content="https://gabrielbispodev.github.io/sabores-de-campinas/">
+  <meta property="og:image" content="https://gabrielbispodev.github.io/sabores-campinas-capa.jpg">
+  <meta property="og:locale" content="pt_BR">
+  <link rel="icon" href="../icone.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Inter+Tight:wght@300;400;500&display=swap" rel="stylesheet">
+  <script>document.documentElement.classList.add('js')</script>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+<svg class="sr" aria-hidden="true" focusable="false"><filter id="vidro" filterUnits="userSpaceOnUse" primitiveUnits="userSpaceOnUse" color-interpolation-filters="sRGB" x="0" y="0" width="100" height="64"><feGaussianBlur in="SourceGraphic" stdDeviation="5" result="base"/><feImage id="vidro-mapa" x="0" y="0" width="100" height="64" preserveAspectRatio="none" result="mapa"/><feDisplacementMap in="base" in2="mapa" scale="52" xChannelSelector="R" yChannelSelector="G"/></filter></svg>
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="topo">
+    <button class="topo__menu" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu">
+      <span></span><span></span>
+    </button>
+    <nav id="menu" class="topo__nav" aria-label="Principal">
+      <ul class="topo__lista">
+        <li><a href="#cardapio">Cardápio</a></li>
+        <li><a href="#historia">Nossa História</a></li>
+        <li><a href="#empresas">Empresas</a></li>
+      </ul>
+      <ul class="topo__lista">
+        <li><a href="#empresas">Encomendas</a></li>
+        <li><a href="#onde-estamos">Onde Estamos</a></li>
+      </ul>
+    </nav>
+    <a class="topo__marca" href="#">Sabores de Campinas</a>
+    <a class="topo__pedir botao botao--verde" href="#cardapio">Peça Já</a>
+  </header>
+
+  <main id="conteudo">
+    <!-- Hero: 3 fotos em fade, troca sozinha (para com prefers-reduced-motion) -->
+    <section class="hero" aria-roledescription="carrossel" aria-label="Destaques">
+      <article class="hero__slide ativo">
+        <img src="img/torta-holandesa.webp" alt="Torta holandesa inteira com cobertura de chocolate e biscoitos na borda, uma fatia cortada" fetchpriority="high">
+        <div class="hero__texto">
+          <p class="sobretitulo">Nascida em Campinas</p>
+          <h1>A torta holandesa voltou</h1>
+          <a class="botao botao--lima" href="#cardapio" data-aba="doces">Peça agora</a>
+        </div>
+      </article>
+      <article class="hero__slide" aria-hidden="true">
+        <img src="img/virado-a-paulista.webp" alt="Prato de virado à paulista com ovo frito, linguiça, bisteca, couve e torresmo" loading="lazy">
+        <div class="hero__texto">
+          <p class="sobretitulo">Toda segunda-feira</p>
+          <h1>Virado à paulista do jeito de casa</h1>
+          <a class="botao botao--lima" href="#cardapio" data-aba="pratos" tabindex="-1">Peça agora</a>
+        </div>
+      </article>
+      <article class="hero__slide" aria-hidden="true">
+        <img src="img/pamonha.webp" alt="Pamonha aberta sobre a palha de milho num prato" loading="lazy">
+        <div class="hero__texto">
+          <p class="sobretitulo">Safra do milho</p>
+          <h1>Pamonha fresquinha, doce ou salgada</h1>
+          <a class="botao botao--lima" href="#cardapio" data-aba="doces" tabindex="-1">Peça agora</a>
+        </div>
+      </article>
+      <div class="hero__controles">
+        <button class="seta" data-hero="-1" aria-label="Destaque anterior">←</button>
+        <button class="seta" data-hero="1" aria-label="Próximo destaque">→</button>
+      </div>
+    </section>
+
+    <!-- Cardápio em abas, cartões em trilho com rolagem -->
+    <section id="cardapio" class="cardapio">
+      <div class="cardapio__cabeca" data-surgir-grupo>
+        <h2 data-surgir>Nosso cardápio</h2>
+        <div class="abas" data-surgir role="tablist" aria-label="Categorias">
+          <button role="tab" aria-selected="true" aria-controls="aba-pratos" id="t-pratos" data-aba="pratos">Pratos</button>
+          <button role="tab" aria-selected="false" aria-controls="aba-salgados" id="t-salgados" data-aba="salgados" tabindex="-1">Salgados</button>
+          <button role="tab" aria-selected="false" aria-controls="aba-doces" id="t-doces" data-aba="doces" tabindex="-1">Doces</button>
+        </div>
+      </div>
+
+      <div class="trilho" data-surgir-grupo id="aba-pratos" role="tabpanel" aria-labelledby="t-pratos">
+        <article class="cartao" data-surgir><div class="cartao__corpo">
+          <div class="foto cartao__foto"><img src="img/virado-a-paulista.webp" alt="Virado à paulista" loading="lazy"></div>
+          <h3>Virado à paulista</h3>
+          <p>Tutu de feijão, arroz, bisteca, linguiça, couve refogada, torresmo, ovo frito e banana à milanesa</p>
+          <a href="#" data-pedido>Peça agora →</a>
+        </div></article>
+        <article class="cartao" data-surgir><div class="cartao__corpo">
+          <div class="foto cartao__foto"><img src="img/cuscuz-paulista.webp" alt="Cuscuz paulista enformado com tomate, ovo e milho" loading="lazy"></div>
+          <h3>Cuscuz paulista</h3>
+          <p>Farinha de milho, sardinha, palmito, ervilha, tomate, ovo cozido e cheiro-verde, servido enformado</p>
+          <a href="#" data-pedido>Peça agora →</a>
+        </div></article>
+        <article class="cartao" data-surgir><div class="cartao__corpo">
+          <div class="foto cartao__foto"><img src="img/bauru.webp" alt="Sanduíche bauru com rosbife, tomate e queijo derretido" loading="lazy"></div>
+          <h3>Bauru</h3>
+          <p>Pão francês, rosbife, tomate, pepino em conserva e queijo derretido no banho-maria. Receita de Bauru, SP</p>
+          <a href="#" data-pedido>Peça agora →</a>
+        </div></article>
+        <article class="cartao" data-surgir><div class="cartao__corpo">
+          <div class="foto cartao__foto"><img src="img/mortadela.webp" alt="Sanduíche de mortadela cortado ao meio, com muitas fatias e queijo derretido, num prato branco" loading="lazy"></div>
+          <h3>Sanduíche de mortadela</h3>
+          <p>Pão francês com mortadela fatiada fina e empilhada e queijo derretido, como no Mercadão de São Paulo</p>
+          <a href="#" data-pedido>Peça agora →</a>
+        </div></article>
+        <article class="cartao" data-surgir><div class="cartao__corpo">
+          <div class="foto cartao__foto"><img src="img/afogado.webp" alt="Prato fundo de afogado com carne, caldo e farinha por cima, decorado com hortelã" loading="lazy"></div>
+          <h3>Afogado</h3>
+          <p>Carne bovina cozida devagar em caldo temperado, servida com farinha de mandioca. Tradição das festas do Divino no Alto Tietê</p>
+          <a href="#" data-pedido>Peça agora →</a>
+        </div></article>
+        <article class="cartao" data-surgir><div class="cartao__corpo">
+          <div class="foto cartao__foto"><img src="img/galinhada.webp" alt="Panela de alumínio cheia de galinhada com arroz amarelo, coxinhas de frango e cheiro-verde" loading="lazy"></div>
+          <h3>Galinhada caipira</h3>
+          <p>Arroz cozido com frango caipira, açafrão-da-terra e cheiro-verde, feito na panela</p>
+          <a href="#" data-pedido>Peça agora →</a>
+        </div></article>
+        <article class="cartao" data-surgir><div class="cartao__corpo">
+          <div class="foto cartao__foto"><img src="img/polenta.webp" alt="Polenta com ragu de carne desfiada, molho de tomate e folhas de manjericão" loading="lazy"></div>
+          <h3>Polenta com ragu</h3>
+          <p>Polenta cremosa com ragu de carne desfiada e molho de tomate, herança da imigração italiana no interior paulista</p>
+          <a href="#" data-pedido>Peça agora →</a>
+        </div></article>
+      </div>
+
+      <div class="trilho" data-surgir-grupo id="aba-salgados" role="tabpanel" aria-labelledby="t-salgados" hidden>
+        <article class="cartao" data-surgir><div class="cartao__corpo">
+          <div class="foto cartao__foto"><img src="img/coxinha.webp" alt="Várias coxinhas douradas lado a lado" loading="lazy"></div>
+          <h3>Coxinha</h3>
+          <p>Massa de batata, frango desfiado temperado e casquinha crocante de farinha de rosca</p>
+          <a href="#" data-pedido>Peça agora →</a>
+        </div></article>
+        <article class="cartao" data-surgir><div class="cartao__corpo">
+          <div class="foto cartao__foto"><img src="img/pastel.webp" alt="Pastel de feira dourado e cheio de bolhas sobre uma mesa de madeira" loading="lazy"></div>
+          <h3>Pastel de feira</h3>
+          <p>Massa fina e bolhuda, frita na hora. Carne, queijo ou palmito</p>
+          <a href="#" data-pedido>Peça agora →</a>
+        </div></article>
+        <article class="cartao" data-surgir><div class="cartao__corpo">
+          <div class="foto cartao__foto"><img src="img/bolinho-caipira.webp" alt="Sete bolinhos caipira dourados num prato verde em forma de folha" loading="lazy"></div>
+          <h3>Bolinho caipira</h3>
+          <p>Massa de farinha de milho com recheio de carne moída, receita do Vale do Paraíba</p>
+          <a href="#" data-pedido>Peça agora →</a>
+        </div></article>
+        <article class="cartao" data-surgir><div class="cartao__corpo">
+          <div class="foto cartao__foto"><img src="img/empada.webp" alt="Empada dourada cortada ao meio mostrando o recheio de palmito" loading="lazy"></div>
+          <h3>Empada de palmito</h3>
+          <p>Massa podre que desmancha e recheio cremoso de palmito com azeitona</p>
+          <a href="#" data-pedido>Peça agora →</a>
+        </div></article>
+        <article class="cartao" data-surgir><div class="cartao__corpo">
+          <div class="foto cartao__foto"><img src="img/risole.webp" alt="Risoles empanados num prato de metal, um deles aberto com recheio de carne" loading="lazy"></div>
+          <h3>Risole de carne</h3>
+          <p>Massa cozida recheada de carne moída, empanada e frita na hora</p>
+          <a href="#" data-pedido>Peça agora →</a>
+        </div></article>
+        <article class="cartao" data-surgir><div class="cartao__corpo">
+          <div class="foto cartao__foto"><img src="img/pao-de-linguica.webp" alt="Pão de linguiça cortado mostrando a linguiça enrolada na massa" loading="lazy"></div>
+          <h3>Pão de linguiça</h3>
+          <p>Pão macio assado com linguiça fina enrolada na massa</p>
+          <a href="#" data-pedido>Peça agora →</a>
+        </div></article>
+      </div>
+
+      <div class="trilho" data-surgir-grupo id="aba-doces" role="tabpanel" aria-labelledby="t-doces" hidden>
+        <article class="cartao" data-surgir><div class="cartao__corpo">
+          <div class="foto cartao__foto"><img src="img/torta-holandesa.webp" alt="Torta holandesa com cobertura de chocolate" loading="lazy"></div>
+          <h3>Torta holandesa</h3>
+          <p>Base de biscoito, creme leve de baunilha, cobertura de chocolate e biscoitos na borda. Criação de Campinas</p>
+          <a href="#" data-pedido>Peça agora →</a>
+        </div></article>
+        <article class="cartao" data-surgir><div class="cartao__corpo">
+          <div class="foto cartao__foto"><img src="img/pamonha-palha.webp" alt="Pamonhas amarradas na palha de milho" loading="lazy"></div>
+          <h3>Pamonha de Piracicaba</h3>
+          <p>Milho verde ralado e cozido na palha. Doce, salgada ou com queijo</p>
+          <a href="#" data-pedido>Peça agora →</a>
+        </div></article>
+        <article class="cartao" data-surgir><div class="cartao__corpo">
+          <div class="foto cartao__foto"><img src="img/curau.webp" alt="Tigela de vidro com curau de milho polvilhado com canela, ao lado de espigas de milho" loading="lazy"></div>
+          <h3>Curau de milho</h3>
+          <p>Creme de milho verde com leite e canela, servido gelado</p>
+          <a href="#" data-pedido>Peça agora →</a>
+        </div></article>
+        <article class="cartao" data-surgir><div class="cartao__corpo">
+          <div class="foto cartao__foto"><img src="img/bolo-de-fuba.webp" alt="Fatia de bolo de fubá com pedaços de goiabada num prato vermelho" loading="lazy"></div>
+          <h3>Bolo de fubá com goiabada</h3>
+          <p>Bolo de fubá fofinho com pedaços de goiabada, como no café da tarde da roça</p>
+          <a href="#" data-pedido>Peça agora →</a>
+        </div></article>
+        <article class="cartao" data-surgir><div class="cartao__corpo">
+          <div class="foto cartao__foto"><img src="img/pudim.webp" alt="Pudim de leite inteiro com furo no meio e calda de caramelo" loading="lazy"></div>
+          <h3>Pudim de leite</h3>
+          <p>Pudim liso de leite condensado com calda de caramelo</p>
+          <a href="#" data-pedido>Peça agora →</a>
+        </div></article>
+        <article class="cartao" data-surgir><div class="cartao__corpo">
+          <div class="foto cartao__foto"><img src="img/romeu-e-julieta.webp" alt="Fatia de queijo branco ao lado de fatia de goiabada" loading="lazy"></div>
+          <h3>Romeu e Julieta</h3>
+          <p>Goiabada cascão com queijo minas fresco</p>
+          <a href="#" data-pedido>Peça agora →</a>
+        </div></article>
+      </div>
+
+      <div class="cardapio__setas" data-surgir-grupo>
+        <button class="seta seta--escura" data-surgir data-trilho="-1" aria-label="Rolar cardápio para trás">←</button>
+        <button class="seta seta--escura" data-surgir data-trilho="1" aria-label="Rolar cardápio para frente">→</button>
+      </div>
+    </section>
+
+    <!-- Empresas: fundo verde-claro, título grande + faixa de fotos -->
+    <section id="empresas" class="empresas">
+      <div class="empresas__texto" data-surgir-grupo>
+        <p class="sobretitulo" data-surgir>Para empresas</p>
+        <h2 data-surgir>Comida de casa para o seu time inteiro</h2>
+        <p data-surgir>Do café da tarde à festa de fim de ano, levamos bandejas de salgados, sanduíches e tortas para o seu escritório em Campinas e região.</p>
+        <ul class="empresas__links" data-surgir>
+          <li><a href="#" data-whatsapp="Olá! Gostaria de fazer uma encomenda para a minha empresa.">Encomendas →</a></li>
+          <li><a href="#" data-whatsapp="Olá! Gostaria de um orçamento para um evento.">Eventos →</a></li>
+        </ul>
+      </div>
+      <!-- Carrossel com todas as comidas: gira sozinho, freia com o mouse, arrasta com inércia. O JS clona a lista para fechar o laço -->
+      <div class="giro" aria-label="Todas as comidas do cardápio" role="region">
+        <div class="giro__trilha">
+          <a class="giro__item" href="#cardapio" data-aba="pratos"><span class="giro__corpo"><img src="img/virado-a-paulista.webp" alt="Virado à paulista" loading="lazy" draggable="false"><span class="giro__nome">Virado à paulista</span></span></a>
+          <a class="giro__item" href="#cardapio" data-aba="pratos"><span class="giro__corpo"><img src="img/cuscuz-paulista.webp" alt="Cuscuz paulista enformado com tomate, ovo e milho" loading="lazy" draggable="false"><span class="giro__nome">Cuscuz paulista</span></span></a>
+          <a class="giro__item" href="#cardapio" data-aba="pratos"><span class="giro__corpo"><img src="img/bauru.webp" alt="Sanduíche bauru com rosbife, tomate e queijo derretido" loading="lazy" draggable="false"><span class="giro__nome">Bauru</span></span></a>
+          <a class="giro__item" href="#cardapio" data-aba="pratos"><span class="giro__corpo"><img src="img/mortadela.webp" alt="Sanduíche de mortadela cortado ao meio, com muitas fatias e queijo derretido, num prato branco" loading="lazy" draggable="false"><span class="giro__nome">Sanduíche de mortadela</span></span></a>
+          <a class="giro__item" href="#cardapio" data-aba="pratos"><span class="giro__corpo"><img src="img/afogado.webp" alt="Prato fundo de afogado com carne, caldo e farinha por cima, decorado com hortelã" loading="lazy" draggable="false"><span class="giro__nome">Afogado</span></span></a>
+          <a class="giro__item" href="#cardapio" data-aba="pratos"><span class="giro__corpo"><img src="img/galinhada.webp" alt="Panela de alumínio cheia de galinhada com arroz amarelo, coxinhas de frango e cheiro-verde" loading="lazy" draggable="false"><span class="giro__nome">Galinhada caipira</span></span></a>
+          <a class="giro__item" href="#cardapio" data-aba="pratos"><span class="giro__corpo"><img src="img/polenta.webp" alt="Polenta com ragu de carne desfiada, molho de tomate e folhas de manjericão" loading="lazy" draggable="false"><span class="giro__nome">Polenta com ragu</span></span></a>
+          <a class="giro__item" href="#cardapio" data-aba="salgados"><span class="giro__corpo"><img src="img/coxinha.webp" alt="Várias coxinhas douradas lado a lado" loading="lazy" draggable="false"><span class="giro__nome">Coxinha</span></span></a>
+          <a class="giro__item" href="#cardapio" data-aba="salgados"><span class="giro__corpo"><img src="img/pastel.webp" alt="Pastel de feira dourado e cheio de bolhas sobre uma mesa de madeira" loading="lazy" draggable="false"><span class="giro__nome">Pastel de feira</span></span></a>
+          <a class="giro__item" href="#cardapio" data-aba="salgados"><span class="giro__corpo"><img src="img/bolinho-caipira.webp" alt="Sete bolinhos caipira dourados num prato verde em forma de folha" loading="lazy" draggable="false"><span class="giro__nome">Bolinho caipira</span></span></a>
+          <a class="giro__item" href="#cardapio" data-aba="salgados"><span class="giro__corpo"><img src="img/empada.webp" alt="Empada dourada cortada ao meio mostrando o recheio de palmito" loading="lazy" draggable="false"><span class="giro__nome">Empada de palmito</span></span></a>
+          <a class="giro__item" href="#cardapio" data-aba="salgados"><span class="giro__corpo"><img src="img/risole.webp" alt="Risoles empanados num prato de metal, um deles aberto com recheio de carne" loading="lazy" draggable="false"><span class="giro__nome">Risole de carne</span></span></a>
+          <a class="giro__item" href="#cardapio" data-aba="salgados"><span class="giro__corpo"><img src="img/pao-de-linguica.webp" alt="Pão de linguiça cortado mostrando a linguiça enrolada na massa" loading="lazy" draggable="false"><span class="giro__nome">Pão de linguiça</span></span></a>
+          <a class="giro__item" href="#cardapio" data-aba="doces"><span class="giro__corpo"><img src="img/torta-holandesa.webp" alt="Torta holandesa com cobertura de chocolate" loading="lazy" draggable="false"><span class="giro__nome">Torta holandesa</span></span></a>
+          <a class="giro__item" href="#cardapio" data-aba="doces"><span class="giro__corpo"><img src="img/pamonha-palha.webp" alt="Pamonhas amarradas na palha de milho" loading="lazy" draggable="false"><span class="giro__nome">Pamonha de Piracicaba</span></span></a>
+          <a class="giro__item" href="#cardapio" data-aba="doces"><span class="giro__corpo"><img src="img/curau.webp" alt="Tigela de vidro com curau de milho polvilhado com canela, ao lado de espigas de milho" loading="lazy" draggable="false"><span class="giro__nome">Curau de milho</span></span></a>
+          <a class="giro__item" href="#cardapio" data-aba="doces"><span class="giro__corpo"><img src="img/bolo-de-fuba.webp" alt="Fatia de bolo de fubá com pedaços de goiabada num prato vermelho" loading="lazy" draggable="false"><span class="giro__nome">Bolo de fubá com goiabada</span></span></a>
+          <a class="giro__item" href="#cardapio" data-aba="doces"><span class="giro__corpo"><img src="img/pudim.webp" alt="Pudim de leite inteiro com furo no meio e calda de caramelo" loading="lazy" draggable="false"><span class="giro__nome">Pudim de leite</span></span></a>
+          <a class="giro__item" href="#cardapio" data-aba="doces"><span class="giro__corpo"><img src="img/romeu-e-julieta.webp" alt="Fatia de queijo branco ao lado de fatia de goiabada" loading="lazy" draggable="false"><span class="giro__nome">Romeu e Julieta</span></span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 50/50: história da torta holandesa -->
+    <section id="historia" class="historia" data-surgir-grupo>
+      <div class="historia__texto" data-surgir-grupo>
+        <p class="sobretitulo" data-surgir>Desde 1968</p>
+        <h2 data-surgir>Tudo começou num fogão a lenha em Barão Geraldo</h2>
+        <p data-surgir>Em 1968, Dona Alzira Bonfim passou a vender pamonha na janela de casa, enquanto o marido, Tião, consertava bicicletas na garagem. No primeiro sábado sobraram duas. No terceiro, a fila dobrou a esquina.</p>
+        <p data-surgir>Tião largou a oficina para cuidar do caixa, a garagem ganhou três mesas e o caderno de receitas da família, manchado de calda, virou o nosso cardápio.</p>
+        <p data-surgir>Hoje a neta Marina comanda a cozinha com as mesmas panelas de ferro. O caderno segue aberto na bancada, e a torta holandesa de sábado ainda sai do jeito que a vó anotou.</p>
+        <a class="link-seta" data-surgir href="#cardapio" data-aba="doces">Ver os doces →</a>
+      </div>
+      <figure class="historia__foto" data-surgir>
+        <img src="img/torta-holandesa.webp" alt="Torta holandesa sobre mesa de madeira" loading="lazy">
+      </figure>
+    </section>
+
+    <section class="contato" data-surgir-grupo>
+      <div class="contato__coluna" data-surgir>
+        <p class="sobretitulo">Receba novidades</p>
+        <p class="contato__frase">Pratos da semana, safra da pamonha e novas lojas.</p>
+        <form class="news" novalidate>
+          <label class="sr" for="email">E-mail</label>
+          <input id="email" type="email" placeholder="Seu e-mail" autocomplete="email" required>
+          <button aria-label="Enviar e-mail">→</button>
+        </form>
+        <p class="news__msg" role="status"></p>
+      </div>
+      <div class="contato__coluna" id="onde-estamos" data-surgir>
+        <p class="sobretitulo">Onde estamos</p>
+        <p class="contato__frase">Rua da Pamonha, 1968<br>Barão Geraldo, Campinas - SP</p>
+        <ul class="contato__horario">
+          <li><span>Terça a sexta</span><span>11h às 20h</span></li>
+          <li><span>Sábado e domingo</span><span>10h às 21h</span></li>
+          <li><span>Segunda</span><span>Só o virado, das 11h às 15h</span></li>
+        </ul>
+        <ul class="contato__redes">
+          <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Bar%C3%A3o%20Geraldo%2C%20Campinas%20-%20SP" target="_blank" rel="noopener">Ver no mapa →</a></li>
+          <li><a href="#" data-whatsapp="Olá! Gostaria de falar com a Sabores de Campinas.">WhatsApp →</a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer id="rodape" class="rodape">
+    <div class="rodape__colunas" data-surgir-grupo>
+      <div data-surgir><h4>Sobre</h4><ul><li><a href="#historia">Nossa história</a></li><li><a href="#onde-estamos">Onde estamos</a></li></ul></div>
+      <div data-surgir><h4>Atendimento</h4><ul><li><a href="#" data-whatsapp="Olá! Gostaria de falar com a Sabores de Campinas.">Fale conosco</a></li><li><a href="#empresas">Encomendas</a></li></ul></div>
+    </div>
+    <details class="creditos">
+      <summary>Créditos das fotos (Wikimedia Commons)</summary>
+      <ul>
+        <li>Torta holandesa — Silvia Leite, <a href="https://commons.wikimedia.org/wiki/File:Silvialeite-com-br-creative-commons-4-sa.jpg">CC BY-SA 4.0</a></li>
+        <li>Virado à paulista — edsonaoki, <a href="https://commons.wikimedia.org/wiki/File:Virado_a_paulista.jpg">CC BY-SA 3.0</a></li>
+        <li>Cuscuz paulista — Everton137, <a href="https://commons.wikimedia.org/wiki/File:Cuscuz_paulista.jpg">CC BY 3.0</a></li>
+        <li>Pamonha de Piracicaba — Sintegrity, <a href="https://commons.wikimedia.org/wiki/File:Pamonha_de_Piracicaba_13.jpg">CC BY-SA 4.0</a></li>
+        <li>Bauru — Rodrigoalves11, <a href="https://commons.wikimedia.org/wiki/File:Sandu%C3%ADche_Bauru.jpg">CC BY-SA 4.0</a></li>
+      </ul>
+      <p>Fotos ampliadas, com ajuste de nitidez e tratamento de cor fosco, convertidas para WebP.</p>
+      <p>Fotos de pamonha na palha (cardápio), bolinho caipira, pastel de feira, coxinha, sanduíche de mortadela, afogado, galinhada caipira, polenta com ragu, empada, risole, pão de linguiça, curau, bolo de fubá, pudim e romeu e julieta enviadas pelo responsável pela página.</p>
+    </details>
+    <p class="rodape__fim">© 2026 Sabores de Campinas</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
