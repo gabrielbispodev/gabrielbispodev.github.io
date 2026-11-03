@@ -244,7 +244,7 @@ a { color: inherit; }
 .secao { max-width: var(--largura); margin: 0 auto; padding: 6rem 1rem; }
 .secao__cab { display: grid; gap: 1rem; margin-bottom: 3rem; }
 /* Títulos em Space Grotesk, como no app SeeAll; segunda linha sólida em cinza (sem o vazado da referência) */
-h1, h2, h3, .numeros dd { font-family: "Space Grotesk", Inter, ui-sans-serif, system-ui, sans-serif; }
+h1, h2, h3 { font-family: "Space Grotesk", Inter, ui-sans-serif, system-ui, sans-serif; }
 .secao__cab h2 { font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 700; letter-spacing: -.03em; }
 .contorno { display: block; color: var(--suave); }
 .secao__desc { color: var(--suave); border-left: 2px solid var(--acento); padding-left: 1rem; max-width: 26rem; }
@@ -271,7 +271,7 @@ a.card:hover { border-color: rgba(var(--acento-rgb), .5); }
 /* Selo "Disponível para trabalho": pílula de vidro sobre a borda de baixo da foto, ponto sempre verde, pulsando (independe da cor escolhida) */
 .sobre__moldura { position: relative; max-width: 22rem; width: 100%; }
 .disponivel {
-  position: absolute; left: 1.1rem; bottom: -1rem; z-index: 3; margin: 0;
+  position: absolute; left: 1.1rem; top: -1rem; z-index: 3; margin: 0;
   display: flex; align-items: center; gap: .5rem; padding: .5rem .9rem; border-radius: 999px;
   background: var(--vidro); border: 1px solid var(--borda); color: var(--texto);
   backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
@@ -279,15 +279,12 @@ a.card:hover { border-color: rgba(var(--acento-rgb), .5); }
 }
 .disponivel__ponto {
   width: .5rem; height: .5rem; border-radius: 50%; background: #22c55e;
-  box-shadow: 0 0 .5rem #22c55e; animation: pulsar 2s ease-in-out infinite;
+  box-shadow: 0 0 .5rem #22c55e; animation: respirar 4s ease-in-out infinite;
 }
-@keyframes pulsar { 50% { box-shadow: 0 0 0 .3rem rgba(34, 197, 94, .25), 0 0 .5rem #22c55e; } }
+/* respiração: o brilho acende e apaga devagar, sem o anel que se expandia */
+@keyframes respirar { 50% { opacity: .45; box-shadow: 0 0 .15rem #22c55e; } }
 /* Retângulo 4:5 mostra a foto inteira: o anel vai onde estava o anel da foto (centro 796,739 e raio 709 em 1599x2000) */
 .sobre__foto .retrato__anel { left: 5.44%; top: 1.5%; width: 88.68%; }
-.numeros { display: flex; gap: 2.5rem; margin: 2rem 0 0; }
-.numeros div { display: flex; flex-direction: column-reverse; justify-content: flex-end; } /* números alinhados no topo mesmo se o rótulo quebrar */
-.numeros dd { margin: 0; font-size: 2rem; font-weight: 800; }
-.numeros dt { color: var(--suave); font-size: .75rem; text-transform: uppercase; letter-spacing: .15em; }
 @media (min-width: 768px) { .sobre { grid-template-columns: minmax(14rem, 22rem) 1fr; gap: 4rem; } }
 
 /* Serviços e preços: planos em cartões de vidro discreto, 2 colunas a partir de 768 px */
