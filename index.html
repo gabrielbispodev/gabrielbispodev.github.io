@@ -3,8 +3,40 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Gabriel Bispo — Desenvolvedor Web</title>
-  <meta name="description" content="Criação de sites profissionais e landing pages sob medida para empresas e profissionais.">
+  <title>Gabriel Bispo — Criação de Sites e Landing Pages</title>
+  <meta name="description" content="Sites e landing pages sob medida, rápidos e com o WhatsApp à vista. Landing page a partir de R$ 890. Peça um orçamento sem compromisso.">
+  <link rel="canonical" href="https://gabrielbispodev.github.io/">
+  <!-- prévia de links (WhatsApp, redes sociais) -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:url" content="https://gabrielbispodev.github.io/">
+  <meta property="og:title" content="Gabriel Bispo — Criação de Sites e Landing Pages">
+  <meta property="og:description" content="Sites e landing pages sob medida, rápidos e com o WhatsApp à vista. Peça um orçamento sem compromisso.">
+  <meta property="og:image" content="https://gabrielbispodev.github.io/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- dados estruturados: ajudam Google e IAs a entender quem oferece o quê e por quanto -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Gabriel Bispo — Desenvolvedor Web",
+    "url": "https://gabrielbispodev.github.io/",
+    "image": "https://gabrielbispodev.github.io/pessoa.webp",
+    "description": "Criação de sites e landing pages sob medida, com SEO técnico básico e integração com WhatsApp.",
+    "email": "gabriel@seeall.app.br",
+    "telephone": "+55-19-99980-1423",
+    "areaServed": "BR",
+    "founder": { "@type": "Person", "name": "Gabriel Bispo", "jobTitle": "Desenvolvedor Web" },
+    "makesOffer": [
+      { "@type": "Offer", "name": "Landing Page", "price": "890", "priceCurrency": "BRL" },
+      { "@type": "Offer", "name": "Site Institucional", "price": "1490", "priceCurrency": "BRL" },
+      { "@type": "Offer", "name": "Site sob medida", "priceSpecification": { "@type": "PriceSpecification", "minPrice": "2490", "priceCurrency": "BRL" } },
+      { "@type": "Offer", "name": "Manutenção", "priceSpecification": { "@type": "UnitPriceSpecification", "minPrice": "99", "priceCurrency": "BRL", "unitText": "MONTH" } }
+    ]
+  }
+  </script>
   <meta name="color-scheme" content="dark light">
   <!-- Aplica tema e cor salvos antes da página aparecer (evita piscar no tema errado) -->
   <script>try { const p = JSON.parse(localStorage.getItem('frame-preferencias')) || {}; if (p.tema) document.documentElement.dataset.tema = p.tema; if (p.cor) document.documentElement.dataset.cor = p.cor; } catch (e) {}</script>
@@ -73,7 +105,7 @@
       <canvas class="hero__haki" aria-hidden="true"></canvas>
       <figure class="hero__foto retrato">
         <span class="retrato__anel" aria-hidden="true"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="49"/></svg></span>
-        <img class="retrato__pessoa" src="pessoa.webp" alt="Gabriel Bispo" width="640" height="640">
+        <img class="retrato__pessoa" src="pessoa.webp" alt="Gabriel Bispo" width="640" height="640" fetchpriority="high">
         <span class="retrato__luz" aria-hidden="true"></span>
       </figure>
       <div class="hero__texto">

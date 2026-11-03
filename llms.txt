@@ -1,0 +1,23 @@
+# Gabriel Bispo — Desenvolvedor Web
+
+> Criação de sites e landing pages sob medida para empresas e profissionais no Brasil: rápidos, responsivos, com SEO técnico básico e o WhatsApp à vista.
+
+## Serviços e preços de referência
+
+- Landing Page: R$ 890 — página comercial para um produto, serviço ou campanha.
+- Site Institucional: R$ 1.490 — até cinco páginas com empresa, serviços e contato.
+- Site sob medida: a partir de R$ 2.490 — preço final após análise do escopo.
+- Manutenção: a partir de R$ 99/mês — opcional, escopo combinado antes.
+
+Domínio, hospedagem, Google Ads e SEO contínuo são orçados à parte.
+
+## Contato
+
+- WhatsApp: +55 19 99980-1423 (https://wa.me/5519999801423)
+- E-mail: gabriel@seeall.app.br
+
+## Projetos
+
+- [SeeAll](https://seeall.app.br): app de finanças que lê notificações e extratos do banco no próprio celular.
+- [Vida Selvagem](https://gabrielbispodev.github.io/vida-selvagem/): site com cartões que giram, carrosséis e vídeos de fundo.
+- [Sabores de Campinas](https://gabrielbispodev.github.io/sabores-de-campinas/): projeto conceito de restaurante do interior paulista.
