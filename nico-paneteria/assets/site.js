@@ -27,15 +27,6 @@ document.querySelectorAll('[data-periodos]').forEach(box => {
   ativar(0);
 });
 
-// Índice do cardápio acompanha a seção visível
-const links = [...document.querySelectorAll('.indice a')];
-if (links.length) {
-  const io2 = new IntersectionObserver(es => es.forEach(e => {
-    if (e.isIntersecting) links.forEach(a => a.classList.toggle('ativo', a.hash === '#' + e.target.id));
-  }), { rootMargin: '-40% 0px -55% 0px' });
-  links.forEach(a => { const s = document.querySelector(a.hash); if (s) io2.observe(s); });
-}
-
 // Formulário de encomenda: monta a mensagem e abre o WhatsApp (nada vai para servidor)
 document.querySelector('#form-encomenda')?.addEventListener('submit', e => {
   e.preventDefault();
@@ -125,6 +116,7 @@ document.querySelectorAll('.morder').forEach(sec => {
     furos = []; mascarar();
     img.onload = () => sec.classList.toggle('alto', img.naturalHeight > img.naturalWidth * 1.05);
     img.src = it.img;
+    new Image().src = itens[(atual + 1) % itens.length].img;  // (2.3.46) pré-carrega o próximo item
     btn.setAttribute('aria-label', `Morder: ${it.nome}`);
     $('.morder__nome').textContent = it.nome;
     $('.morder__desc').textContent = it.desc;
@@ -233,6 +225,8 @@ document.querySelectorAll('.livro').forEach(livro => {
     livro.classList.toggle('livro--uma', modo === 1);
   };
 
+  // (2.3.46) a foto da polaroide só baixa quando a folha está aberta ou vizinha (data-src -> src)
+  const pedirFoto = i => folhas[i]?.querySelectorAll('img[data-src]').forEach(im => { im.src = im.dataset.src; im.removeAttribute('data-src'); });
   const desenhar = () => {
     const passo = modo === 2 ? 26 : 0, fundo = 34;
     folhas.forEach((f, i) => {
@@ -251,6 +245,7 @@ document.querySelectorAll('.livro').forEach(livro => {
       : `${s + 1} / ${total}`;
     livro.classList.toggle('livro--fechado', modo === 2 && s === 0);
     livro.classList.toggle('livro--fim', s === folhas.length);
+    [s - 2, s - 1, s, s + 1, s + 2].forEach(pedirFoto);
   };
   const ir = novo => { s = Math.max(0, Math.min(folhas.length, novo)); desenhar(); };
   const irPara = cid => {
@@ -266,7 +261,9 @@ document.querySelectorAll('.livro').forEach(livro => {
   });
   montar(); desenhar(); caber();
   document.fonts?.ready.then(caber);
-  let tempo; addEventListener('resize', () => { clearTimeout(tempo); tempo = setTimeout(caber, 200); });
+  // (2.3.46) o texto só precisa ser medido de novo quando a largura muda (não ao rolar no celular)
+  let tempo, largura = innerWidth;
+  addEventListener('resize', () => { if (innerWidth === largura) return; largura = innerWidth; clearTimeout(tempo); tempo = setTimeout(caber, 200); });
   umaPagina.addEventListener('change', () => {
     const p = modo === 2 ? Math.max(0, 2 * s - 1) : s;  // mantém a página que estava aberta
     montar(); ir(modo === 2 ? Math.ceil(p / 2) : p); caber();

@@ -140,19 +140,6 @@ h3{font-size:24px}
 .aviso{display:inline-block;margin-top:22px;padding:8px 14px;border-radius:999px;border:1px dashed var(--dourado);color:var(--dourado-claro);font-size:13px;letter-spacing:.06em}
 .creme .aviso{color:var(--madeira);border-color:var(--madeira)}
 
-/* Cardápios */
-.cardapio{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:clamp(30px,5vw,80px);align-items:start}
-.indice{position:sticky;top:110px;display:grid;gap:4px}
-.indice a{font:700 12.5px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;padding:14px 0 14px 18px;border-left:2px solid var(--linha);color:var(--texto-3);transition:color .2s,border-color .2s}
-.indice a.ativo,.indice a:hover{color:var(--texto);border-color:var(--ouro-texto)}
-.bloco{scroll-margin-top:110px;padding-bottom:70px}
-.bloco>h2{font-size:clamp(32px,3.6vw,48px);margin:14px 0 6px}
-.bloco>.sub{color:var(--texto-2);margin-bottom:24px}
-.grupo{font:700 13px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ouro-texto);margin:34px 0 4px}
-.item{display:flex;justify-content:space-between;gap:24px;padding:18px 0;border-bottom:1px solid var(--linha)}
-.item h3{font-size:20px}
-.item p{color:var(--texto-2);font-size:15px;margin-top:4px}
-.item .tag{flex:none;font:700 11.5px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ouro-texto);padding-top:6px}
 
 /* Encomendas */
 .tipos{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:46px}
@@ -193,9 +180,6 @@ h3{font-size:24px}
   .citados{grid-template-columns:1fr 1fr}
   .citados div:nth-child(2){border-right:0}
   .rodape__grid{grid-template-columns:1fr 1fr}
-  .cardapio{grid-template-columns:1fr}
-  .indice{position:sticky;top:76px;z-index:5;display:flex;overflow-x:auto;background:var(--carvao);padding:8px 0;margin:0 calc(var(--gutter)*-1);padding-inline:var(--gutter)}
-  .indice a{border-left:0;border-bottom:2px solid var(--linha);padding:12px 14px;white-space:nowrap}
 }
 /* Celular */
 @media (max-width:767px){
@@ -217,7 +201,6 @@ h3{font-size:24px}
   .cards,.tipos,.passos,.form,.visita,.historia{grid-template-columns:1fr}
   .rodape__grid{grid-template-columns:1fr}
   .rodape__marca{flex-direction:column;align-items:start}
-  .item{flex-direction:column;gap:6px}
   .capa{margin:0 8px}
 }
 
@@ -370,7 +353,8 @@ html:not([data-theme=light]) :is(.creme .card,.creme .visita img,.creme .histori
 .polaroid{position:relative;flex:none;display:block;width:62%;aspect-ratio:1.35;margin:.5em auto .7em;padding:.5em .5em 1.6em;border:0;background:#fff;box-shadow:0 10px 18px -8px rgba(0,0,0,.45);rotate:-2.5deg;cursor:pointer;transition:rotate .3s,scale .3s}
 .polaroid:hover{rotate:0deg;scale:1.03}
 .polaroid::before{content:"";position:absolute;top:-11px;left:50%;width:74px;height:22px;margin-left:-37px;background:rgba(226,206,160,.8);rotate:3deg;box-shadow:0 1px 2px rgba(0,0,0,.1)}
-.polaroid img{width:100%;height:100%;object-fit:contain;background:radial-gradient(circle at 50% 60%,#fdf8ee,#ece0ca);filter:drop-shadow(0 8px 8px rgba(0,0,0,.25))}
+/* (2.3.46) foto absoluta dentro da moldura: a altura intrínseca do copo não estica mais o botão */
+.polaroid img{position:absolute;left:.5em;top:.5em;width:calc(100% - 1em);height:calc(100% - 2.1em);max-width:none;object-fit:contain;background:radial-gradient(circle at 50% 60%,#fdf8ee,#ece0ca);filter:drop-shadow(0 8px 8px rgba(0,0,0,.25))}
 .polaroid span{position:absolute;left:0;right:0;bottom:.3em;text-align:center;font:600 1em/1 "Caveat",cursive;color:#6b4a1f}
 .pag__titulo{font:800 1.42em/1.05 var(--serif);letter-spacing:-.01em;color:#1c1712}
 .pag__titulo--cont small{font:600 .65em "Caveat",cursive;color:#8a5a2b}
@@ -381,6 +365,8 @@ html:not([data-theme=light]) :is(.creme .card,.creme .visita img,.creme .histori
 .pag__nome{font-weight:700}
 .pag__preco{font-weight:700;white-space:nowrap;color:#6b4a1f}
 .pag__preco i{font-style:normal;color:#b0915f}
+/* (2.3.46) opções de um item agrupado: rótulo pequeno antes de cada preço */
+.pag__preco small{font:600 .9em "Caveat",cursive;color:#8a5a2b}
 .pag__desc{grid-column:1/-1;font-size:.88em;color:#5f574d}
 .pag__num{position:absolute;right:1.1em;bottom:.7em;font:700 .7em/1 var(--sans);letter-spacing:.12em;color:#b06a3a}
 .folha__verso .pag__num{right:auto;left:20px}
