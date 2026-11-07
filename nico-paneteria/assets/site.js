@@ -315,7 +315,8 @@ document.querySelectorAll('.livro').forEach(livro => {
   }
 });
 
-// (2.3.51) intro em vídeo com filmagem real (Pexels): café servido, jorro, grãos e crema; o café sobe e revela o letreiro NICOPANETERIA.
+// (2.3.52) intro só com letras: as linhas NICOPANETERIA (uma normal, a seguinte espelhada, como a parede da loja)
+// entram correndo em sentidos opostos e depois aparece a marca Nico Paneteria.
 // Toca sozinha na primeira visita da home (por sessão). Volta com 3 cliques ou segurando o logo "nico".
 (() => {
   const calmo = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -323,23 +324,25 @@ document.querySelectorAll('.livro').forEach(livro => {
   const tocar = () => {
     if (tocando) return;
     tocando = true;
-    const pe = matchMedia('(max-aspect-ratio: 1/1)').matches ? '-celular' : '';  // celular em pé recebe o vídeo vertical
+    const linha = 'NICOPANETERIA '.repeat(5);
+    let linhas = '';
+    for (let i = 0; i < 14; i++) linhas += `<div class="intro__linha${i % 2 ? ' intro__linha--esp' : ''}" style="--i:${i}"><span>${linha}</span></div>`;
     const el = document.createElement('div');
     el.className = 'intro';
     el.setAttribute('role', 'dialog');
     el.setAttribute('aria-label', 'Abertura da Nico Paneteria');
-    el.innerHTML = `<video class="intro__video" src="assets/video/intro${pe}.mp4?v=2" poster="assets/video/intro${pe}.webp?v=2" muted playsinline autoplay preload="auto" aria-hidden="true"></video>
+    el.innerHTML = `<div class="intro__letreiro" aria-hidden="true">${linhas}</div>
       <div class="intro__marca"><b>nico</b><span>Paneteria · desde 1973</span></div>
       <button type="button" class="intro__pular">Pular</button>`;
     document.body.append(el);
     const raiz = document.documentElement, rolagem = raiz.style.overflow;
     raiz.style.overflow = 'hidden';
-    const v = el.querySelector('video');
-    let acabou = false, espera;
+    let acabou = false;
+    const timers = [];
     const fim = () => {
       if (acabou) return;
       acabou = true;
-      clearTimeout(espera);
+      timers.forEach(clearTimeout);
       removeEventListener('keydown', esc);
       el.classList.add('sai');
       setTimeout(() => { el.remove(); raiz.style.overflow = rolagem; tocando = false; }, 650);
@@ -347,12 +350,8 @@ document.querySelectorAll('.livro').forEach(livro => {
     const esc = e => { if (e.key === 'Escape') fim(); };
     addEventListener('keydown', esc);
     el.querySelector('.intro__pular').addEventListener('click', fim);
-    v.addEventListener('timeupdate', () => { if (v.currentTime > 6.7) el.classList.add('marca'); });
-    v.addEventListener('ended', () => setTimeout(fim, 900));
-    v.addEventListener('error', fim);
-    // internet lenta: se o vídeo não começar em 3 s, segue direto para o site
-    espera = setTimeout(() => { if (v.currentTime === 0) fim(); }, 3000);
-    v.play().catch(fim);
+    timers.push(setTimeout(() => el.classList.add('marca'), 1500));
+    timers.push(setTimeout(fim, 3600));
   };
 
   // toca sozinha na primeira visita da home nesta sessão
