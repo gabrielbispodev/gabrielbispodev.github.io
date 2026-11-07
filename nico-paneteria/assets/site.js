@@ -314,3 +314,136 @@ document.querySelectorAll('.livro').forEach(livro => {
     livro.scrollIntoView({ block: 'start' });
   }
 });
+
+// (2.3.49) intro 3D: o biscoito com o letreiro espelhado da Nico gira, é arremessado contra a tela e vira um respingo.
+// Toca sozinha na primeira visita da home (por sessão). Volta com 3 cliques ou segurando o logo "nico".
+(() => {
+  const calmo = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const rnd = (a, b) => a + Math.random() * (b - a);
+
+  // letreiro do balcão: linhas de NICOPANETERIA, uma normal e a seguinte espelhada, como a parede da loja
+  const letreiro = (largura, altura) => {
+    const c = document.createElement('canvas');
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    c.width = Math.round(largura * dpr); c.height = Math.round(altura * dpr);
+    const g = c.getContext('2d');
+    g.scale(dpr, dpr);
+    g.fillStyle = '#efe7d8'; g.fillRect(0, 0, largura, altura);
+    const linhas = 3, lh = altura / linhas;
+    g.fillStyle = '#151515';
+    g.font = `900 ${lh * 1.02}px Fraunces, Georgia, serif`;
+    g.textBaseline = 'alphabetic';
+    const palavra = 'NICOPANETERIA ', w = g.measureText(palavra).width;
+    for (let l = 0; l < linhas; l++) {
+      g.save();
+      g.translate(0, l * lh);
+      if (l % 2) { g.translate(largura, lh); g.scale(-1, -1); }  // linha espelhada e de ponta-cabeça
+      for (let x = -(l * w * .37) % w; x < largura; x += w) g.fillText(palavra, x, lh * .86);
+      g.restore();
+    }
+    return c.toDataURL('image/webp', .9);
+  };
+
+  // respingo de chantilly: um miolo de bordas irregulares, gotas em volta, pingos de chocolate e escorridos
+  const respingo = () => {
+    const pts = 22, raio = 92, p = [];
+    for (let i = 0; i < pts; i++) {
+      const a = i / pts * Math.PI * 2, r = raio * rnd(.82, 1.22) * (i % 4 === 0 ? rnd(1.15, 1.45) : 1);
+      p.push([Math.cos(a) * r, Math.sin(a) * r]);
+    }
+    let d = '';
+    p.forEach((q, i) => {
+      const n = p[(i + 1) % pts], m = [(q[0] + n[0]) / 2, (q[1] + n[1]) / 2];
+      d += i ? `Q${q[0].toFixed(1)} ${q[1].toFixed(1)} ${m[0].toFixed(1)} ${m[1].toFixed(1)}` : `M${m[0].toFixed(1)} ${m[1].toFixed(1)}`;
+    });
+    d += 'Z';
+    let gotas = '', chocs = '', escorre = '';
+    for (let i = 0; i < 16; i++) {
+      const a = rnd(0, Math.PI * 2), dist = rnd(118, 195), r = rnd(3.5, 13);
+      const x = Math.cos(a) * dist, y = Math.sin(a) * dist;
+      gotas += `<circle class="gota" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(1)}" fill="#F3EDE1" style="--t:${Math.round(rnd(0, 90))}ms;--x:${x.toFixed(0)}px;--y:${y.toFixed(0)}px"/>`;
+    }
+    for (let i = 0; i < 9; i++) {
+      const a = rnd(0, Math.PI * 2), dist = rnd(40, 150), r = rnd(3, 9);
+      chocs += `<circle class="choc" cx="${(Math.cos(a) * dist).toFixed(1)}" cy="${(Math.sin(a) * dist).toFixed(1)}" r="${r.toFixed(1)}" fill="#4a2a17" style="--t:${Math.round(rnd(0, 120))}ms"/>`;
+    }
+    for (let i = 0; i < 4; i++) {
+      const x = rnd(-70, 70), w = rnd(9, 16), h = rnd(30, 60);
+      escorre += `<rect class="escorre" x="${(x - w / 2).toFixed(1)}" y="${rnd(55, 80).toFixed(1)}" width="${w.toFixed(1)}" height="${h.toFixed(1)}" rx="${(w / 2).toFixed(1)}" fill="#F3EDE1" style="--queda:${Math.round(rnd(25, 70))}px"/>`;
+    }
+    return `<svg class="intro__splash" viewBox="-210 -210 420 420" aria-hidden="true"><g class="miolo">${escorre}<path d="${d}" fill="#F3EDE1"/></g>${gotas}${chocs}</svg>`;
+  };
+
+  let tocando = false;
+  const tocar = async () => {
+    if (tocando) return;
+    tocando = true;
+    const el = document.createElement('div');
+    el.className = 'intro';
+    el.setAttribute('role', 'dialog');
+    el.setAttribute('aria-label', 'Abertura da Nico Paneteria');
+    el.innerHTML = `<div class="intro__cena"><div class="intro__bolo"></div></div><div class="intro__sombra"></div>${respingo()}
+      <div class="intro__farelos" aria-hidden="true"></div>
+      <div class="intro__marca"><b>nico</b><span>Paneteria · desde 1973</span></div>
+      <button type="button" class="intro__pular">Pular</button>`;
+    document.body.append(el);
+    const raiz = document.documentElement, rolagem = raiz.style.overflow;
+    raiz.style.overflow = 'hidden';
+
+    // monta o cilindro achatado com 36 fatias da faixa de letras
+    const cena = el.querySelector('.intro__cena'), bolo = el.querySelector('.intro__bolo');
+    const d = cena.clientWidth, h = cena.clientHeight, n = 36, volta = Math.PI * d, w = volta / n;
+    try { await Promise.race([document.fonts.load(`900 ${h / 3}px Fraunces`), new Promise(r => setTimeout(r, 400))]); } catch (e) {}
+    const tex = letreiro(volta, h);
+    for (let i = 0; i < n; i++) {
+      const f = document.createElement('div');
+      f.className = 'intro__faixa';
+      f.style.cssText = `width:${w + 1}px;margin-left:${-w / 2}px;transform:rotateY(${i * 360 / n}deg) translateZ(${d / 2 - 1}px);background-image:url(${tex});background-size:${volta}px 100%;background-position:${-i * w}px 0`;
+      bolo.append(f);
+    }
+    bolo.insertAdjacentHTML('beforeend', '<div class="intro__tampa intro__tampa--cima"><span>nico</span></div><div class="intro__tampa intro__tampa--baixo"></div>');
+
+    const timers = [];
+    const fim = () => {
+      timers.forEach(clearTimeout);
+      el.classList.add('sai');
+      setTimeout(() => { el.remove(); raiz.style.overflow = rolagem; tocando = false; }, 650);
+    };
+    el.querySelector('.intro__pular').addEventListener('click', fim);
+    addEventListener('keydown', function esc(e) { if (e.key === 'Escape') { removeEventListener('keydown', esc); fim(); } });
+
+    // farelos que voam no impacto
+    const farelos = el.querySelector('.intro__farelos');
+    for (let i = 0; i < 26; i++) {
+      const a = rnd(0, Math.PI * 2), dist = rnd(120, 360);
+      const f = document.createElement('i');
+      f.style.cssText = `--s:${rnd(4, 11).toFixed(1)}px;--c:${['#c89558', '#9A6A3A', '#e2c08a', '#5a3519'][i % 4]};--x:${(Math.cos(a) * dist).toFixed(0)}px;--y:${(Math.sin(a) * dist + 60).toFixed(0)}px;--r:${rnd(-200, 200).toFixed(0)}deg;animation-delay:${rnd(0, 80).toFixed(0)}ms`;
+      farelos.append(f);
+    }
+    const t = calmo ? [0, 1400] : [1900, 3400];
+    timers.push(setTimeout(() => el.classList.add('splash'), t[0]));
+    timers.push(setTimeout(fim, t[1]));
+  };
+
+  // toca sozinha na primeira visita da home nesta sessão
+  const home = document.querySelector('.hero');
+  let vista = false;
+  try { vista = sessionStorage.getItem('nico-intro') === '1'; sessionStorage.setItem('nico-intro', '1'); } catch (e) {}
+  if (home && !vista && !calmo) tocar();
+
+  // 3 cliques ou segurar o logo "nico" tocam de novo; um clique só continua indo para a home
+  document.querySelectorAll('.nav__logo').forEach(logo => {
+    let cliques = 0, espera, segura, segurou = false;
+    logo.addEventListener('click', e => {
+      e.preventDefault();
+      if (segurou) { segurou = false; return; }
+      cliques++;
+      clearTimeout(espera);
+      if (cliques >= 3) { cliques = 0; tocar(); return; }
+      espera = setTimeout(() => { cliques = 0; location.href = logo.href; }, 420);
+    });
+    logo.addEventListener('pointerdown', () => { segura = setTimeout(() => { segurou = true; cliques = 0; clearTimeout(espera); tocar(); }, 650); });
+    ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => logo.addEventListener(ev, () => clearTimeout(segura)));
+    logo.addEventListener('contextmenu', e => e.preventDefault());  // segurar no celular não abre o menu do navegador
+  });
+})();

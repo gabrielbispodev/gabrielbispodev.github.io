@@ -446,3 +446,51 @@ html:not([data-theme=light]) :is(.creme .card,.creme .visita img,.creme .histori
 main>section.sec:not(:first-of-type),.rodape{content-visibility:auto;contain-intrinsic-size:auto 900px}
 .pag__preco--opcoes{grid-column:1/-1;white-space:normal;font-weight:700;font-size:.92em;line-height:1.35} /* (2.3.47) itens agrupados: opções de preço numa linha própria */
 @media (min-width:1024px){.hero__txt{max-width:min(560px,36vw)}.hero__side{max-width:min(420px,36vw)}} /* (2.3.48) o texto do herói fica todo no lado liso, sem invadir a fachada */
+
+/* (2.3.49) intro 3D: biscoito recheado com o letreiro espelhado NICOPANETERIA na lateral gira, é arremessado contra a tela
+   e vira um respingo de chantilly com pingos de chocolate; no meio do respingo aparece a marca */
+.intro{position:fixed;inset:0;z-index:999;display:grid;place-items:center;overflow:hidden;background:radial-gradient(circle at 50% 45%,#2a241d,#121110 70%);color:#F3EDE1;transition:opacity .6s ease,visibility .6s}
+.intro.sai{opacity:0;visibility:hidden}
+.intro__cena{--d:min(58vw,340px);grid-area:1/1;width:var(--d);height:calc(var(--d)*.34);perspective:900px;perspective-origin:50% 20%}
+.intro__bolo{position:relative;width:100%;height:100%;transform-style:preserve-3d;animation:intro-gira 1.9s cubic-bezier(.25,.6,.25,1) both}
+.intro__faixa{position:absolute;top:0;left:50%;height:100%;backface-visibility:hidden;background-repeat:repeat-x;background-size:auto 100%}
+.intro__tampa{position:absolute;left:0;top:50%;width:var(--d);height:var(--d);margin-top:calc(var(--d)/-2);border-radius:50%}
+.intro__tampa--cima{transform:rotateX(90deg) translateZ(calc(var(--d)*.17));background:radial-gradient(circle at 42% 38%,#6a3f24,#3b2213 62%,#2a170c);box-shadow:inset 0 0 0 calc(var(--d)*.035) #c79a5b,inset 0 0 0 calc(var(--d)*.05) #8a5a2b;display:grid;place-items:center}
+.intro__tampa--cima span{font:900 calc(var(--d)*.2)/1 var(--serif);letter-spacing:-.04em;color:rgba(243,237,225,.18);transform:rotate(180deg)}
+.intro__tampa--baixo{transform:rotateX(-90deg) translateZ(calc(var(--d)*.17));background:#b07a3f}
+.intro__sombra{position:absolute;left:50%;top:calc(50% + var(--d)*.42);width:var(--d);height:calc(var(--d)*.12);margin-left:calc(var(--d)/-2);border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.55),transparent);animation:intro-sombra 1.9s ease both}
+@keyframes intro-gira{
+  0%{transform:translateY(-60vh) rotateX(-22deg) rotateY(0deg) scale(.7)}
+  35%{transform:translateY(0) rotateX(-22deg) rotateY(-420deg) scale(1)}
+  78%{transform:translateY(0) rotateX(-18deg) rotateY(-1060deg) scale(1)}
+  88%{transform:translateY(-4%) rotateX(-58deg) rotateY(-1080deg) scale(1.05)}
+  100%{transform:translateY(0) rotateX(-78deg) rotateY(-1080deg) scale(2.6)}
+}
+@keyframes intro-sombra{0%{opacity:0;scale:.3}35%,80%{opacity:1;scale:1}100%{opacity:0;scale:1.6}}
+.intro.splash .intro__cena{animation:intro-some .14s ease-in forwards}
+@keyframes intro-some{to{opacity:0;scale:1.25}}
+/* respingo */
+.intro__splash{grid-area:1/1;width:min(150vw,1100px);height:auto;overflow:visible;pointer-events:none}
+.intro__splash *{transform-box:fill-box;transform-origin:center}
+.intro__splash .gota,.intro__splash .miolo,.intro__splash .choc{scale:0}
+.intro.splash .miolo{animation:intro-estoura .5s cubic-bezier(.2,1.4,.4,1) forwards}
+.intro.splash .gota{animation:intro-gota .55s cubic-bezier(.2,1.2,.4,1) forwards;animation-delay:var(--t,0ms)}
+.intro.splash .choc{animation:intro-gota .5s cubic-bezier(.2,1.3,.4,1) forwards;animation-delay:calc(var(--t,0ms) + 60ms)}
+.intro.splash .escorre{animation:intro-escorre 1.4s cubic-bezier(.4,0,.6,1) .35s forwards}
+@keyframes intro-estoura{0%{scale:0}60%{scale:1.08}100%{scale:1}}
+@keyframes intro-gota{0%{scale:0;translate:calc(var(--x,0px)*-.6) calc(var(--y,0px)*-.6)}100%{scale:1;translate:0 0}}
+@keyframes intro-escorre{to{translate:0 var(--queda,40px);scale:1 1.5}}
+.intro__farelos{grid-area:1/1;position:relative;width:0;height:0}
+.intro__farelos i{position:absolute;width:var(--s);height:var(--s);border-radius:45% 55% 50% 40%;background:var(--c);opacity:0}
+.intro.splash .intro__farelos i{animation:intro-farelo .9s cubic-bezier(.15,.7,.3,1) forwards}
+@keyframes intro-farelo{0%{opacity:1;translate:0 0}100%{opacity:0;translate:var(--x) var(--y);rotate:var(--r)}}
+/* marca no meio do respingo */
+.intro__marca{grid-area:1/1;display:grid;justify-items:center;gap:8px;opacity:0;scale:.6;color:#151515;pointer-events:none}
+.intro__marca b{font:900 clamp(84px,17vw,190px)/.8 var(--serif);letter-spacing:-.045em;font-variation-settings:"SOFT" 100}
+.intro__marca span{font:700 clamp(11px,1.4vw,14px)/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:#8a5a2b}
+.intro.splash .intro__marca{animation:intro-marca .55s cubic-bezier(.2,1.5,.4,1) .2s forwards}
+@keyframes intro-marca{to{opacity:1;scale:1}}
+.intro__pular{position:absolute;right:18px;bottom:18px;padding:11px 18px;border:1px solid rgba(243,237,225,.35);border-radius:999px;background:rgba(0,0,0,.25);color:#F3EDE1;font:700 12px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
+.intro.splash .intro__pular{color:#151515;border-color:rgba(21,21,21,.3);background:rgba(243,237,225,.6)}
+@media (prefers-reduced-motion:reduce){.intro__bolo,.intro__sombra,.intro .miolo,.intro .gota,.intro .choc,.intro .escorre,.intro__farelos i{animation:none!important}}
+.intro{grid-template:100% / 100%}.intro>*{justify-self:center;align-self:center} /* (2.3.49) a grade tem o tamanho da tela: o respingo maior que a tela transborda igual dos dois lados */
