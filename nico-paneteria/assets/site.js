@@ -32,6 +32,50 @@ document.querySelectorAll('[data-periodos]').forEach(box => {
   ativar(0);
 });
 
+// (2.3.55) galeria de encomendas: anda sozinha e dá para agarrar e arrastar com o mouse ou o dedo (com embalo ao soltar)
+document.querySelectorAll('.galeria').forEach(g => {
+  const trilho = g.querySelector('.galeria__trilho');
+  if (!trilho) return;
+  g.classList.add('arrastavel');
+  const calmo = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let x = 0, embalo = 0, arrastando = false, ultimoX = 0, ultimoT = 0, antes = performance.now(), solto = 0;
+  const metade = () => trilho.scrollWidth / 2;   // os itens vêm duplicados: metade do trilho é uma volta
+  const passo = agora => {
+    const dt = Math.min((agora - antes) / 1000, 0.05); antes = agora;
+    if (!arrastando) {
+      const auto = calmo || g.classList.contains('parado') ? 0 : metade() / 60;   // uma volta a cada 60 s, como antes
+      x += embalo * dt - auto * dt * Math.min(1, (agora - solto) / 600);
+      embalo *= Math.pow(0.04, dt);   // o embalo do arraste some em ~1 s
+    }
+    const m = metade();
+    if (m) { x %= m; if (x > 0) x -= m; }
+    trilho.style.transform = `translate3d(${x}px,0,0)`;
+    requestAnimationFrame(passo);
+  };
+  requestAnimationFrame(passo);
+  g.addEventListener('pointerdown', e => {
+    if (e.button > 0) return;
+    arrastando = true; embalo = 0; ultimoX = e.clientX; ultimoT = performance.now();
+    g.classList.add('arrastando');
+    g.setPointerCapture(e.pointerId);
+  });
+  g.addEventListener('pointermove', e => {
+    if (!arrastando) return;
+    const agora = performance.now(), dx = e.clientX - ultimoX;
+    x += dx;
+    embalo = dx / Math.max((agora - ultimoT) / 1000, 0.008);
+    ultimoX = e.clientX; ultimoT = agora;
+  });
+  const soltar = () => {
+    if (!arrastando) return;
+    arrastando = false; solto = performance.now();
+    if (performance.now() - ultimoT > 80) embalo = 0;   // parou antes de soltar: sem embalo
+    embalo = Math.max(-2500, Math.min(2500, embalo));
+    g.classList.remove('arrastando');
+  };
+  ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(ev => g.addEventListener(ev, soltar));
+});
+
 // (2.3.47) faixas animadas (letreiro e galeria) param quando saem da tela, para não gastar bateria nem travar a rolagem
 const ioFaixas = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('parado', !e.isIntersecting)));
 document.querySelectorAll('.faixa, .galeria').forEach(el => ioFaixas.observe(el));

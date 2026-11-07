@@ -102,7 +102,11 @@ h3{font-size:24px}
 /* Galeria de encomendas (faixa de fotos) */
 .galeria{overflow:hidden;margin-top:50px}
 .galeria__trilho{display:flex;gap:16px;width:max-content;animation:correr 60s linear infinite}
-.galeria:hover .galeria__trilho{animation-play-state:paused}
+/* (2.3.55) com JS o trilho anda por código e dá para agarrar e arrastar (mouse e dedo); sem JS continua a animação CSS */
+.galeria.arrastavel{cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.galeria.arrastavel .galeria__trilho{animation:none;will-change:transform}
+.galeria.arrastando{cursor:grabbing}
+.galeria.arrastavel img{-webkit-user-drag:none;pointer-events:none}
 .galeria figure{width:clamp(220px,24vw,330px);flex:none}
 .galeria img{aspect-ratio:3/3.6;object-fit:cover;border-radius:16px;width:100%;height:auto} /* (2.3.53) height:auto: o atributo height da foto deixava o card com até 1071 px */
 .galeria figcaption{font:700 12px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--texto-2);margin-top:14px}
