@@ -315,7 +315,7 @@ document.querySelectorAll('.livro').forEach(livro => {
   }
 });
 
-// (2.3.50) intro em vídeo 3D: a xícara tomba no balcão de mármore e o café corre pelas letras gravadas NICOPANETERIA.
+// (2.3.51) intro em vídeo com filmagem real (Pexels): café servido, jorro, grãos e crema; o café sobe e revela o letreiro NICOPANETERIA.
 // Toca sozinha na primeira visita da home (por sessão). Volta com 3 cliques ou segurando o logo "nico".
 (() => {
   const calmo = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -328,7 +328,7 @@ document.querySelectorAll('.livro').forEach(livro => {
     el.className = 'intro';
     el.setAttribute('role', 'dialog');
     el.setAttribute('aria-label', 'Abertura da Nico Paneteria');
-    el.innerHTML = `<video class="intro__video" src="assets/video/intro${pe}.mp4" poster="assets/video/intro${pe}.webp" muted playsinline autoplay preload="auto" aria-hidden="true"></video>
+    el.innerHTML = `<video class="intro__video" src="assets/video/intro${pe}.mp4?v=2" poster="assets/video/intro${pe}.webp?v=2" muted playsinline autoplay preload="auto" aria-hidden="true"></video>
       <div class="intro__marca"><b>nico</b><span>Paneteria · desde 1973</span></div>
       <button type="button" class="intro__pular">Pular</button>`;
     document.body.append(el);
@@ -347,7 +347,7 @@ document.querySelectorAll('.livro').forEach(livro => {
     const esc = e => { if (e.key === 'Escape') fim(); };
     addEventListener('keydown', esc);
     el.querySelector('.intro__pular').addEventListener('click', fim);
-    v.addEventListener('timeupdate', () => { if (v.currentTime > 4.9) el.classList.add('marca'); });
+    v.addEventListener('timeupdate', () => { if (v.currentTime > 6.7) el.classList.add('marca'); });
     v.addEventListener('ended', () => setTimeout(fim, 900));
     v.addEventListener('error', fim);
     // internet lenta: se o vídeo não começar em 3 s, segue direto para o site
