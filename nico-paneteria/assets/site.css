@@ -104,7 +104,7 @@ h3{font-size:24px}
 .galeria__trilho{display:flex;gap:16px;width:max-content;animation:correr 60s linear infinite}
 .galeria:hover .galeria__trilho{animation-play-state:paused}
 .galeria figure{width:clamp(220px,24vw,330px);flex:none}
-.galeria img{aspect-ratio:3/3.6;object-fit:cover;border-radius:16px;width:100%}
+.galeria img{aspect-ratio:3/3.6;object-fit:cover;border-radius:16px;width:100%;height:auto} /* (2.3.53) height:auto: o atributo height da foto deixava o card com até 1071 px */
 .galeria figcaption{font:700 12px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--texto-2);margin-top:14px}
 
 /* Visita */
@@ -423,13 +423,20 @@ html:not([data-theme=light]) :is(.creme .card,.creme .visita img,.creme .histori
 }
 @media (max-width:767px){.hero__card{--hp:20px}.hero__bg{height:min(48svh,420px)}}
 
-/* (2.3.47) "Uma casa, o dia inteiro" no celular: a foto fica presa no topo e troca conforme a rolagem passa por cada período */
+/* (2.3.53) "Uma casa, o dia inteiro" no celular e no tablet: cada período vira um card com a própria foto
+   (a foto presa no topo cobria os títulos e parecia quebrada) */
+.periodo__foto{display:none}
 @media (max-width:1023px){
-  .periodos{align-items:start}
-  .pilha{position:sticky;top:76px;z-index:2;background:var(--carvao);padding-bottom:10px;aspect-ratio:auto;height:min(62vw,340px)}
-  .pilha img{inset:4% 10%;width:80%;height:92%}
-  .periodo{min-height:38svh;display:flex;flex-direction:column;justify-content:center}
+  .pilha{display:none}
+  .periodos{margin-top:28px}
+  .periodos>div:first-child{display:grid;gap:30px}
+  .periodo{padding:0;border-left:0}
+  .periodo__foto{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;border-radius:16px;margin-bottom:16px}
+  .periodo h3,.periodo p{color:var(--texto)}
+  .periodo .hora{color:var(--ouro-texto)}
+  .periodo__ver{opacity:1;translate:0 0}
 }
+@media (min-width:640px) and (max-width:1023px){.periodos>div:first-child{grid-template-columns:1fr 1fr;gap:34px 24px}}
 
 /* (2.3.47) desempenho no celular: menos efeitos caros de pintura enquanto a página rola */
 @media (max-width:1023px),(hover:none){
