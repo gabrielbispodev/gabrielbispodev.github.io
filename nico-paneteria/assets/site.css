@@ -398,3 +398,48 @@ html:not([data-theme=light]) :is(.creme .card,.creme .visita img,.creme .histori
 .mesa__seta[data-dir="-1"]{left:16px}.mesa__seta[data-dir="1"]{right:16px}
 @media (max-width:767px){.mesa__seta{top:auto;bottom:16px;margin:0}}
 @media (max-width:767px){.livro__fichas{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}.livro__fichas::-webkit-scrollbar{display:none}.livro .ficha{flex:none}} /* (livro) categorias em faixa rolável no celular */
+
+/* (2.3.47) sumário visual do cardápio: uma faixa rolável com miniatura de cada seção; a seção aberta fica destacada */
+.sumario{display:flex;gap:22px;overflow-x:auto;scroll-snap-type:x proximity;max-width:1180px;margin:0 auto 8px;padding:4px 16px 12px;scrollbar-width:thin;scrollbar-color:var(--linha) transparent}
+.sumario__grupo{display:flex;flex-direction:column;gap:7px;flex:none}
+.sumario__lista{display:flex;gap:8px}
+.sumario__rotulo{position:sticky;left:0;font:700 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ouro-texto);padding-left:4px}
+.sumario__item{flex:none;display:flex;flex-direction:column;align-items:center;gap:6px;width:86px;padding:8px 4px 9px;border:1px solid var(--linha);border-radius:16px;background:var(--carvao-2);color:var(--texto-2);font:600 11.5px/1.15 var(--sans);text-align:center;cursor:pointer;scroll-snap-align:center;transition:border-color .2s,background .2s,color .2s,translate .2s}
+.sumario__item img{width:40px;height:40px;object-fit:contain;filter:drop-shadow(0 3px 3px rgba(0,0,0,.25))}
+.sumario__item:hover{border-color:var(--texto);color:var(--texto);translate:0 -2px}
+.sumario__item[aria-current]{background:var(--dourado);border-color:var(--dourado);color:var(--tinta)}
+@media (max-width:767px){.sumario{gap:14px;padding-inline:12px}.sumario__item{width:78px}}
+
+/* (2.3.47) herói em telas menores que 1024px: a fachada fica inteira no topo, sem véu por cima; o texto vem embaixo em fundo liso */
+@media (max-width:1023px){
+  .hero__card{--hp:clamp(22px,5vw,48px);min-height:0;padding:0 var(--hp) 28px;grid-template-columns:1fr;grid-template-rows:auto}
+  .hero__card::after{display:none}
+  .hero__bg{position:relative;inset:auto;order:-1;width:calc(100% + 2*var(--hp));max-width:none;height:min(56svh,520px);margin:0 calc(-1*var(--hp)) 26px;object-position:50% 38%}
+  html[data-theme=light] .hero__bg--dia{filter:none}
+  .hero__bg--noite{filter:none}
+  .hero__marca{margin:26px 0 14px}
+}
+@media (max-width:767px){.hero__card{--hp:20px}.hero__bg{height:min(48svh,420px)}}
+
+/* (2.3.47) "Uma casa, o dia inteiro" no celular: a foto fica presa no topo e troca conforme a rolagem passa por cada período */
+@media (max-width:1023px){
+  .periodos{align-items:start}
+  .pilha{position:sticky;top:76px;z-index:2;background:var(--carvao);padding-bottom:10px;aspect-ratio:auto;height:min(62vw,340px)}
+  .pilha img{inset:4% 10%;width:80%;height:92%}
+  .periodo{min-height:38svh;display:flex;flex-direction:column;justify-content:center}
+}
+
+/* (2.3.47) desempenho no celular: menos efeitos caros de pintura enquanto a página rola */
+@media (max-width:1023px),(hover:none){
+  .nav{backdrop-filter:none;-webkit-backdrop-filter:none;background:color-mix(in srgb,var(--carvao) 94%,transparent)}
+  .leque__topo span{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(0,0,0,.35)}
+  .polaroid img,.morder__corte img{filter:none}
+  html:not([data-theme=light]) :is(.faixa,.creme,.morder){box-shadow:0 -2px 0 var(--led),0 2px 0 var(--led)}
+  html:not([data-theme=light]) :is(.creme .card,.creme .visita img,.creme .historia img,.tipo,.leque__card.ativo){box-shadow:0 0 0 2px var(--led),0 0 12px rgba(120,185,255,.45)}
+  .pilha img{box-shadow:0 14px 26px -12px rgba(0,0,0,.5)}
+}
+/* faixas que correm sozinhas param quando estão fora da tela */
+.parado .faixa__trilho,.parado.faixa__trilho,.parado .galeria__trilho{animation-play-state:paused}
+/* seções longe da tela não são desenhadas até chegar perto */
+main>section.sec:not(:first-of-type),.rodape{content-visibility:auto;contain-intrinsic-size:auto 900px}
+.pag__preco--opcoes{grid-column:1/-1;white-space:normal;font-weight:700;font-size:.92em;line-height:1.35} /* (2.3.47) itens agrupados: opções de preço numa linha própria */

@@ -24,8 +24,17 @@ document.querySelectorAll('[data-periodos]').forEach(box => {
   };
   // (links) o clique segue para o cardápio; mouse e foco só trocam a foto
   itens.forEach((b, i) => { b.addEventListener('mouseenter', () => ativar(i)); b.addEventListener('focus', () => ativar(i)); });
+  // (2.3.47) no celular e no tablet não há mouse: a foto acompanha o período que passa pelo meio da tela
+  if (matchMedia('(max-width: 1023px), (hover: none)').matches) {
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) ativar(itens.indexOf(e.target)); }), { rootMargin: '-45% 0px -45% 0px' });
+    itens.forEach(b => io.observe(b));
+  }
   ativar(0);
 });
+
+// (2.3.47) faixas animadas (letreiro e galeria) param quando saem da tela, para não gastar bateria nem travar a rolagem
+const ioFaixas = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('parado', !e.isIntersecting)));
+document.querySelectorAll('.faixa, .galeria').forEach(el => ioFaixas.observe(el));
 
 // Formulário de encomenda: monta a mensagem e abre o WhatsApp (nada vai para servidor)
 document.querySelector('#form-encomenda')?.addEventListener('submit', e => {
@@ -199,7 +208,7 @@ document.querySelectorAll('.tema').forEach(b => b.addEventListener('click', () =
 // No desktop são duas páginas por vez; no celular, uma (cada folha leva uma página só).
 document.querySelectorAll('.livro').forEach(livro => {
   const palco = livro.querySelector('.livro__palco'), miolo = livro.querySelector('.livro__miolo');
-  const conta = livro.querySelector('.livro__conta');
+  const conta = livro.querySelector('.livro__conta'), sumario = livro.querySelector('.sumario');
   const paginas = [...livro.querySelectorAll('.livro__paginas > .pag')];
   const capitulos = JSON.parse(livro.dataset.capitulos);
   const umaPagina = matchMedia('(max-width: 767px)');
@@ -226,7 +235,10 @@ document.querySelectorAll('.livro').forEach(livro => {
   };
 
   // (2.3.46) a foto da polaroide só baixa quando a folha está aberta ou vizinha (data-src -> src)
-  const pedirFoto = i => folhas[i]?.querySelectorAll('img[data-src]').forEach(im => { im.src = im.dataset.src; im.removeAttribute('data-src'); });
+  const pedirFoto = i => {
+    folhas[i]?.querySelectorAll('img[data-src]').forEach(im => { im.src = im.dataset.src; im.removeAttribute('data-src'); });
+    folhas[i]?.querySelectorAll('.pag').forEach(caberPag);  // (2.3.47) só mede as páginas que estão perto de abrir
+  };
   const desenhar = () => {
     const passo = modo === 2 ? 26 : 0, fundo = 34;
     folhas.forEach((f, i) => {
@@ -240,9 +252,16 @@ document.querySelectorAll('.livro').forEach(livro => {
     // só as duas páginas abertas (ou a única, no celular) recebem cliques
     folhas.forEach((f, i) => { f.inert = !(i === s || (modo === 2 && i === s - 1)); });
     const total = paginas.length;
-    conta.textContent = modo === 2
+    // (2.3.47) a seção aberta aparece no contador e fica destacada no sumário
+    const aberta = modo === 2 ? (paginas[2 * s] || paginas[2 * s - 1]) : paginas[s];
+    const cat = aberta?.dataset.cat || (modo === 2 ? paginas[2 * s - 1]?.dataset.cat : '');
+    const item = cat && sumario.querySelector(`[data-ir="${cat}"]`);
+    sumario.querySelectorAll('[aria-current]').forEach(b => b.removeAttribute('aria-current'));
+    if (item) { item.setAttribute('aria-current', 'true'); sumario.scrollTo({ left: item.offsetLeft - sumario.clientWidth / 2 + item.clientWidth / 2, behavior: 'smooth' }); }
+    const pags = modo === 2
       ? (s === 0 ? `Capa / ${total}` : `${2 * s - 1}–${Math.min(2 * s, total - 1)} / ${total}`)
       : `${s + 1} / ${total}`;
+    conta.textContent = item ? `${item.textContent} · ${pags}` : pags;
     livro.classList.toggle('livro--fechado', modo === 2 && s === 0);
     livro.classList.toggle('livro--fim', s === folhas.length);
     [s - 2, s - 1, s, s + 1, s + 2].forEach(pedirFoto);
@@ -255,11 +274,16 @@ document.querySelectorAll('.livro').forEach(livro => {
   };
 
   // cada página encolhe a fonte até caber na folha (as descrições têm tamanhos muito diferentes)
-  const caber = () => paginas.forEach(p => {
+  let ajustadas = new WeakSet();
+  function caberPag(p) {
+    if (ajustadas.has(p)) return;
+    ajustadas.add(p);
     let f = 1; p.style.fontSize = '';
     while (p.scrollHeight > p.clientHeight + 1 && f > .62) { f -= .04; p.style.fontSize = `calc(var(--pw) * ${(.04 * f).toFixed(4)})`; }
-  });
-  montar(); desenhar(); caber();
+  }
+  // remede as páginas abertas e vizinhas (depois das fontes ou de mudar a largura)
+  const caber = () => { ajustadas = new WeakSet(); [s - 2, s - 1, s, s + 1, s + 2].forEach(i => folhas[i]?.querySelectorAll('.pag').forEach(caberPag)); };
+  montar(); desenhar();
   document.fonts?.ready.then(caber);
   // (2.3.46) o texto só precisa ser medido de novo quando a largura muda (não ao rolar no celular)
   let tempo, largura = innerWidth;
