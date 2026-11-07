@@ -310,7 +310,9 @@ html[data-theme=light] .hero__bg--noite{display:none}
 html[data-theme=light] .hero__bg--dia{display:block;filter:saturate(1.02) contrast(1.03)}
 html[data-theme=light] .hero__card::after{background:linear-gradient(180deg,rgba(247,242,232,.92),rgba(247,242,232,.8) 45%,rgba(247,242,232,.95))}
 @media (min-width:1024px){
-  html[data-theme=light] .hero__card::after{background:linear-gradient(90deg,var(--carvao) 0%,var(--carvao) 40%,color-mix(in srgb,var(--carvao) 55%,transparent) 54%,transparent 72%),linear-gradient(0deg,color-mix(in srgb,var(--carvao) 60%,transparent),transparent 30%)}
+  /* (2.3.48) tema claro: a fachada aparece com borda nítida, sem o degradê creme que apagava a foto */
+  html[data-theme=light] .hero__card::after{display:none}
+  html[data-theme=light] .hero__info{background:rgba(247,242,232,.9);padding:10px 14px;border-radius:999px;margin-bottom:-4px}
 }
 html[data-theme=light] .hero__marca{color:var(--tinta)}
 html[data-theme=light] .nota{background:rgba(255,253,248,.75)}
@@ -443,3 +445,4 @@ html:not([data-theme=light]) :is(.creme .card,.creme .visita img,.creme .histori
 /* seções longe da tela não são desenhadas até chegar perto */
 main>section.sec:not(:first-of-type),.rodape{content-visibility:auto;contain-intrinsic-size:auto 900px}
 .pag__preco--opcoes{grid-column:1/-1;white-space:normal;font-weight:700;font-size:.92em;line-height:1.35} /* (2.3.47) itens agrupados: opções de preço numa linha própria */
+@media (min-width:1024px){.hero__txt{max-width:min(560px,36vw)}.hero__side{max-width:min(420px,36vw)}} /* (2.3.48) o texto do herói fica todo no lado liso, sem invadir a fachada */
