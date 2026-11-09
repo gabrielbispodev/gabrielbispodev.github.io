@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Taishi · Culinária Oriental em Americana, Campinas e Sumaré</title>
+<meta name="description" content="Rodízio japonês, à la carte, delivery e retirada. Unidades em Americana, Campinas e Sumaré. Peça pelo site e pague até 20% menos que no iFood.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#a91110">
+<link rel="icon" href="assets/img/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wght@600;800&family=Bebas+Neue&family=Inria+Serif:wght@400;700&display=swap" rel="stylesheet">
+<!-- (2.4) tema: a escolha salva vale; sem escolha, segue o sistema. Roda antes do CSS para não piscar -->
+<script>try{var t=localStorage.getItem('taishi-tema');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark'}catch(e){}</script>
+<link rel="stylesheet" href="assets/site.css?v=11">
+<script defer src="assets/site.js?v=7"></script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Restaurant","name":"Taishi Culinária Oriental","servesCuisine":"Japonesa","url":"https://www.taishi.com.br/",
+ "aggregateRating":{"@type":"AggregateRating","ratingValue":"4.2","reviewCount":"878"},
+ "address":{"@type":"PostalAddress","streetAddress":"Rua Santo Antônio Claret, 80","addressLocality":"Campinas","addressRegion":"SP","postalCode":"13070-145","addressCountry":"BR"},
+ "telephone":"+55 19 2513-5012"}
+</script>
+</head>
+<body>
+
+<!-- Intro (padrão Kaiseki, 2.0): fundo vermelho com ondas seigaiha; o pincel desenha o ensō, entram タイシ,
+     o selo com o logo e as letras TAISHI; depois as portas de shoji abrem para o site. Uma vez por sessão. -->
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="intro-porta esq"></div><div class="intro-porta dir"></div>
+  <div class="intro-cena">
+    <span class="intro-kana">タイシ</span>
+    <div class="intro-selo">
+      <svg class="enso" viewBox="0 0 200 200"><defs><filter id="pincel"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="7"/></filter></defs>
+        <path d="M112 20 A80 80 0 1 1 52 38" pathLength="1"/></svg>
+      <img src="assets/img/logo.png" alt="" width="152" height="95">
+    </div>
+    <p class="intro-nome"><span>T</span><span>A</span><span>I</span><span>S</span><span>H</span><span>I</span></p>
+    <small class="intro-sub">Culinária oriental</small>
+  </div>
+  <button type="button" class="intro-pular">Pular</button>
+</div>
+
+<header class="nav">
+  <nav class="nav-esq" aria-label="Seções">
+    <a href="cardapio.html">Cardápio</a><a href="#horarios">Horários</a><a href="#unidades">Unidades</a>
+  </nav>
+  <a class="nav-logo" href="#topo" aria-label="Taishi, início"><img src="assets/img/logo.png" alt="Taishi Culinária Oriental" width="152" height="95"></a>
+  <div class="nav-dir">
+    <a class="so-desk" href="tel:+551925135012">(19) 2513-5012</a>
+    <button type="button" class="tema" aria-label="Trocar tema claro ou escuro"><svg class="tema-sol" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3M4.6 4.6l2.1 2.1M17.3 17.3l2.1 2.1M4.6 19.4l2.1-2.1M17.3 6.7l2.1-2.1"/></svg><svg class="tema-lua" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg></button>
+    <a class="btn btn-mini" href="#pedir">Pedir agora</a>
+  </div>
+</header>
+
+<main id="topo">
+
+<!-- Herói -->
+<!-- (2.0) herói no estilo nanquim do Kigo: papel, sol vermelho e pinheiro desenhado (src/arvore.py, arte própria) -->
+<section class="heroi">
+  <div class="sol" aria-hidden="true"></div>
+  <img class="arvore pinheiro" src="assets/img/arvore.webp" alt="" width="900" height="964" fetchpriority="high">
+  <!-- (2.5) no tema escuro entra um galho de sakura ilustrado (src/sakura.py; só baixa quando aparece) -->
+  <img class="arvore sakura" src="assets/img/sakura.webp" alt="" width="1300" height="866" loading="lazy">
+  <span class="kanji-lado" aria-hidden="true">寿司</span>
+  <div class="heroi-txt">
+    <p class="selo">Culinária oriental · Americana · Campinas · Sumaré</p>
+    <h1>Rodízio japonês<br>feito na hora</h1>
+    <p class="lead">Sushi, sashimi, temaki e pratos quentes preparados no balcão, com rodízio à vontade, à la carte, delivery e retirada nas casas do Taishi.</p>
+    <div class="botoes">
+      <a class="btn" href="#pedir">Fazer pedido</a>
+      <a class="btn btn-linha" href="cardapio.html">Ver cardápio</a>
+    </div>
+  </div>
+  <!-- o prato gira conforme a rolagem (site.js) -->
+  <img class="prato-giro" src="assets/img/prato-giro.webp" alt="Prato redondo com sushis variados" width="760" height="760">
+  <!-- faixa corrida de pratos (Kaiseki); cada um abre a seção do cardápio -->
+  <nav class="faixa-pratos" aria-label="Pratos do cardápio"><div class="faixa-trilho">
+    <a href="cardapio.html#sushis"><img src="assets/img/faixa/niguiri.webp" alt="" width="200" height="200">Niguiri</a>
+    <a href="cardapio.html#sushis"><img src="assets/img/faixa/sashimi.webp" alt="" width="200" height="200">Sashimi</a>
+    <a href="cardapio.html#sushis"><img src="assets/img/faixa/maki.webp" alt="" width="200" height="200">Maki</a>
+    <a href="cardapio.html#quentes"><img src="assets/img/faixa/tako.webp" alt="" width="200" height="200">Tako</a>
+    <a href="cardapio.html#rodizio"><img src="assets/img/faixa/camarao.webp" alt="" width="200" height="200">Camarão</a>
+    <a href="cardapio.html#hotrolls"><img src="assets/img/faixa/hotroll.webp" alt="" width="200" height="200">Hot roll</a>
+    <a href="cardapio.html#combinados"><img src="assets/img/faixa/california.webp" alt="" width="200" height="200">Califórnia</a>
+    <a href="cardapio.html#temakis"><img src="assets/img/faixa/temaki.webp" alt="" width="200" height="200">Temaki</a>
+    <a href="cardapio.html#sushis"><img src="assets/img/faixa/hamachi.webp" alt="" width="200" height="200">Hamachi</a>
+  </div></nav>
+</section>
+
+<!-- Faixa de fotos -->
+<section class="faixa" data-galeria>
+  <img src="assets/img/campinas-1.webp" alt="Fachada da unidade Campinas à noite" width="1600" height="1067" loading="lazy">
+  <img src="assets/img/prato-5.webp" alt="Hot roll com cebolinha" width="1000" height="667" loading="lazy">
+  <img src="assets/img/campinas-3.webp" alt="Salão da unidade Campinas" width="1600" height="1067" loading="lazy">
+  <img src="assets/img/slide1.webp" alt="Mesa com vários pratos do rodízio" width="1349" height="400" loading="lazy">
+</section>
+
+<!-- Painel vermelho -->
+<section class="painel-wrap">
+  <div class="painel">
+    <div>
+      <h2>Um balcão japonês<br>perto de você</h2>
+      <p>O Taishi leva o rodízio de comida oriental para Americana, Campinas e Sumaré. Peixe cortado na hora, pratos quentes saindo da cozinha e uma equipe que conhece os clientes pelo nome.</p>
+    </div>
+    <!-- (2.5) vídeo de yakisoba sendo feito na chapa (Pexels 31384253), 14 s, sem som, em loop -->
+    <video class="painel-video" src="assets/video/yakisoba.mp4" poster="assets/video/yakisoba.webp" muted loop playsinline preload="metadata" aria-label="Yakisoba sendo feito na chapa" width="960" height="540"></video>
+  </div>
+</section>
+
+<!-- Formas de comer (Menu Packages da referência) -->
+<section class="secao" id="cardapio">
+  <p class="selo">Do almoço ao delivery</p>
+  <h2 class="titulo">Um jeito de comer para cada dia</h2>
+  <div class="cards">
+    <!-- (2.2) cada card abre a seção do cardápio que combina com ele -->
+    <a class="card" href="cardapio.html#rodizio"><h3>Rodízio à vontade</h3><p class="preco">Almoço e jantar</p><p>Sushis, sashimis, temakis e pratos quentes até você dizer chega. Nas três unidades.</p><span class="card-ir">Ver no cardápio →</span><img src="assets/img/prato-1.webp" alt="" width="1000" height="667" loading="lazy"></a>
+    <a class="card" href="cardapio.html#combinados"><h3>À la carte</h3><p class="preco">Almoço e jantar</p><p>Escolha os seus preferidos no cardápio e peça do seu jeito.</p><span class="card-ir">Ver no cardápio →</span><img src="assets/img/prato-5.webp" alt="" width="1000" height="667" loading="lazy"></a>
+    <a class="card" href="cardapio.html#hotrolls"><h3>Delivery e retirada</h3><p class="preco">Todos os dias</p><p>Peça pelo site e pague até 20% menos que no iFood. Retire no balcão ou receba em casa.</p><span class="card-ir">Ver no cardápio →</span><img src="assets/img/prato-2.webp" alt="" width="1000" height="667" loading="lazy"></a>
+    <a class="card" href="cardapio.html#executivo"><h3>Buffet à vontade</h3><p class="preco">Almoço · Sumaré</p><p>Buffet oriental no almoço da unidade Sumaré.</p><span class="card-ir">Ver no cardápio →</span><img src="assets/img/slide1.webp" alt="" width="1349" height="400" loading="lazy"></a>
+    <a class="card" href="cardapio.html#executivo"><h3>Almoço por quilo</h3><p class="preco">Almoço · Sumaré</p><p>Monte o prato e pague pelo peso, para o almoço rápido do dia a dia.</p><span class="card-ir">Ver no cardápio →</span><img src="assets/img/sumare-1.webp" alt="" width="1000" height="667" loading="lazy"></a>
+    <a class="card" href="cardapio.html#bebidas"><h3>Bebidas e drinks</h3><p class="preco">Para acompanhar</p><p>Sucos, drinks de frutas e chope gelado para fechar a mesa.</p><span class="card-ir">Ver no cardápio →</span><img src="assets/img/prato-3.webp" alt="" width="1000" height="1500" loading="lazy"></a>
+  </div>
+  <p class="centro-btn"><a class="btn" href="cardapio.html">Abrir o cardápio</a></p>
+</section>
+
+<!-- CTA escuro -->
+<section class="cta-escuro" id="pedir">
+  <img class="cta-foto esq" src="assets/img/prato-4.webp" alt="" width="1000" height="1500" loading="lazy">
+  <div>
+    <h2>Peça pelo site e pague<br>até 20% menos que no iFood</h2>
+    <div class="unid-botoes">
+      <a class="btn" href="https://pedido.anota.ai/loja/taishi-americana?f=msa" target="_blank" rel="noopener">Americana</a>
+      <a class="btn" href="https://pedido.anota.ai/loja/taishi-campinas?f=msa" target="_blank" rel="noopener">Campinas</a>
+      <a class="btn" href="https://pedido.anota.ai/loja/taishi-sumar?f=msa" target="_blank" rel="noopener">Sumaré</a>
+    </div>
+  </div>
+  <img class="cta-foto dir" src="assets/img/campinas-2.webp" alt="" width="1600" height="1067" loading="lazy">
+</section>
+
+<!-- Como pedir (How It Works da referência) -->
+<section class="secao">
+  <p class="selo">Como pedir</p>
+  <h2 class="titulo">Do pedido à sua mesa</h2>
+  <ol class="passos">
+    <li><span>01</span><h3>Escolha a unidade</h3><p>Americana, Campinas ou Sumaré: a mais perto de você.</p></li>
+    <li><span>02</span><h3>Monte o pedido</h3><p>Combinados, temakis e quentes no cardápio online, sem taxa de aplicativo.</p></li>
+    <li><span>03</span><h3>Retire ou receba</h3><p>Busque no balcão ou receba em casa no horário de delivery.</p></li>
+    <li><span>04</span><h3>Aproveite</h3><p>Hashi, shoyu e wasabi já vão junto. É só abrir e comer.</p></li>
+  </ol>
+</section>
+
+<!-- Depoimentos -->
+<section class="secao">
+  <p class="selo">Nota 4,2 · 878 avaliações no Google (Campinas)</p>
+  <h2 class="titulo">Quem já veio, volta</h2>
+  <div class="depos">
+    <blockquote><div class="estrelas" aria-label="5 estrelas">★★★★★</div><p>“Os atendentes são sempre muito atenciosos, e o rodízio melhorou muito nos últimos meses. É um lugar que sempre vou e saio feliz.”</p><cite>Aline N.</cite></blockquote>
+    <blockquote><div class="estrelas" aria-label="5 estrelas">★★★★★</div><p>“Sou de São Paulo e o Taishi e o atendimento dão de 10x0 em qualquer outro rodízio! Tive a melhor experiência de rodízio de todas.”</p><cite>Gabriela B.</cite></blockquote>
+    <blockquote><div class="estrelas" aria-label="5 estrelas">★★★★★</div><p>“Ótimo atendimento pela Fernanda e equipe, todos os pratos chegaram rapidamente.”</p><cite>Avaliação no Google</cite></blockquote>
+  </div>
+</section>
+
+<!-- (2.4) As nossas casas: carrossel 3D (ideia do componente "3D Service carousel" do Framer, estudado com o REA;
+     código próprio). O card da frente amplia ao clicar; os de lado vêm para a frente. -->
+<section class="secao colagem-sec">
+  <div class="colagem-topo">
+    <div><p class="selo">As nossas casas</p><h2 class="titulo esq">Um jantar que vale<br>reunir a turma</h2></div>
+    <p>Aniversário, encontro de amigos ou o jantar de sexta: salões aconchegantes, luz baixa e o rodízio chegando à mesa sem pressa.</p>
+  </div>
+  <div class="carrossel" data-galeria aria-roledescription="carrossel" aria-label="Fotos das casas do Taishi">
+    <div class="carrossel-palco" tabindex="0">
+      <figure><img src="assets/img/campinas-3.webp" alt="Salão da unidade Campinas" width="1600" height="1067" loading="lazy"><figcaption><small>Campinas</small>Salão de tijolinho e luz baixa</figcaption></figure>
+      <figure><img src="assets/img/campinas-1.webp" alt="Fachada da unidade Campinas à noite" width="1600" height="1067" loading="lazy"><figcaption><small>Campinas</small>A fachada no Castelo</figcaption></figure>
+      <figure><img src="assets/img/campinas-2.webp" alt="Entrada da unidade Campinas" width="1600" height="1067" loading="lazy"><figcaption><small>Campinas</small>Entrada entre bambus</figcaption></figure>
+      <figure><img src="assets/img/prato-1.webp" alt="Barca de sushi e sashimi" width="1000" height="667" loading="lazy"><figcaption><small>Rodízio</small>A barca chegando à mesa</figcaption></figure>
+      <figure><img src="assets/img/americana-2.webp" alt="Fachada da unidade Americana" width="1000" height="667" loading="lazy"><figcaption><small>Americana</small>Na Avenida Brasil</figcaption></figure>
+      <figure><img src="assets/img/americana-1.webp" alt="Equipe no salão de Americana" width="1000" height="667" loading="lazy"><figcaption><small>Americana</small>A equipe pronta para o jantar</figcaption></figure>
+      <figure><img src="assets/img/americana-3.webp" alt="Salão da unidade Americana" width="1000" height="667" loading="lazy"><figcaption><small>Americana</small>Mesas para a turma toda</figcaption></figure>
+      <figure><img src="assets/img/americana-4.webp" alt="Salão iluminado de Americana" width="1000" height="667" loading="lazy"><figcaption><small>Americana</small>Salão amplo</figcaption></figure>
+      <figure><img src="assets/img/americana-5.webp" alt="Mesas de madeira em Americana" width="1000" height="667" loading="lazy"><figcaption><small>Americana</small>Madeira e luz natural</figcaption></figure>
+      <figure><img src="assets/img/prato-5.webp" alt="Hot roll com cebolinha" width="1000" height="667" loading="lazy"><figcaption><small>Cozinha</small>Hot roll saindo agora</figcaption></figure>
+      <figure><img src="assets/img/sumare-4.webp" alt="Detalhe do salão de Sumaré" width="1000" height="667" loading="lazy"><figcaption><small>Sumaré</small>Cerejeira na mesa</figcaption></figure>
+      <figure><img src="assets/img/sumare-3.webp" alt="Salão da unidade Sumaré" width="1000" height="667" loading="lazy"><figcaption><small>Sumaré</small>Lanternas e madeira</figcaption></figure>
+      <figure><img src="assets/img/sumare-2.webp" alt="Equipe da unidade Sumaré" width="1000" height="1500" loading="lazy"><figcaption><small>Sumaré</small>Quem cuida de você</figcaption></figure>
+      <figure><img src="assets/img/sumare-1.webp" alt="Bebida gelada e prato vazio na mesa" width="1000" height="667" loading="lazy"><figcaption><small>Sumaré</small>Mesa posta</figcaption></figure>
+      <figure><img src="assets/img/slide1.webp" alt="Mesa com vários pratos do rodízio" width="1349" height="400" loading="lazy"><figcaption><small>Rodízio</small>Tudo na mesa de uma vez</figcaption></figure>
+      <figure><img src="assets/img/slide3.webp" alt="Salão com mesas e tablets" width="1349" height="400" loading="lazy"><figcaption><small>Salão</small>Pedido pelo tablet</figcaption></figure>
+      <figure><img src="assets/img/slide4.webp" alt="Fachada com jardim à noite" width="1349" height="400" loading="lazy"><figcaption><small>Fachada</small>Jardim na entrada</figcaption></figure>
+      <figure><img src="assets/img/slide6.webp" alt="Salão com plantas e tijolos" width="1349" height="400" loading="lazy"><figcaption><small>Salão</small>Verde por todo lado</figcaption></figure>
+      <figure><img src="assets/img/prato-2.webp" alt="Delivery do Taishi" width="1000" height="667" loading="lazy"><figcaption><small>Delivery</small>Em casa também</figcaption></figure>
+      <figure><img src="assets/img/prato-3.webp" alt="Drink de morango" width="1000" height="1500" loading="lazy"><figcaption><small>Bar</small>Drink de morango</figcaption></figure>
+      <figure><img src="assets/img/prato-4.webp" alt="Chope gelado" width="1000" height="1500" loading="lazy"><figcaption><small>Bar</small>Chope gelado</figcaption></figure>
+    </div>
+    <div class="carrossel-nav">
+      <button type="button" class="carrossel-seta" data-dir="-1" aria-label="Foto anterior">‹</button>
+      <div class="carrossel-pontos" role="tablist"></div>
+      <button type="button" class="carrossel-seta" data-dir="1" aria-label="Próxima foto">›</button>
+    </div>
+  </div>
+</section>
+
+<!-- Horários em abas (Full Menu da referência) -->
+<section class="secao" id="horarios">
+  <p class="selo">Horários</p>
+  <h2 class="titulo">Quando estamos abertos</h2>
+  <div class="abas" role="tablist">
+    <button role="tab" aria-selected="true" data-aba="americana">Americana</button>
+    <button role="tab" aria-selected="false" data-aba="campinas">Campinas</button>
+    <button role="tab" aria-selected="false" data-aba="sumare">Sumaré</button>
+  </div>
+  <div class="quadro" data-painel="americana">
+    <div><h3>Almoço</h3><p>Segunda a domingo<b>11:00 às 14:00</b></p><small>À la carte · Rodízio à vontade</small></div>
+    <div><h3>Jantar</h3><p>Segunda a quinta<b>17:30 às 22:00</b></p><p>Sexta a domingo<b>17:30 às 22:30</b></p><small>À la carte · Rodízio à vontade</small></div>
+    <div><h3>Delivery e retirada</h3><p>Segunda a domingo<b>10:30 às 14:15</b></p><p>Segunda a quinta<b>14:30 às 22:30</b></p><p>Sexta a domingo<b>14:30 às 23:30</b></p></div>
+  </div>
+  <div class="quadro" data-painel="campinas" hidden>
+    <div><h3>Almoço</h3><p>Segunda a domingo<b>11:30 às 14:30</b></p><small>À la carte · Rodízio à vontade</small></div>
+    <div><h3>Jantar</h3><p>Segunda a quinta<b>18:00 às 22:00</b></p><p>Sexta a domingo<b>18:00 às 22:30</b></p><small>À la carte · Rodízio à vontade</small></div>
+    <div><h3>Delivery e retirada</h3><p>Segunda a domingo<b>10:30 às 14:30</b></p><p>Segunda a quinta<b>17:45 às 22:30</b></p><p>Sexta a domingo<b>17:45 às 23:30</b></p></div>
+  </div>
+  <div class="quadro" data-painel="sumare" hidden>
+    <div><h3>Almoço</h3><p>Segunda a domingo<b>11:00 às 14:00</b></p><small>À la carte · Almoço por quilo · Buffet à vontade · Rodízio à vontade</small></div>
+    <div><h3>Jantar</h3><p>Segunda a quinta<b>18:00 às 22:00</b></p><p>Sexta a domingo<b>18:00 às 22:30</b></p><small>À la carte · Rodízio à vontade · O rodízio encerra 30 min antes</small></div>
+    <div><h3>Delivery e retirada</h3><p>Segunda a domingo<b>10:45 às 14:30</b></p><p>Segunda a quinta<b>17:45 às 22:30</b></p><p>Sexta a domingo<b>17:45 às 23:30</b></p></div>
+  </div>
+</section>
+
+<!-- Equipe (Chef Bio da referência) -->
+<section class="secao equipe">
+  <img src="assets/img/americana-1.webp" alt="Equipe do Taishi no salão de Americana" width="1000" height="667" loading="lazy">
+  <div>
+    <h2>Uma boa refeição não é só servida. É feita na hora, para a sua mesa.</h2>
+    <p>Sushimen e cozinha trabalham juntos em cada unidade para o rodízio chegar fresco, quente e sem demora.</p>
+    <div class="numeros">
+      <div><b>3</b><span>Salões</span></div>
+      <div><b>4</b><span>Cidades no delivery</span></div>
+      <div><b>7</b><span>Dias por semana</span></div>
+      <div><b>4,2</b><span>Nota no Google</span></div>
+    </div>
+    <a class="btn" href="#unidades">Encontrar uma unidade</a>
+  </div>
+</section>
+
+<!-- Unidades -->
+<section class="secao" id="unidades">
+  <p class="selo">Unidades</p>
+  <h2 class="titulo">Venha nos visitar</h2>
+  <div class="unidades">
+    <article>
+      <img src="assets/img/americana-2.webp" alt="Unidade Americana" width="1000" height="667" loading="lazy">
+      <h3>Americana</h3>
+      <p>Avenida Brasil, 1650 · Vila Santo Antônio<br><small>Na esquina, ao lado da R2 Sports</small></p>
+      <p><a href="tel:+551934052050">(19) 3405-2050</a> · <a href="mailto:americana@taishi.com.br">americana@taishi.com.br</a></p>
+      <div class="unid-acoes"><a class="btn btn-linha" href="https://www.google.com/maps/search/?api=1&query=Taishi+Avenida+Brasil+1650+Americana" target="_blank" rel="noopener">Como chegar</a>
+      <a class="btn-insta" href="https://www.instagram.com/taishi_americana/" target="_blank" rel="noopener" aria-label="Instagram do Taishi Americana"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1" class="cheio"/></svg>@taishi_americana</a></div>
+    </article>
+    <article>
+      <img src="assets/img/campinas-1.webp" alt="Unidade Campinas" width="1600" height="1067" loading="lazy">
+      <h3>Campinas</h3>
+      <p>Rua Santo Antônio Claret, 80 · Jardim Chapadão<br><small>Pertinho da Torre do Castelo</small></p>
+      <p><a href="tel:+551925135012">(19) 2513-5012</a> · <a href="mailto:campinas@taishi.com.br">campinas@taishi.com.br</a></p>
+      <a class="btn btn-linha" href="https://maps.app.goo.gl/d1mCTJu25KtGU9Tn6" target="_blank" rel="noopener">Como chegar</a>
+    </article>
+    <article>
+      <img src="assets/img/slide5.webp" alt="Unidade Sumaré" width="1349" height="400" loading="lazy">
+      <h3>Sumaré</h3>
+      <p>Avenida Rebouças, 1201 · Centro<br><small>Praça da Bandeira, ao lado do Sicoob</small></p>
+      <p><a href="tel:+551933069882">(19) 3306-9882</a> · <a href="tel:+551933069884">3306-9884</a> · <a href="mailto:sumare@taishi.com.br">sumare@taishi.com.br</a></p>
+      <div class="unid-acoes"><a class="btn btn-linha" href="https://www.google.com/maps/search/?api=1&query=Taishi+Avenida+Rebou%C3%A7as+1201+Sumar%C3%A9" target="_blank" rel="noopener">Como chegar</a>
+      <a class="btn-insta" href="https://www.instagram.com/taishi_sumare/" target="_blank" rel="noopener" aria-label="Instagram do Taishi Sumaré"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1" class="cheio"/></svg>@taishi_sumare</a></div>
+    </article>
+  </div>
+</section>
+
+<!-- CTA vermelho (Booking CTA da referência) -->
+<section class="painel-wrap">
+  <div class="painel centro">
+    <p class="selo claro">Bateu a fome?</p>
+    <h2>Seu rodízio está a um clique</h2>
+    <p>Peça pelo site, retire no balcão ou receba em casa.</p>
+    <div class="botoes centro-flex">
+      <a class="btn btn-claro" href="#pedir">Pedir agora</a>
+      <a class="btn btn-claro btn-insta-grande" href="https://www.instagram.com/taishi_sumare/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1" class="cheio"/></svg>Siga no Instagram</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="rodape">
+  <div class="rodape-grade">
+    <div>
+      <img src="assets/img/logo.png" alt="Taishi Culinária Oriental" width="152" height="95" loading="lazy">
+      <p>Culinária oriental em Americana, Campinas e Sumaré.</p>
+      <p><a href="https://api.whatsapp.com/send?phone=5519992511961" target="_blank" rel="noopener">WhatsApp</a> · <a href="https://www.taishi.com.br/trabalhe-conosco/" target="_blank" rel="noopener">Trabalhe conosco</a></p>
+      <p class="rodape-insta">
+        <a class="btn-insta" href="https://www.instagram.com/taishi_americana/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1" class="cheio"/></svg>Americana</a>
+        <a class="btn-insta" href="https://www.instagram.com/taishi_sumare/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1" class="cheio"/></svg>Sumaré</a>
+      </p>
+    </div>
+    <div class="kanji" aria-hidden="true">寿<br>司</div>
+    <div><h4>Unidades</h4><p>Americana · (19) 3405-2050</p><p>Campinas · (19) 2513-5012</p><p>Sumaré · (19) 3306-9882</p></div>
+    <div><h4>Navegar</h4><p><a href="cardapio.html">Cardápio</a></p><p><a href="#horarios">Horários</a></p><p><a href="#unidades">Unidades</a></p><p><a href="#pedir">Pedir agora</a></p></div>
+  </div>
+  <p class="rodape-fim">© 2026 Taishi Culinária Oriental · Prévia do novo site</p>
+</footer>
+
+<!-- (2.4) poucas agulhas (ou pétalas, no tema escuro) caindo pelo site todo -->
+<div class="agulhas" aria-hidden="true"></div>
+<!-- (2.4) visualizador: fotos com data-galeria ampliam ao clicar -->
+<dialog class="lupa" aria-label="Foto ampliada">
+  <button type="button" class="lupa-fechar" aria-label="Fechar">×</button>
+  <button type="button" class="lupa-seta" data-dir="-1" aria-label="Foto anterior">‹</button>
+  <figure><img alt=""><figcaption></figcaption></figure>
+  <button type="button" class="lupa-seta" data-dir="1" aria-label="Próxima foto">›</button>
+</dialog>
+</body>
+</html>
