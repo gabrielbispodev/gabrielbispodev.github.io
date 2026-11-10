@@ -300,16 +300,17 @@ a.card{color:inherit;text-decoration:none}
   .nav{grid-template-columns:auto 1fr;padding:8px 16px}
   .nav-esq,.so-desk{display:none}
   .nav-logo img{height:44px}
-  .heroi{padding:104px 16px 0}
+  /* (2.8) celular: lua + árvore centralizadas no topo, como no PC (árvore na frente da lua); o texto vem logo abaixo */
+  .heroi{padding:400px 16px 0}
   .heroi-txt{margin-left:0;align-self:center;text-align:center;max-width:none}
   .heroi .selo{text-align:center}
   .lead{margin:0 auto 24px}
   .botoes{justify-content:center}
   /* (2.6) árvore sem distorção: só a largura manda, a altura segue a proporção da imagem */
-  .arvore{opacity:.26;width:96vw;height:auto;right:-38vw;bottom:auto;top:84px}
+  .arvore{opacity:1;width:min(280px,76vw);height:auto;right:auto;left:50%;translate:-44% 0;bottom:auto;top:78px}
   /* (2.6) Anybody mais estreita no celular: a largura padrão parecia esticada nos rótulos pequenos */
   body{font-variation-settings:'wdth' 82}
-  .sol{width:180px;right:-30px;top:90px;opacity:.85}
+  .sol{width:min(220px,58vw);right:auto;left:50%;translate:-50% 0;top:110px;opacity:1}
   .kanji-lado{display:none}
   .prato-giro{width:84vw;margin-bottom:-22%}
   .faixa-pratos{margin:0 -16px}
@@ -351,7 +352,7 @@ a.card{color:inherit;text-decoration:none}
 /* (2.5) galho de sakura entrando pela direita, por cima do sol (como no Kigo) */
 [data-theme=dark] .arvore.sakura{display:block;top:104px;bottom:auto;right:1%;width:min(48vw,calc((100svh - 150px) * 1.18))} /* (2.7) sakura bonsai no vaso, inteira na primeira dobra: atrás do texto, na frente do sol */
 [data-theme=dark] .agulha{width:18px;height:15px;animation-name:petala}
-@media (max-width:767px){[data-theme=dark] .arvore.sakura{width:96vw;right:-22vw;top:120px;opacity:.38}}
+@media (max-width:767px){[data-theme=dark] .arvore.sakura{width:min(330px,88vw);right:auto;left:50%;translate:-55% 0;top:96px;opacity:1}}
 [data-theme=dark] .sol{background:#c8231b;box-shadow:0 0 120px 20px rgba(200,35,27,.25)}
 [data-theme=dark] .kanji-lado{color:var(--marfim)}
 [data-theme=dark] .lead{color:#d8cdbf}
