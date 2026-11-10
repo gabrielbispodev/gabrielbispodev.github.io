@@ -349,9 +349,9 @@ a.card{color:inherit;text-decoration:none}
 [data-theme=dark] .heroi{background-color:#141011}
 [data-theme=dark] .arvore.pinheiro{display:none}
 /* (2.5) galho de sakura entrando pela direita, por cima do sol (como no Kigo) */
-[data-theme=dark] .arvore.sakura{display:block;width:min(50vw,calc((100svh - 120px) * 1.03))} /* (2.6) sakura de pé, como o pinheiro: atrás do texto, na frente do sol */
+[data-theme=dark] .arvore.sakura{display:block;right:-2%;width:min(60vw,calc(100svh * 1.07))} /* (2.6) sakura de pé, como o pinheiro: atrás do texto, na frente do sol */
 [data-theme=dark] .agulha{width:18px;height:15px;animation-name:petala}
-@media (max-width:767px){[data-theme=dark] .arvore.sakura{width:104vw;right:-16vw;top:70px;opacity:.3}}
+@media (max-width:767px){[data-theme=dark] .arvore.sakura{width:104vw;right:-14vw;top:70px;opacity:.4}}
 [data-theme=dark] .sol{background:#c8231b;box-shadow:0 0 120px 20px rgba(200,35,27,.25)}
 [data-theme=dark] .kanji-lado{color:var(--marfim)}
 [data-theme=dark] .lead{color:#d8cdbf}
