@@ -129,7 +129,8 @@ document.querySelectorAll('.carrossel').forEach(car => {
       let d = i - atual;
       if (d > n / 2) d -= n; if (d < -n / 2) d += n;   // caminho mais curto na volta
       const a = Math.abs(d);
-      c.style.transform = `translateX(${d * 58}%) translateZ(${-a * 170}px) rotateY(${-Math.sign(d) * Math.min(a, 1) * 28}deg)`;
+      c.dataset.base = `translateX(${d * 58}%) translateZ(${-a * 170}px) rotateY(${-Math.sign(d) * Math.min(a, 1) * 28}deg)`;
+      c.style.transform = c.dataset.base;
       c.style.opacity = a > 3 ? 0 : 1;
       c.style.filter = `brightness(${1 - Math.min(a, 3) * 0.2})`;
       c.style.zIndex = 100 - a;
@@ -158,6 +159,23 @@ document.querySelectorAll('.carrossel').forEach(car => {
     if (!c) return;
     if (c.classList.contains('frente')) ampliar(c.querySelector('img'));
     else { ir(cards.indexOf(c)); rodar(); }
+  });
+  // (2.8) efeito físico: o card sob o mouse inclina para o lado do cursor, sobe um pouco e ganha um brilho que segue o ponteiro;
+  // ao sair, volta com efeito de mola. Só com mouse (no celular não há cursor) e sem movimento reduzido.
+  if (!calmo) cards.forEach(c => {
+    c.addEventListener('pointermove', e => {
+      if (e.pointerType !== 'mouse' || x0 !== null) return;
+      const r = c.getBoundingClientRect(), px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+      c.classList.add('mexe');
+      c.style.transform = `${c.dataset.base} translateZ(30px) rotateX(${((.5 - py) * 16).toFixed(2)}deg) rotateY(${((px - .5) * 20).toFixed(2)}deg)`;
+      c.style.setProperty('--mx', `${(px * 100).toFixed(1)}%`);
+      c.style.setProperty('--my', `${(py * 100).toFixed(1)}%`);
+    });
+    c.addEventListener('pointerleave', () => {
+      if (!c.classList.contains('mexe')) return;
+      c.classList.replace('mexe', 'volta'); c.style.transform = c.dataset.base;
+      setTimeout(() => c.classList.remove('volta'), 700);
+    });
   });
   car.addEventListener('pointerenter', () => clearInterval(auto));
   car.addEventListener('pointerleave', rodar);
