@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -24 726 804" fill="#d4a23c">
+  <!-- Símbolo da Alencar Barbershop redesenhado a partir da placa da Unidade 01 -->
+  <defs>
+    <path id="hat-crown" d="M247 52 Q247 40 260 40 H350 Q363 40 363 52 V162 H247 Z"/>
+    <rect id="hat-brim" x="190" y="156" width="230" height="46" rx="23"/>
+    <path id="bigode" d="M0 562 C40 522 90 497 130 502 C180 507 230 562 280 577 C300 582 315 572 318 557 C320 542 305 532 292 540 C300 517 335 514 345 537 C360 572 335 612 300 627 C240 657 160 692 80 682 C40 677 15 657 0 632 Z"/>
+    <!-- recorte: o "A" some atrás do chapéu e do bigode, com um fio de folga -->
+    <mask id="folga" maskUnits="userSpaceOnUse" x="0" y="0" width="726" height="780">
+      <rect width="726" height="780" fill="#fff"/>
+      <g fill="#000" stroke="#000" stroke-width="22" stroke-linejoin="round">
+        <g transform="translate(322 128) rotate(-26) scale(1.28) translate(-305 -130)"><use href="#hat-crown"/><use href="#hat-brim"/></g>
+        <use href="#bigode" transform="translate(362 0)"/>
+        <use href="#bigode" transform="translate(362 0) scale(-1 1)"/>
+      </g>
+    </mask>
+    <!-- fita do chapéu vazada -->
+    <mask id="fita" maskUnits="userSpaceOnUse" x="0" y="0" width="726" height="780">
+      <rect width="726" height="780" fill="#fff"/>
+      <rect x="250" y="138" width="110" height="20" rx="10" fill="#000"/>
+    </mask>
+  </defs>
+
+  <path mask="url(#folga)" d="M55 755 L392 186 L447 160 L648 755 L470 755 L360 336 L232 755 Z"/>
+  <g transform="translate(322 128) rotate(-26) scale(1.28) translate(-305 -130)" mask="url(#fita)">
+    <use href="#hat-crown"/>
+    <use href="#hat-brim"/>
+  </g>
+  <use href="#bigode" transform="translate(362 0)"/>
+  <use href="#bigode" transform="translate(362 0) scale(-1 1)"/>
+</svg>
