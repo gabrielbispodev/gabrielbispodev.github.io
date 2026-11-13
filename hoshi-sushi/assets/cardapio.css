@@ -1,0 +1,151 @@
+/* (2.0) Cardápio em pergaminho (ideia do pergaminho de reserva do template "Using"; código próprio) */
+.pag-cardapio{background:#ece4d6}
+.palco-rolo{height:300vh;position:relative}
+.rolo-fixo{position:sticky;top:0;height:100svh;display:flex;flex-direction:column;align-items:center;padding:84px 12px 16px;overflow:hidden}
+.rolo-topo{text-align:center;flex:none}
+.rolo-topo .selo{margin-bottom:4px}
+.rolo-dica{font:400 15px/1.3 var(--texto);color:var(--cinza);transition:opacity .4s}
+.aberto .rolo-dica{opacity:0}
+.secoes{display:flex;gap:8px;overflow-x:auto;max-width:min(940px,96vw);padding:10px 4px;scrollbar-width:none;opacity:0;transition:opacity .5s}
+.secoes::-webkit-scrollbar{display:none}
+.secoes{user-select:none;-webkit-user-select:none} /* (2.2) arrastar não seleciona o texto das abas */
+.secoes.arrastando{cursor:grabbing}
+.secoes.arrastando button{pointer-events:none}
+.aberto .secoes{opacity:1}
+.secoes button{flex:none;font:800 11px/1 var(--rotulo);letter-spacing:.08em;text-transform:uppercase;padding:9px 13px;border-radius:999px;
+  border:1.5px solid var(--verm);background:transparent;color:var(--verm)}
+.secoes button[aria-current]{background:var(--verm);color:#fff}
+
+/* pergaminho */
+.pergaminho{--alto:max(380px,calc(100svh - 270px));--abre:0;position:relative;width:min(860px,94vw);display:flex;flex-direction:column;align-items:center;flex:none}
+.cilindro{position:relative;z-index:3;width:calc(100% + 40px);height:46px;border-radius:23px/50%;
+  background:linear-gradient(180deg,#5e0a08 0%,#b3140f 22%,#d63a2f 40%,#a8110d 62%,#5e0a08 100%);box-shadow:0 8px 14px rgba(60,0,0,.35)}
+.cilindro::before,.cilindro::after{content:"";position:absolute;top:9px;width:30px;height:28px;border-radius:7px;background:linear-gradient(180deg,#2b0504,#6b0c09 45%,#2b0504)}
+.cilindro::before{left:-24px}.cilindro::after{right:-24px}
+.cilindro.base{margin-top:-6px}
+.papel{position:relative;z-index:2;width:100%;height:calc(var(--abre) * var(--alto));overflow:hidden;margin-top:-6px;
+  background:#b8120f;box-shadow:inset 0 10px 12px -8px rgba(0,0,0,.45),inset 0 -10px 12px -8px rgba(0,0,0,.45)}
+.trocando .papel{transition:height .45s cubic-bezier(.6,0,.3,1)}
+.papel-miolo{position:absolute;left:0;right:0;top:0;height:var(--alto);padding:22px 30px 18px;color:var(--marfim);display:flex;flex-direction:column;
+  background-image:radial-gradient(circle at 50% 100%,transparent 0 12px,rgba(242,232,213,.05) 12px 13px,transparent 13px);background-size:40px 20px}
+/* moldura de marfim com cantos recortados embaixo, como o pergaminho da referência */
+.papel-miolo::before{content:"";position:absolute;inset:12px 16px;border:1.5px solid rgba(242,232,213,.75);pointer-events:none;
+  -webkit-mask:radial-gradient(circle 28px at 0 100%,transparent 27px,#000 28px) left/51% 100% no-repeat,radial-gradient(circle 28px at 100% 100%,transparent 27px,#000 28px) right/51% 100% no-repeat;
+          mask:radial-gradient(circle 28px at 0 100%,transparent 27px,#000 28px) left/51% 100% no-repeat,radial-gradient(circle 28px at 100% 100%,transparent 27px,#000 28px) right/51% 100% no-repeat}
+.papel-miolo::after{content:"";position:absolute;left:16px;right:16px;bottom:12px;height:29px;pointer-events:none;
+  background:radial-gradient(circle 28px at 0 100%,transparent 27px,rgba(242,232,213,.75) 27.5px,transparent 29px) left/30px 30px no-repeat,
+             radial-gradient(circle 28px at 100% 100%,transparent 27px,rgba(242,232,213,.75) 27.5px,transparent 29px) right/30px 30px no-repeat}
+
+.folha-conteudo{position:relative;flex:1;min-height:0;overflow:hidden;display:grid;grid-template-columns:1.3fr 1fr;gap:28px;padding:10px 12px 0;font-size:19px} /* (2.1) letra maior */
+.folha-cab{grid-column:1/-1;text-align:center}
+.folha-cab h2{font:400 clamp(34px,4.4vw,56px)/1 var(--titulo);letter-spacing:.02em}
+.folha-cab p{font:400 italic 1em/1.3 var(--texto);opacity:.85;margin-top:4px}
+.folha-cab hr{width:120px;margin:12px auto 0;border:0;border-top:1.5px solid rgba(242,232,213,.75)}
+.folha-itens{list-style:none;padding:0;display:grid;align-content:start;gap:.55em}
+.folha-itens li{border-bottom:1px dashed rgba(242,232,213,.35)}
+/* (2.1) cada prato é um botão que abre a mesa de morder */
+.f-item{display:grid;grid-template-columns:1fr auto;column-gap:14px;width:100%;padding:.2em .35em .45em;border:0;border-radius:6px;background:none;color:inherit;font:inherit;text-align:left;transition:background .2s}
+.escrito .f-item:hover,.f-item:focus-visible{background:rgba(242,232,213,.12)}
+.f-nome{font:800 .88em/1.25 var(--rotulo);letter-spacing:.04em;text-transform:uppercase}
+.f-preco{font:800 .95em/1.25 var(--rotulo);white-space:nowrap;text-align:right}
+.f-preco small{font:400 italic .85em var(--texto);opacity:.85;margin-left:.5em}
+.f-preco small:first-child{margin-left:0}
+.f-op{display:block}
+.f-desc{grid-column:1/-1;font:400 .92em/1.3 var(--texto);opacity:.9}
+.folha-fotos{position:relative;align-self:start;display:grid;gap:14px;justify-items:center}
+.foto-tinta{width:100%;max-width:330px;aspect-ratio:1;object-fit:cover;border-radius:50%;border:5px solid var(--marfim);box-shadow:0 14px 26px rgba(40,0,0,.45)}
+.foto-tinta + .foto-tinta{width:52%;margin-top:-22%;margin-left:48%;rotate:8deg}
+/* o que ainda não foi escrito fica escondido */
+.tinta{clip-path:inset(-20% 100% -20% 0)}
+.escrito .tinta{clip-path:none}
+.foto-tinta{clip-path:circle(0% at 50% 50%)}
+.escrito .foto-tinta{clip-path:none}
+
+.pincel{position:absolute;left:0;top:0;width:90px;height:90px;z-index:5;pointer-events:none;opacity:0;transition:opacity .3s;filter:drop-shadow(2px 4px 3px rgba(0,0,0,.35))}
+.escrevendo .pincel{opacity:1}
+
+.papel-acoes{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 26px 14px;flex:none}
+.btn-papel{font:800 12px/1 var(--rotulo);letter-spacing:.1em;text-transform:uppercase;color:var(--marfim);background:var(--verm);padding:12px 18px;
+  border:1.5px solid var(--marfim);border-radius:4px;outline:1.5px solid var(--marfim);outline-offset:3px;transition:background .2s,color .2s}
+.btn-papel:hover{background:var(--marfim);color:var(--verm)}
+.btn-papel:disabled{opacity:.35;pointer-events:none}
+.btn-papel.pedir{background:var(--marfim);color:var(--verm)}
+.papel-conta{font:800 11px/1 var(--rotulo);letter-spacing:.14em;text-transform:uppercase;opacity:.8;text-align:center}
+
+.cardapio-nota{max-width:860px;margin:24px auto 60px;padding:0 16px;text-align:center;font-size:13px;color:var(--cinza);position:relative}
+
+@media (max-width:767px){
+  .rolo-fixo{padding-top:70px}
+  .pergaminho{--alto:max(400px,calc(100svh - 210px));width:calc(100vw - 44px)}
+  .papel-miolo{padding:18px 18px 12px}
+  .folha-conteudo{grid-template-columns:1fr;grid-template-rows:auto auto 1fr;gap:10px;padding:6px 4px 0;font-size:16px}
+  .folha-fotos{order:-1;grid-column:1;grid-template-columns:auto auto;align-items:center}
+  .folha-cab{order:-2}
+  .foto-tinta{width:96px;border-width:3px}
+  .foto-tinta + .foto-tinta{width:70px;margin:0 0 0 -24px}
+  .papel-acoes{padding:8px 12px 12px}
+  .btn-papel{padding:10px 12px;font-size:11px}
+  .conta-nome{display:none}
+  .f-item{grid-template-columns:1fr}
+  .f-preco{text-align:left;white-space:normal}
+  .f-op{display:inline;margin-right:.8em}
+}
+@media (prefers-reduced-motion:reduce){.tinta,.foto-tinta{clip-path:none}}
+
+/* (2.1) mesa de morder: tela cheia de papel, título grande atrás e na frente do prato, bilhete com o preço */
+.mesa{width:100%;height:100%;max-width:100%;max-height:100%;margin:0;padding:0;border:0;overflow:auto;color:var(--tinta);
+  background:#f4efe6 radial-gradient(circle at 50% 100%,transparent 0 14px,rgba(169,17,16,.06) 14px 15.5px,transparent 15.5px 22px,rgba(169,17,16,.06) 22px 23.5px,transparent 23.5px) 0 0/60px 30px}
+.mesa::backdrop{background:rgba(20,6,6,.6)}
+.mesa[open]{animation:mesa-abre .35s cubic-bezier(.2,.8,.2,1)}
+@keyframes mesa-abre{from{opacity:0;scale:.97}}
+.morder{min-height:100%;display:flex;flex-direction:column;justify-content:center;padding:40px 0;overflow:hidden}
+.morder__palco{position:relative;display:grid;place-items:center;isolation:isolate;min-height:clamp(460px,60vw,700px);padding:0 16px}
+.morder__titulo{grid-area:1/1;display:flex;flex-direction:column;align-items:center;font:400 1em/.86 var(--titulo);color:var(--verm);text-align:center;pointer-events:none;user-select:none}
+.morder__l1,.morder__l2{position:relative;display:block;white-space:nowrap}
+.morder__l1{z-index:1}.morder__l2{z-index:3;color:var(--tinta)}
+.morder__vao{display:block;height:clamp(170px,24vw,330px)}
+.morder__comida{grid-area:1/1;position:relative;z-index:2;width:clamp(240px,30vw,420px)}
+.morder__btn{display:block;width:100%;padding:0;border:0;background:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.morder__btn:focus-visible{outline:2px dashed var(--verm);outline-offset:8px;border-radius:50%}
+.morder__corte{display:block;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-composite:source-in;mask-composite:intersect;transition:opacity .45s,scale .5s cubic-bezier(.3,1.3,.5,1)}
+.morder__corte img{display:block;width:100%;aspect-ratio:1;object-fit:cover;border-radius:50%;border:8px solid #fffaf0;box-shadow:0 0 0 2px rgba(23,23,23,.15);pointer-events:none;user-select:none;-webkit-user-drag:none}
+.morder__sombra{position:absolute;left:10%;right:10%;bottom:-6%;height:10%;border-radius:50%;background:radial-gradient(closest-side,rgba(21,21,21,.3),transparent);z-index:-1;transition:opacity .4s}
+.morder.cai .morder__btn{animation:cair .9s cubic-bezier(.3,1.35,.5,1) both}
+@keyframes cair{from{translate:0 -60vh;rotate:-25deg}}
+.morder__corte.mastiga{animation:mastiga .3s cubic-bezier(.3,1.5,.5,1)}
+@keyframes mastiga{40%{scale:.95}}
+.morder.acabou .morder__corte{opacity:0;scale:.85}
+.morder.acabou .morder__sombra{opacity:0}
+.morder__farelos{position:absolute;inset:0;pointer-events:none;overflow:visible;z-index:4}
+/* grãos de arroz (e alguns de gergelim e salmão) */
+.farelo{position:absolute;width:9px;height:5px;margin:-3px 0 0 -4px;border-radius:50%;background:var(--c);box-shadow:0 0 0 .5px rgba(0,0,0,.18);animation:cai-farelo 1s cubic-bezier(.3,.1,.7,1) both}
+.farelo.gergelim{width:6px;height:3.5px}
+@keyframes cai-farelo{to{translate:var(--dx) var(--dy);rotate:var(--r);opacity:0}}
+.morder__ticket{position:absolute;left:calc(100% - 10px);top:10%;width:220px;display:grid;gap:5px;padding:18px 16px 14px;border-radius:6px;background:var(--verm);color:var(--marfim);
+  outline:1.5px solid var(--marfim);outline-offset:-7px;box-shadow:0 18px 26px -14px rgba(21,21,21,.5);rotate:8deg;transition:rotate .45s cubic-bezier(.34,1.56,.64,1)}
+.morder__ticket:hover{rotate:4deg}
+.morder__nome{font:400 24px/1 var(--titulo);letter-spacing:.02em}
+.morder__desc{font-size:14px;line-height:1.35}
+.morder__quando{font:800 11.5px/1.35 var(--rotulo);letter-spacing:.06em;text-transform:uppercase}
+.morder__status{text-align:center;font:800 12.5px/1.4 var(--rotulo);letter-spacing:.1em;text-transform:uppercase;color:var(--cinza);margin:22px 16px 0}
+.mesa__fechar{position:fixed;top:16px;right:16px;z-index:10;width:48px;height:48px;border:0;border-radius:50%;background:var(--tinta);color:var(--marfim);font:400 30px/1 sans-serif}
+.mesa__seta{position:fixed;top:50%;z-index:10;width:52px;height:52px;margin-top:-26px;border-radius:50%;border:1.5px solid var(--verm);background:#fffaf0;color:var(--verm);font:400 30px/1 sans-serif}
+.mesa__seta[data-dir="-1"]{left:16px}.mesa__seta[data-dir="1"]{right:16px}
+@media (max-width:767px){
+  .mesa__seta{top:auto;bottom:16px;margin:0}
+  .morder__palco{min-height:0;padding:40px 12px 0}
+  .morder__comida{width:min(70vw,290px)}
+  .morder__ticket{position:relative;left:auto;top:auto;width:auto;margin:22px 8px 0;rotate:-2deg}
+  .morder__vao{height:min(64vw,250px)}
+}
+@media (prefers-reduced-motion:reduce){.morder.cai .morder__btn,.morder__corte.mastiga{animation:none}.farelo{display:none}}
+
+/* (2.4) tema escuro no cardápio: o pergaminho continua vermelho; o fundo e a mesa ficam pretos */
+[data-theme=dark] .pag-cardapio{background:#121011}
+[data-theme=dark] .secoes button{color:#ff6b5f;border-color:#ff6b5f}
+[data-theme=dark] .secoes button[aria-current]{background:var(--verm);border-color:var(--verm);color:#fff}
+[data-theme=dark] .mesa{color:var(--marfim);background-color:#121011}
+[data-theme=dark] .morder__l2{color:var(--marfim)}
+[data-theme=dark] .morder__l1{color:#ff6b5f}
+[data-theme=dark] .mesa__fechar{background:var(--marfim);color:#121011}
+[data-theme=dark] .mesa__seta{background:#1c1818;color:#ff6b5f;border-color:#ff6b5f}

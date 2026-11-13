@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cardápio · Hoshi Sushi</title>
+<meta name="description" content="Cardápio do Hoshi Sushi: rodízio em casa, combinados, hot rolls, temakis, yakisobas, teppan e bebidas.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#a91110">
+<link rel="icon" href="assets/img/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@75..100,600..800&family=Bebas+Neue&family=Inria+Serif:wght@400;700&display=swap" rel="stylesheet">
+<script>try{var t=localStorage.getItem('hoshi-tema');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark'}catch(e){}</script>
+<link rel="stylesheet" href="assets/site.css?v=12">
+<link rel="stylesheet" href="assets/cardapio.css?v=5">
+<script defer src="assets/site.js?v=8"></script>
+<script defer src="assets/cardapio-dados.js?v=1"></script>
+<script defer src="assets/cardapio.js?v=5"></script>
+</head>
+<body class="pag-cardapio">
+
+<header class="nav">
+  <nav class="nav-esq" aria-label="Seções">
+    <a href="index.html">Início</a><a href="index.html#horarios">Horários</a><a href="index.html#unidades">Onde estamos</a>
+  </nav>
+  <a class="nav-logo" href="index.html" aria-label="Hoshi Sushi, início"><img src="assets/img/logo.svg" alt="Hoshi Sushi" width="152" height="95"></a>
+  <div class="nav-dir">
+    <a class="so-desk" href="index.html#unidades">(19) 0000-0000</a>
+    <button type="button" class="tema" aria-label="Trocar tema claro ou escuro"><svg class="tema-sol" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3M4.6 4.6l2.1 2.1M17.3 17.3l2.1 2.1M4.6 19.4l2.1-2.1M17.3 6.7l2.1-2.1"/></svg><svg class="tema-lua" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg></button>
+    <a class="btn btn-mini" href="index.html#pedir">Pedir agora</a>
+  </div>
+</header>
+
+<main>
+  <!-- (2.0) pergaminho: desenrola com a rolagem; aberto, o pincel escreve a seção e "Continuar" troca de seção -->
+  <section class="palco-rolo" id="palco">
+    <div class="rolo-fixo">
+      <div class="rolo-topo">
+        <p class="selo">Cardápio</p>
+        <p class="rolo-dica">Role para abrir o pergaminho</p>
+        <nav class="secoes" aria-label="Seções do cardápio"></nav>
+      </div>
+      <div class="pergaminho">
+        <div class="cilindro" aria-hidden="true"></div>
+        <div class="papel">
+          <div class="papel-miolo">
+            <div class="folha-conteudo" aria-live="polite"></div>
+            <img class="pincel" src="assets/img/pincel.svg" alt="" width="90" height="90">
+            <div class="papel-acoes">
+              <button type="button" class="btn-papel" data-dir="-1">‹ Voltar</button>
+              <span class="papel-conta"></span>
+              <button type="button" class="btn-papel" data-dir="1">Continuar ›</button>
+            </div>
+          </div>
+        </div>
+        <div class="cilindro base" aria-hidden="true"></div>
+      </div>
+    </div>
+  </section>
+  <!-- (2.1) mesa: clicar num prato do pergaminho abre aqui; cada clique é uma mordida (mecânica do site da Nico Paneteria) -->
+  <dialog class="mesa" aria-label="Mesa: morda o prato">
+    <button type="button" class="mesa__fechar" aria-label="Fechar">×</button>
+    <button type="button" class="mesa__seta" data-dir="-1" aria-label="Prato anterior">‹</button>
+    <button type="button" class="mesa__seta" data-dir="1" aria-label="Próximo prato">›</button>
+    <section class="morder">
+      <div class="morder__palco">
+        <h2 class="morder__titulo" aria-live="polite"><span class="morder__l1"></span><span class="morder__vao" aria-hidden="true"></span><span class="morder__l2"></span></h2>
+        <div class="morder__comida">
+          <button type="button" class="morder__btn"><span class="morder__corte"><img alt="" draggable="false"></span><span class="morder__sombra"></span></button>
+          <div class="morder__farelos" aria-hidden="true"></div>
+          <div class="morder__ticket"><b class="morder__nome"></b><span class="morder__desc"></span><small class="morder__quando"></small></div>
+        </div>
+      </div>
+      <p class="morder__status" aria-live="polite"></p>
+    </section>
+  </dialog>
+  <p class="cardapio-nota">Preços ilustrativos do modelo de demonstração.
+    Fotos ilustrativas: Pexels.</p>
+</main>
+
+<footer class="rodape">
+  <div class="rodape-grade">
+    <div>
+      <img src="assets/img/logo.svg" alt="Hoshi Sushi" width="152" height="95" loading="lazy">
+      <p>Culinária japonesa feita na hora.</p>
+    </div>
+    <div class="kanji" aria-hidden="true">寿<br>司</div>
+    <div><h4>Contato</h4><p>Rua das Cerejeiras, 100 · Centro</p><p>(19) 0000-0000</p><p>contato@seurestaurante.com.br</p></div>
+    <div><h4>Navegar</h4><p><a href="index.html">Início</a></p><p><a href="index.html#horarios">Horários</a></p><p><a href="index.html#unidades">Onde estamos</a></p><p><a href="index.html#pedir">Pedir agora</a></p></div>
+  </div>
+  <p class="rodape-fim">© 2026 Hoshi Sushi · Modelo de demonstração · Fotos: Pexels</p>
+</footer>
+
+<!-- (2.4) poucas agulhas (pétalas no tema escuro) caindo pelo site todo -->
+<div class="agulhas" aria-hidden="true"></div>
+</body>
+</html>

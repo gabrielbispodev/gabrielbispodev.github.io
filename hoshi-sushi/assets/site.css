@@ -1,0 +1,378 @@
+/* Hoshi Sushi (modelo): estrutura do template Kaiseki (Framer). Código próprio. */
+:root{
+  --verm:#a91110; --verm-esc:#8a0d0d; --creme:#f6f2ec; --papel:#fffaf3; --tinta:#171717; --cinza:#5d5650;
+  --titulo:'Bebas Neue',Impact,sans-serif; /* a Bayon da referência não tem acentos */ --rotulo:'Anybody',system-ui,sans-serif; --texto:'Inria Serif',Georgia,serif;
+  --raio:18px;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{background:var(--creme);color:var(--tinta);font:400 17px/1.55 var(--texto);overflow-x:hidden}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit}
+h1,h2,h3{font-family:var(--titulo);font-weight:400;line-height:.95;letter-spacing:.01em;text-transform:uppercase}
+.selo{font:800 12px/1.2 var(--rotulo);letter-spacing:.14em;text-transform:uppercase;color:var(--verm);text-align:center;margin-bottom:12px}
+.selo.claro{color:#ffd9d4}
+
+/* Botões */
+.btn{display:inline-block;background:var(--verm);color:#fff;font:800 13px/1 var(--rotulo);letter-spacing:.08em;text-transform:uppercase;
+  text-decoration:none;padding:16px 24px;border-radius:6px;border:2px solid var(--verm);transition:transform .2s,background .2s}
+.btn:hover{transform:translateY(-2px);background:var(--verm-esc)}
+.btn-linha{background:transparent;color:var(--tinta);border-color:var(--tinta)}
+.btn-linha:hover{background:var(--tinta);color:#fff}
+.btn-claro{background:transparent;border-color:#fff}
+.btn-claro:hover{background:#fff;color:var(--verm)}
+.btn-mini{padding:11px 16px;font-size:12px}
+
+/* (2.0) cursor de hashi no site todo; segurando um grão de arroz sobre links e botões */
+html{cursor:url(img/hashi.svg) 2 2,auto}
+a,button,[role=tab],label,summary{cursor:url(img/hashi-pega.svg) 3 3,pointer}
+
+/* (2.0) Intro japonesa: seigaiha, ensō a pincel, kana, selo com o logo, nome e portas de shoji */
+:root{--marfim:#f2e8d5}
+.intro{position:fixed;inset:0;z-index:100;display:grid;place-items:center;color:var(--marfim);overflow:hidden}
+.intro-porta{position:absolute;top:0;bottom:0;width:50.5%;background-color:var(--verm-esc);
+  background-image:radial-gradient(circle at 50% 100%,transparent 0 10px,rgba(242,232,213,.09) 10px 11.5px,transparent 11.5px 17px,rgba(242,232,213,.09) 17px 18.5px,transparent 18.5px 24px,rgba(242,232,213,.09) 24px 25.5px,transparent 25.5px);
+  background-size:56px 28px;transition:transform 1.1s cubic-bezier(.75,0,.2,1)}
+.intro-porta.esq{left:0;border-right:2px solid rgba(242,232,213,.35)}
+.intro-porta.dir{right:0;background-position:28px 14px}
+.intro-cena{position:relative;display:grid;justify-items:center;gap:10px;text-align:center;transition:opacity .5s,transform .7s}
+.intro-kana{position:absolute;left:calc(100% + 18px);top:4px;writing-mode:vertical-rl;font:400 clamp(26px,3.4vw,44px)/1 serif;letter-spacing:.25em;
+  opacity:0;animation:kana .9s .55s cubic-bezier(.2,.7,.2,1) forwards}
+.intro-selo{position:relative;width:clamp(150px,20vw,220px);aspect-ratio:1;display:grid;place-items:center}
+.enso{position:absolute;inset:-8%;width:116%;overflow:visible;fill:none;stroke:var(--marfim);stroke-width:9;stroke-linecap:round;filter:url(#pincel);
+  stroke-dasharray:1;stroke-dashoffset:1;animation:enso .95s .1s cubic-bezier(.6,0,.3,1) forwards}
+.intro-selo img{width:66%;padding:9% 7%;background:var(--marfim);border-radius:50%;aspect-ratio:1;object-fit:contain;box-shadow:0 0 0 4px var(--verm-esc),0 0 0 6px var(--marfim);
+  opacity:0;transform:scale(1.8) rotate(-14deg);animation:carimbo .45s 1s cubic-bezier(.3,1.6,.5,1) forwards}
+.intro-nome{display:flex;gap:.04em;font:400 clamp(70px,13vw,190px)/.9 var(--titulo);letter-spacing:.06em;margin-top:6px}
+.intro-nome span{display:inline-block;opacity:0;transform:translateY(60%);animation:letra .6s cubic-bezier(.2,.8,.2,1) forwards}
+.intro-nome span:nth-child(1){animation-delay:1.3s}.intro-nome span:nth-child(2){animation-delay:1.38s}.intro-nome span:nth-child(3){animation-delay:1.46s}
+.intro-nome span:nth-child(4){animation-delay:1.54s}.intro-nome span:nth-child(5){animation-delay:1.62s}.intro-nome span:nth-child(6){animation-delay:1.7s}
+.intro-sub{font:800 clamp(11px,1.3vw,15px)/1 var(--rotulo);letter-spacing:.5em;text-transform:uppercase;opacity:0;animation:kana .7s 1.95s forwards}
+.intro-pular{position:absolute;right:20px;bottom:20px;background:none;border:1px solid rgba(242,232,213,.5);color:var(--marfim);font:800 11px/1 var(--rotulo);
+  letter-spacing:.14em;text-transform:uppercase;padding:10px 14px;border-radius:6px}
+.intro.abre .intro-cena{opacity:0;transform:scale(1.06)}
+.intro.abre .intro-porta.esq{transform:translateX(-101%)}
+.intro.abre .intro-porta.dir{transform:translateX(101%)}
+.intro.abre .intro-pular{opacity:0}
+.intro.fora{display:none}
+@keyframes enso{to{stroke-dashoffset:0}}
+@keyframes carimbo{to{opacity:1;transform:none}}
+@keyframes letra{to{opacity:1;transform:none}}
+@keyframes kana{from{opacity:0;clip-path:inset(0 0 100% 0)}to{opacity:1;clip-path:inset(0)}}
+
+/* Navegação */
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+  padding:10px 20px;
+  /* (2.1) vidro: o que passa por baixo fica bem desfocado, com brilho em cima e filete claro embaixo (como na SushiMate) */
+  background:linear-gradient(180deg,rgba(255,255,255,.42),rgba(255,255,255,.12));
+  -webkit-backdrop-filter:blur(18px) saturate(1.6);backdrop-filter:blur(18px) saturate(1.6);
+  border-bottom:1px solid rgba(255,255,255,.55);box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 10px 30px -12px rgba(23,23,23,.25)}
+.pag-cardapio .nav{background:linear-gradient(180deg,rgba(255,255,255,.3),rgba(255,255,255,.06))}
+.nav-esq{display:flex;gap:22px}
+.nav-esq a,.nav-dir a:not(.btn){font:800 12px/1 var(--rotulo);letter-spacing:.1em;text-transform:uppercase;text-decoration:none}
+.nav-esq a:hover{color:var(--verm)}
+.nav-logo img{height:52px;width:auto}
+.nav-dir{display:flex;justify-content:flex-end;align-items:center;gap:18px}
+
+/* (2.0) Herói: papel com grão, sol vermelho, pinheiro em nanquim à direita, prato que gira e faixa de pratos embaixo */
+.heroi{position:relative;min-height:100svh;padding:140px 20px 0;overflow:hidden;display:flex;flex-direction:column;align-items:center;
+  background:#f4efe6 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .25 0 0 0 0 .2 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E")}
+.sol{position:absolute;z-index:0;width:clamp(220px,30vw,440px);aspect-ratio:1;border-radius:50%;background:#e3261c;right:12%;top:15%}
+.arvore{position:absolute;z-index:0;right:-1%;bottom:60px;width:min(46vw,calc((100svh - 120px) * .93));height:auto;pointer-events:none}
+/* (2.4) poucas agulhas caindo pelo site todo (camada fixa sobre a tela, sem pegar cliques), balançando com o vento.
+   No tema escuro viram pétalas de sakura. */
+:root{--queda:url(img/agulha.svg)}
+.agulhas{position:fixed;inset:0;z-index:40;pointer-events:none;overflow:hidden}
+.agulha{position:absolute;top:-24px;width:20px;height:14px;background:var(--queda) center/contain no-repeat;opacity:0;
+  animation:agulha var(--d,18s) linear var(--atraso,0s) infinite}
+@keyframes agulha{
+  0%{opacity:0;transform:translate(0,0) rotate(var(--r0))}
+  6%{opacity:.85}
+  25%{transform:translate(var(--s),28vh) rotate(calc(var(--r0) + 90deg))}
+  50%{transform:translate(calc(var(--s) * -.7 + var(--vento) * .5),55vh) rotate(calc(var(--r0) + 170deg))}
+  75%{transform:translate(calc(var(--s) * .8 + var(--vento) * .75),82vh) rotate(calc(var(--r0) + 250deg))}
+  94%{opacity:.75}
+  100%{opacity:0;transform:translate(var(--vento),106vh) rotate(calc(var(--r0) + 330deg))}}
+.arvore.sakura{display:none}
+/* (2.5) pétala de sakura: cai girando em 3D (vira de frente e de costas), como no Kigo */
+@keyframes petala{
+  0%{opacity:0;transform:translate(0,0) rotate3d(1,.3,0,0deg) rotate(var(--r0))}
+  6%{opacity:.95}
+  25%{transform:translate(var(--s),28vh) rotate3d(1,.3,0,160deg) rotate(calc(var(--r0) + 40deg))}
+  50%{transform:translate(calc(var(--s) * -.7 + var(--vento) * .5),55vh) rotate3d(.4,1,0,300deg) rotate(calc(var(--r0) + 90deg))}
+  75%{transform:translate(calc(var(--s) * .8 + var(--vento) * .75),82vh) rotate3d(1,.2,0,470deg) rotate(calc(var(--r0) + 130deg))}
+  94%{opacity:.8}
+  100%{opacity:0;transform:translate(var(--vento),106vh) rotate3d(.5,1,0,620deg) rotate(calc(var(--r0) + 170deg))}}
+.kanji-lado{position:absolute;left:28px;top:150px;writing-mode:vertical-rl;font:400 clamp(40px,4.4vw,68px)/1.1 serif;color:#1a1412;opacity:.85}
+.heroi-txt{position:relative;z-index:1;max-width:min(640px,48vw);align-self:flex-start;margin-left:max(110px,9vw)}
+@media (max-width:1199px){.kanji-lado{display:none}.heroi-txt{margin-left:4vw}}
+@media (min-width:768px) and (max-width:1023px){.heroi-txt{max-width:56vw}.arvore{width:50vw;opacity:.85}.sol{right:4%}}
+.heroi .selo{text-align:left}
+.heroi h1{font-size:clamp(56px,8.6vw,132px);margin-bottom:22px}
+.lead{max-width:520px;margin:0 0 28px;color:#3d3833}
+.botoes{display:flex;gap:12px;flex-wrap:wrap}
+.prato-giro{position:relative;z-index:1;width:clamp(300px,40vw,580px);aspect-ratio:1;margin:28px 0 -16%;border-radius:50%;
+  filter:drop-shadow(0 28px 30px rgba(0,0,0,.4));will-change:transform}
+.faixa-pratos{position:relative;z-index:2;align-self:stretch;margin:0 -20px;background:var(--tinta);overflow:hidden;padding:14px 0}
+.faixa-trilho{display:flex;width:max-content;animation:corre 38s linear infinite}
+.faixa-pratos:hover .faixa-trilho{animation-play-state:paused}
+.faixa-pratos a{display:flex;align-items:center;gap:12px;padding:0 26px;color:#f2e8d5;text-decoration:none;font:800 14px/1 var(--rotulo);letter-spacing:.12em;text-transform:uppercase;transition:color .2s}
+.faixa-pratos a:hover{color:#ff6b5f}
+.faixa-pratos img{width:38px;height:38px;border-radius:50%;object-fit:cover;border:2px solid #f2e8d5;transition:transform .3s}
+.faixa-pratos a:hover img{transform:scale(1.25) rotate(-12deg)}
+@keyframes corre{to{transform:translateX(-50%)}}
+.centro-btn{text-align:center;margin-top:84px}
+
+/* Faixa de fotos */
+.faixa{position:relative;z-index:2;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:0 20px;max-width:1400px;margin:0 auto}
+.faixa img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--raio)}
+
+/* Painel vermelho */
+.painel-wrap{padding:64px 20px;max-width:1400px;margin:0 auto}
+.painel{background:var(--verm);color:#fff;border-radius:28px;padding:56px;display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center;
+  outline:2px solid rgba(255,255,255,.35);outline-offset:-14px;
+  background-image:radial-gradient(circle at 20% 20%,rgba(255,255,255,.08) 0 2px,transparent 3px);background-size:26px 26px}
+.painel h2{font-size:clamp(38px,4.6vw,64px);margin-bottom:18px}
+.painel p{max-width:520px;color:#ffe9e5}
+.painel img{width:100%;aspect-ratio:5/4;object-fit:cover;object-position:center 25%;border-radius:var(--raio)}
+/* (2.5) vídeo de yakisoba no lugar da foto da equipe */
+.painel-video{width:100%;aspect-ratio:5/4;object-fit:cover;border-radius:var(--raio);background:#000;box-shadow:0 20px 40px -18px rgba(0,0,0,.6)}
+.painel.centro{grid-template-columns:1fr;text-align:center;justify-items:center;gap:14px;padding:72px 24px}
+.painel.centro p{margin-bottom:10px}
+
+/* Seções */
+.secao{padding:80px 20px;max-width:1400px;margin:0 auto}
+.titulo{font-size:clamp(40px,5.6vw,76px);text-align:center;margin-bottom:44px}
+.titulo.esq{text-align:left;margin-bottom:0}
+
+/* Cards */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.card{background:var(--papel);border:2px solid #e9b7a8;border-radius:var(--raio);padding:30px 26px 0;text-align:center;overflow:hidden;
+  display:flex;flex-direction:column;align-items:center;transition:transform .3s,box-shadow .3s}
+.card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(169,17,16,.14)}
+.card h3{font-size:30px;margin-bottom:6px}
+.preco{font:800 13px/1 var(--rotulo);letter-spacing:.1em;text-transform:uppercase;color:var(--verm);margin-bottom:14px}
+.card p:not(.preco){color:var(--cinza);font-size:15px;max-width:300px}
+.card img{width:78%;aspect-ratio:1;object-fit:cover;border-radius:50%;margin-top:26px;margin-bottom:-26%;box-shadow:0 14px 30px rgba(0,0,0,.25);transition:transform .6s}
+.card:hover img{transform:rotate(12deg) scale(1.12)}
+/* (2.2) o card é um link para o cardápio */
+a.card{color:inherit;text-decoration:none}
+.card:focus-visible{outline:2px dashed var(--verm);outline-offset:4px}
+.card-ir{margin-top:14px;font:800 12px/1 var(--rotulo);letter-spacing:.1em;text-transform:uppercase;color:var(--verm);opacity:.75;transition:opacity .2s,translate .2s}
+.card:hover .card-ir{opacity:1;translate:4px 0}
+
+/* CTA escuro */
+.cta-escuro{position:relative;background:var(--tinta);color:#fff;text-align:center;padding:84px 20px;margin:60px 0;display:grid;grid-template-columns:1fr 2fr 1fr;align-items:center;gap:20px}
+.cta-escuro h2{font-size:clamp(34px,4.2vw,58px);margin-bottom:26px}
+.unid-botoes{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.cta-foto{width:100%;max-width:280px;aspect-ratio:3/4;object-fit:cover;border-radius:var(--raio);border:6px solid #fff;box-shadow:0 20px 40px rgba(0,0,0,.4)}
+.cta-foto.esq{transform:rotate(-6deg) translateY(-30px);justify-self:end}
+.cta-foto.dir{transform:rotate(6deg) translateY(30px)}
+
+/* Passos */
+.passos{list-style:none;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:28px;text-align:center}
+.passos span{display:inline-grid;place-items:center;width:58px;height:58px;border-radius:50%;background:var(--verm);color:#fff;
+  font:800 18px/1 var(--rotulo);outline:2px solid var(--verm);outline-offset:4px;margin-bottom:18px}
+.passos h3{font-size:26px;margin-bottom:8px}
+.passos p{color:var(--cinza);font-size:15px}
+
+/* Depoimentos */
+.depos{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.depos blockquote{background:var(--papel);border:2px solid #e9b7a8;border-radius:var(--raio);padding:30px;text-align:center}
+.estrelas{color:var(--verm);letter-spacing:.2em;margin-bottom:12px}
+.depos p{font-style:italic;margin-bottom:16px}
+.depos cite{font:800 12px/1 var(--rotulo);letter-spacing:.12em;text-transform:uppercase;font-style:normal}
+
+/* Colagem */
+.colagem-topo{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end;margin-bottom:40px}
+.colagem-topo .selo{text-align:left}
+.colagem-topo>p{color:var(--cinza)}
+/* (2.4) carrossel 3D: o card da frente em tamanho cheio, os vizinhos de lado, mais fundos e girados ~28°
+   (medidas do componente "3D Service carousel" do Framer: perspectiva 1200px, transição .6s cubic-bezier(.23,1,.32,1)) */
+.carrossel{--cw:clamp(230px,28vw,380px);overflow-x:clip;padding-block:10px} /* os cards de lado não podem alargar a página */
+.carrossel-palco{position:relative;height:calc(var(--cw) * 1.3);perspective:1200px;touch-action:pan-y;user-select:none;outline:none;cursor:grab}
+.carrossel-palco:active{cursor:grabbing}
+.carrossel-palco figure{position:absolute;left:50%;top:0;width:var(--cw);height:100%;margin:0 0 0 calc(var(--cw) / -2);border-radius:20px;overflow:hidden;
+  background:#111;box-shadow:0 26px 40px -18px rgba(0,0,0,.55);transition:transform .6s cubic-bezier(.23,1,.32,1),opacity .6s,filter .6s}
+.carrossel-palco img{width:100%;height:100%;object-fit:cover;pointer-events:none;transition:scale .6s}
+/* (2.8) card reagindo ao cursor: segue rápido enquanto o mouse mexe; ao sair volta com mola (classe .volta por 0,7 s);
+   o brilho acompanha o ponteiro */
+.carrossel-palco figure.mexe{transition:transform .12s ease-out,opacity .6s,filter .6s,box-shadow .3s;box-shadow:0 40px 60px -20px rgba(0,0,0,.65)}
+.carrossel-palco figure.volta{transition:transform .7s cubic-bezier(.34,1.5,.5,1),opacity .6s,filter .6s}
+.carrossel-palco figure::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .3s;
+  background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.32),rgba(255,255,255,.06) 35%,transparent 60%)}
+.carrossel-palco figure.mexe::after{opacity:1}
+.carrossel-palco figure.frente{cursor:zoom-in}
+.carrossel-palco figure.frente:hover img{scale:1.05}
+.carrossel-palco figcaption{position:absolute;left:0;right:0;bottom:0;padding:60px 20px 20px;color:#fff;font:400 clamp(22px,2.2vw,30px)/1 var(--titulo);
+  background:linear-gradient(transparent,rgba(0,0,0,.78));opacity:0;transition:opacity .4s}
+.carrossel-palco figure.frente figcaption{opacity:1}
+.carrossel-palco figcaption small{display:block;width:max-content;margin-bottom:8px;padding:6px 10px;border-radius:999px;background:var(--verm);font:800 10px/1 var(--rotulo);letter-spacing:.12em;text-transform:uppercase}
+.carrossel-nav{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:26px}
+.carrossel-seta{width:46px;height:46px;border-radius:50%;border:1.5px solid var(--verm);background:transparent;color:var(--verm);font:400 26px/1 sans-serif;transition:background .2s,color .2s}
+.carrossel-seta:hover{background:var(--verm);color:#fff}
+.carrossel-pontos{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;max-width:60vw}
+.carrossel-pontos button{width:8px;height:8px;padding:0;border:0;border-radius:99px;background:rgba(169,17,16,.25);transition:width .3s,background .3s}
+.carrossel-pontos button[aria-selected=true]{width:26px;background:var(--verm)}
+
+/* (2.4) visualizador de fotos */
+[data-galeria] img{cursor:zoom-in}
+.lupa{width:100%;height:100%;max-width:100%;max-height:100%;margin:0;padding:0;border:0;background:rgba(12,10,10,.92);display:none;place-items:center}
+.lupa[open]{display:grid;animation:lupa-abre .3s ease}
+@keyframes lupa-abre{from{opacity:0}}
+.lupa::backdrop{background:transparent}
+.lupa figure{margin:0;display:grid;justify-items:center;gap:14px}
+.lupa img{max-width:min(92vw,1400px);max-height:80vh;border-radius:12px;box-shadow:0 30px 60px rgba(0,0,0,.6);animation:lupa-img .35s cubic-bezier(.2,.8,.2,1)}
+@keyframes lupa-img{from{scale:.92;opacity:0}}
+.lupa figcaption{color:#f2e8d5;font:800 13px/1.3 var(--rotulo);letter-spacing:.1em;text-transform:uppercase;text-align:center}
+.lupa-fechar{position:fixed;top:16px;right:16px;width:48px;height:48px;border-radius:50%;border:0;background:#f2e8d5;color:#171717;font:400 30px/1 sans-serif}
+.lupa-seta{position:fixed;top:50%;margin-top:-26px;width:52px;height:52px;border-radius:50%;border:1.5px solid #f2e8d5;background:rgba(0,0,0,.35);color:#f2e8d5;font:400 30px/1 sans-serif}
+.lupa-seta[data-dir="-1"]{left:16px}.lupa-seta[data-dir="1"]{right:16px}
+
+/* Horários */
+.abas{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:28px}
+.abas button{font:800 13px/1 var(--rotulo);letter-spacing:.08em;text-transform:uppercase;padding:14px 22px;border-radius:6px;
+  border:2px solid var(--verm);background:transparent;color:var(--verm);cursor:pointer}
+.abas button[aria-selected=true]{background:var(--verm);color:#fff}
+.quadro{display:grid;grid-template-columns:repeat(3,1fr);gap:0;background:var(--papel);border:2px solid #e9b7a8;border-radius:var(--raio);padding:12px}
+.quadro[hidden]{display:none}
+.quadro>div{padding:22px 24px}
+.quadro>div+div{border-left:1px solid #ecd2c7}
+.quadro h3{font-size:28px;color:var(--verm);margin-bottom:12px}
+.quadro p{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dashed #e3cfc4;padding:8px 0;font-size:15px}
+.quadro b{font-family:var(--rotulo);font-size:14px;white-space:nowrap}
+.quadro small{display:block;margin-top:12px;color:var(--cinza);font-size:13px}
+
+/* Equipe */
+.equipe{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.equipe>img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--raio)}
+.equipe h2{font-family:var(--texto);font-weight:700;text-transform:none;font-size:clamp(28px,2.8vw,40px);line-height:1.15;margin-bottom:16px}
+.equipe p{color:var(--cinza);margin-bottom:24px}
+.numeros{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:28px}
+.numeros div{background:var(--papel);border:1px solid #e9b7a8;border-radius:12px;padding:16px 8px;text-align:center}
+.numeros b{display:block;font:400 34px/1 var(--titulo);color:var(--verm)}
+.numeros span{font:800 10px/1.2 var(--rotulo);letter-spacing:.08em;text-transform:uppercase}
+
+/* Unidades */
+.unidades{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.unidades article{background:var(--papel);border-radius:var(--raio);overflow:hidden;padding-bottom:26px}
+.unidades img{width:100%;aspect-ratio:16/10;object-fit:cover;margin-bottom:20px}
+.unidades h3,.unidades p,.unidades .btn{margin-left:24px;margin-right:24px}
+.unidades h3{font-size:34px;margin-bottom:8px}
+.unidades p{font-size:15px;margin-bottom:10px}
+.unidades small{color:var(--cinza)}
+.unidades .btn{margin-top:8px}
+/* (2.5) botões do Instagram nos cards das unidades */
+.unidades article{display:flex;flex-direction:column}
+.unid-acoes{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:auto 24px 0;padding-top:8px}
+.unidades .unid-acoes .btn{margin:0}
+.btn-insta{display:inline-flex;align-items:center;gap:7px;font:800 12px/1 var(--rotulo);letter-spacing:.06em;color:var(--verm);text-decoration:none;padding:10px 12px;border-radius:999px;
+  background:linear-gradient(var(--papel),var(--papel)) padding-box,linear-gradient(45deg,#f7b733,#e1306c,#833ab4) border-box;border:2px solid transparent;transition:transform .2s}
+.btn-insta:hover{transform:translateY(-2px)}
+.btn-insta svg,.btn-insta-grande svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2}
+.btn-insta svg .cheio,.btn-insta-grande svg .cheio{fill:currentColor;stroke:none}
+.btn-insta-grande{display:inline-flex;align-items:center;gap:8px}
+.centro-flex{justify-content:center}
+.rodape-insta{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.rodape .btn-insta{background:linear-gradient(#171717,#171717) padding-box,linear-gradient(45deg,#f7b733,#e1306c,#833ab4) border-box;color:#f2e8d5}
+[data-theme=dark] .rodape .btn-insta{background:linear-gradient(#080707,#080707) padding-box,linear-gradient(45deg,#f7b733,#e1306c,#833ab4) border-box}
+[data-theme=dark] .btn-insta{color:#ff8a7f}
+
+/* Rodapé */
+.rodape{background:var(--tinta);color:#e9e2d8;padding:64px 20px 24px}
+.rodape-grade{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1.4fr .6fr 1fr 1fr;gap:40px}
+.rodape img{height:64px;width:auto;margin-bottom:16px}
+.rodape p{font-size:15px;margin-bottom:8px}
+.rodape h4{font:800 12px/1 var(--rotulo);letter-spacing:.14em;text-transform:uppercase;color:#ff6b5f;margin-bottom:16px}
+.kanji{font:400 64px/1.1 serif;color:#c9a46a;opacity:.8}
+.rodape-fim{max-width:1400px;margin:40px auto 0;padding-top:20px;border-top:1px solid #333;font-size:13px;color:#9a948c}
+
+/* Animação de entrada nas seções */
+.revela{opacity:0;transform:translateY(30px);transition:opacity .8s,transform .8s}
+.revela.visto{opacity:1;transform:none}
+
+/* Tablet */
+@media (max-width:1023px){
+  .cards,.depos,.unidades{grid-template-columns:repeat(2,1fr)}
+  .passos{grid-template-columns:repeat(2,1fr)}
+  .cta-escuro{grid-template-columns:1fr}
+  .cta-foto{display:none}
+  .equipe{grid-template-columns:1fr}
+  .rodape-grade{grid-template-columns:1fr 1fr}
+  .kanji{display:none}
+}
+/* Celular */
+@media (max-width:767px){
+  body{font-size:16px}
+  .nav{grid-template-columns:auto 1fr;padding:8px 16px}
+  .nav-esq,.so-desk{display:none}
+  .nav-logo img{height:44px}
+  /* (2.8) celular: lua + árvore centralizadas no topo, como no PC (árvore na frente da lua); o texto vem logo abaixo */
+  .heroi{padding:400px 16px 0}
+  .heroi-txt{margin-left:0;align-self:center;text-align:center;max-width:none}
+  .heroi .selo{text-align:center}
+  .lead{margin:0 auto 24px}
+  .botoes{justify-content:center}
+  /* (2.6) árvore sem distorção: só a largura manda, a altura segue a proporção da imagem */
+  .arvore{opacity:1;width:min(280px,76vw);height:auto;right:auto;left:50%;translate:-44% 0;bottom:auto;top:78px}
+  /* (2.6) Anybody mais estreita no celular: a largura padrão parecia esticada nos rótulos pequenos */
+  body{font-variation-settings:'wdth' 82}
+  .sol{width:min(220px,58vw);right:auto;left:50%;translate:-50% 0;top:110px;opacity:1}
+  .kanji-lado{display:none}
+  .prato-giro{width:84vw;margin-bottom:-22%}
+  .faixa-pratos{margin:0 -16px}
+  .faixa{grid-template-columns:repeat(2,1fr);gap:10px;padding:0 16px}
+  .painel-wrap{padding:48px 16px}
+  .painel{grid-template-columns:1fr;padding:40px 26px}
+  .secao{padding:56px 16px}
+  .titulo{margin-bottom:30px}
+  .cards,.depos,.unidades,.passos{grid-template-columns:1fr}
+  .card img{width:62%}
+  .colagem-topo{grid-template-columns:1fr;gap:16px}
+  .carrossel{--cw:62vw}
+  .carrossel-pontos{display:none}
+  .lupa-seta{top:auto;bottom:16px;margin:0}
+  .quadro{grid-template-columns:1fr}
+  .quadro>div+div{border-left:0;border-top:1px solid #ecd2c7}
+  .numeros{grid-template-columns:repeat(2,1fr)}
+  .rodape-grade{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .revela{opacity:1;transform:none}
+}
+
+/* (2.4) botão de tema: lua no claro (vai para o escuro), sol no escuro */
+.tema{width:40px;height:40px;flex:none;display:grid;place-items:center;border-radius:50%;border:1.5px solid currentColor;background:transparent;color:inherit;transition:rotate .5s}
+.tema:hover{rotate:25deg}
+.tema svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+.tema-sol,[data-theme=dark] .tema-lua{display:none}
+[data-theme=dark] .tema-sol{display:block}
+
+/* (2.4) Tema escuro: o creme vira preto, o texto vira marfim, o pinheiro vira sakura e as agulhas viram pétalas */
+:root[data-theme=dark]{--creme:#121011;--papel:#1c1818;--cinza:#b7aca2;--queda:url(img/petala.svg);color-scheme:dark}
+[data-theme=dark] body{color:var(--marfim)}
+[data-theme=dark] .nav{background:linear-gradient(180deg,rgba(30,24,24,.62),rgba(18,14,14,.3));border-bottom-color:rgba(242,232,213,.12);box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 10px 30px -12px rgba(0,0,0,.6)}
+[data-theme=dark] .nav-logo img{filter:drop-shadow(0 0 1px rgba(242,232,213,.9)) drop-shadow(0 0 6px rgba(242,232,213,.25))}
+[data-theme=dark] .heroi{background-color:#141011}
+[data-theme=dark] .arvore.pinheiro{display:none}
+/* (2.5) galho de sakura entrando pela direita, por cima do sol (como no Kigo) */
+[data-theme=dark] .arvore.sakura{display:block;top:104px;bottom:auto;right:1%;width:min(48vw,calc((100svh - 150px) * 1.18))} /* (2.7) sakura bonsai no vaso, inteira na primeira dobra: atrás do texto, na frente do sol */
+[data-theme=dark] .agulha{width:18px;height:15px;animation-name:petala}
+@media (max-width:767px){[data-theme=dark] .arvore.sakura{width:min(330px,88vw);right:auto;left:50%;translate:-55% 0;top:96px;opacity:1}}
+[data-theme=dark] .sol{background:#c8231b;box-shadow:0 0 120px 20px rgba(200,35,27,.25)}
+[data-theme=dark] .kanji-lado{color:var(--marfim)}
+[data-theme=dark] .lead{color:#d8cdbf}
+[data-theme=dark] .btn-linha{color:var(--marfim);border-color:var(--marfim)}
+[data-theme=dark] .btn-linha:hover{background:var(--marfim);color:#121011}
+[data-theme=dark] :is(.card,.depos blockquote,.quadro,.numeros div){border-color:#4d2522}
+[data-theme=dark] .quadro>div+div{border-color:#3a2220}
+[data-theme=dark] .quadro p{border-color:#3a2a28}
+[data-theme=dark] :is(.faixa-pratos,.cta-escuro,.rodape){background:#080707}
+[data-theme=dark] .cta-escuro{border-block:1px solid #2a1a19}
+[data-theme=dark] .carrossel-pontos button{background:rgba(242,232,213,.25)}
+[data-theme=dark] .carrossel-pontos button[aria-selected=true]{background:var(--verm)}
+[data-theme=dark] .abas button[aria-selected=false]{color:#ff6b5f;border-color:#ff6b5f}
+[data-theme=dark] .selo{color:#ff6b5f}
+[data-theme=dark] .selo.claro{color:#ffd9d4}
+[data-theme=dark] .preco,[data-theme=dark] .card-ir,[data-theme=dark] .quadro h3,[data-theme=dark] .numeros b,[data-theme=dark] .estrelas{color:#ff6b5f}
