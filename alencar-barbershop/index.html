@@ -8,7 +8,7 @@
 <link rel="preload" href="fontes/manrope-500.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fontes/sora-600.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="img/o/padrao-noite-g.webp" as="image" fetchpriority="high" media="(min-width:761px)">
-<link rel="preload" href="img/o/padrao-noite-m.webp" as="image" fetchpriority="high" media="(max-width:760px)">
+<link rel="preload" href="img/o/padrao-noite-c.webp" as="image" fetchpriority="high" media="(max-width:760px)">
 <link rel="canonical" href="https://gabrielbispodev.github.io/alencar-barbershop/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Alencar Barbershop | Barbearia em Campinas, 3 unidades">
@@ -125,7 +125,14 @@ header.rolou .nav .logo{max-width:0;opacity:0}
 .heroi-fotos div::after{content:"";position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);height:100%;aspect-ratio:var(--ar);max-width:100%;background:var(--img) center/cover no-repeat;
   -webkit-mask-image:linear-gradient(90deg,transparent,#000 16%,#000 84%,transparent),linear-gradient(transparent,#000 8%,#000 82%,transparent);-webkit-mask-composite:source-in;
   mask-image:linear-gradient(90deg,transparent,#000 16%,#000 84%,transparent),linear-gradient(transparent,#000 8%,#000 82%,transparent);mask-composite:intersect}
-@media (max-width:760px){.heroi-fotos div::after{background-image:var(--img-m,var(--img))}}
+@media (max-width:760px){
+  /* celular: a foto vira uma faixa limpa no alto, na largura da tela e na proporção dela; o texto começa logo abaixo */
+  main .heroi{padding-top:calc(66px + var(--foto-h,62vw) + 10px)}
+  .heroi-fotos div::after{top:66px;bottom:auto;left:0;transform:none;width:100%;height:var(--foto-h,62vw);max-width:none;aspect-ratio:auto;
+    background-image:var(--img-c,var(--img));background-size:cover;background-position:center;
+    -webkit-mask-image:linear-gradient(#000 82%,transparent);-webkit-mask-composite:source-over;mask-image:linear-gradient(#000 82%,transparent);mask-composite:add}
+  .heroi::after{background:none}
+}
 .heroi::after{content:"";position:absolute;inset:0;z-index:-1;background:var(--veu);transition:background .6s}
 .heroi .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
 .heroi h1,.heroi .sub,.selo{text-shadow:var(--sombra-txt)}
@@ -318,7 +325,7 @@ dialog.lb img{max-height:84vh;width:auto;border-radius:16px;margin:auto}
 .hist blockquote{font-family:"Sora",sans-serif;font-weight:600;font-size:24px;line-height:1.35;letter-spacing:-.01em;margin:40px 0 10px}
 .hist cite{font-style:normal;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ouro)}
 .mini{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:40px}
-.mini img{border-radius:14px;aspect-ratio:1;object-fit:cover;box-shadow:0 0 0 4px var(--bg)}
+.mini img{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:center 35%;border-radius:14px;box-shadow:0 0 0 4px var(--bg)}
 
 /* ---------- unidades: mapa grande com pinos + cards de vidro ---------- */
 .mapa{border-radius:28px;overflow:hidden;aspect-ratio:2200/1000;box-shadow:0 8px 30px rgba(0,0,0,.35);border:1px solid var(--line)}
@@ -445,7 +452,7 @@ main>section:not(.heroi){content-visibility:auto;contain-intrinsic-size:auto 900
 <!-- HERÓI -->
 <section class="heroi">
   <div class="heroi-fotos" aria-hidden="true">
-    <div class="on" data-foto="padrao-noite" style="--img:url(img/o/padrao-noite-g.webp);--img-m:url(img/o/padrao-noite-m.webp);--ar:1049/1008"></div>
+    <div class="on" data-foto="padrao-noite" style="--img:url(img/o/padrao-noite-g.webp);--img-c:url(img/o/padrao-noite-c.webp);--ar:1049/1008"></div>
     <div data-img="img/o/padrao-dia-g.webp" data-foto="padrao-dia" style="--ar:1049/1008"></div>
     <div data-img="img/o/u1-gemini-g.webp" class="inteira" data-foto="u1" style="--ar:16/9"></div>
     <div data-img="img/o/u2-fiel-g.webp" data-foto="u2" style="--ar:1536/2752"></div>
@@ -711,10 +718,12 @@ document.getElementById('agendarZap').addEventListener('click',e=>{if(uid)return
   l.querySelector('.loja').focus()});
 function marcar(sel,b){document.querySelectorAll(sel).forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'))}
 // fundo: foto da unidade escolhida; sem unidade, a fachada de noite (tema escuro) ou de dia (tema claro)
+function alturaFoto(d){const [a,b]=(d.style.getPropertyValue('--ar')||'1').split('/').map(Number);const ar=b?a/b:a;
+  document.querySelector('.heroi').style.setProperty('--foto-h',`min(56vh,${(100/ar).toFixed(2)}vw)`)}
 function atualizarFundo(){
-  document.querySelectorAll('.heroi-fotos div[data-img]').forEach(d=>{if(d.dataset.foto===(uid||(raiz.dataset.tema==='claro'?'padrao-dia':'padrao-noite'))){d.style.setProperty('--img',`url(${d.dataset.img})`);d.style.setProperty('--img-m',`url(${d.dataset.img.replace('-g.webp','-m.webp')})`);d.removeAttribute('data-img')}});
+  document.querySelectorAll('.heroi-fotos div[data-img]').forEach(d=>{if(d.dataset.foto===(uid||(raiz.dataset.tema==='claro'?'padrao-dia':'padrao-noite'))){d.style.setProperty('--img',`url(${d.dataset.img})`);d.style.setProperty('--img-c',`url(${d.dataset.img.replace('-g.webp','-c.webp')})`);d.removeAttribute('data-img')}});
   const id=uid||(raiz.dataset.tema==='claro'?'padrao-dia':'padrao-noite');
-  document.querySelectorAll('.heroi-fotos div').forEach(d=>{const on=d.dataset.foto===id;d.classList.toggle('on',on)});
+  document.querySelectorAll('.heroi-fotos div').forEach(d=>{const on=d.dataset.foto===id;d.classList.toggle('on',on);if(on)alturaFoto(d)});
 }
 function escolherUnidade(id){
   const b=document.querySelector(`.loja[data-foto="${id}"]`); if(!b)return;
