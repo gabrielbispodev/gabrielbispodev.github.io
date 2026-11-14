@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 110" fill="none" stroke="#d4a23c" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Navalha Barbearia (marca fictícia): escudo com navalha aberta -->
+  <path d="M50 5 L92 18 V55 C92 80 72 97 50 105 C28 97 8 80 8 55 V18 Z"/>
+  <path d="M30 72 L62 34" stroke-width="9"/>
+  <path d="M62 34 L74 22 C78 18 82 22 78 26 L66 38"/>
+  <circle cx="32" cy="70" r="5" fill="#d4a23c"/>
+</svg>
