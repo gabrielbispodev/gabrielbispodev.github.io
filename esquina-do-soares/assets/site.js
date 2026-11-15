@@ -149,7 +149,7 @@ document.querySelectorAll('.morder').forEach(sec => {
   };
   const dividir = nome => {
     const p = nome.split(' ');
-    if (p.length === 1) return [nome, 'da Trigal.'];
+    if (p.length === 1) return [nome, 'do Soares.'];
     const meio = Math.ceil(p.length / 2);
     return [p.slice(0, meio).join(' '), p.slice(meio).join(' ') + '.'];
   };
@@ -358,3 +358,64 @@ document.querySelectorAll('.livro').forEach(livro => {
   }
 });
 
+// (2.3.52) intro só com letras: as linhas ESQUINADOSOARES (uma normal, a seguinte espelhada)
+// entram correndo em sentidos opostos e depois aparece a marca Soares..
+// Toca sozinha na primeira visita da home (por sessão). Volta com 3 cliques ou segurando o logo.
+(() => {
+  const calmo = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let tocando = false;
+  const tocar = () => {
+    if (tocando) return;
+    tocando = true;
+    const linha = 'ESQUINADOSOARES '.repeat(5);
+    let linhas = '';
+    for (let i = 0; i < 14; i++) linhas += `<div class="intro__linha${i % 2 ? ' intro__linha--esp' : ''}" style="--i:${i}"><span>${linha}</span></div>`;
+    const el = document.createElement('div');
+    el.className = 'intro';
+    el.setAttribute('role', 'dialog');
+    el.setAttribute('aria-label', 'Abertura do Esquina do Soares');
+    el.innerHTML = `<div class="intro__letreiro" aria-hidden="true">${linhas}</div>
+      <div class="intro__marca"><b>Soares<i>.</i></b><span>Esquina · das 18h às 6h</span></div>
+      <button type="button" class="intro__pular">Pular</button>`;
+    document.body.append(el);
+    const raiz = document.documentElement, rolagem = raiz.style.overflow;
+    raiz.style.overflow = 'hidden';
+    let acabou = false;
+    const timers = [];
+    const fim = () => {
+      if (acabou) return;
+      acabou = true;
+      timers.forEach(clearTimeout);
+      removeEventListener('keydown', esc);
+      el.classList.add('sai');
+      setTimeout(() => { el.remove(); raiz.style.overflow = rolagem; tocando = false; }, 650);
+    };
+    const esc = e => { if (e.key === 'Escape') fim(); };
+    addEventListener('keydown', esc);
+    el.querySelector('.intro__pular').addEventListener('click', fim);
+    timers.push(setTimeout(() => el.classList.add('marca'), 1500));
+    timers.push(setTimeout(fim, 3600));
+  };
+
+  // toca sozinha na primeira visita da home nesta sessão
+  const home = document.querySelector('.hero');
+  let vista = false;
+  try { vista = sessionStorage.getItem('soares-intro') === '1'; sessionStorage.setItem('soares-intro', '1'); } catch (e) {}
+  if (home && !vista && !calmo) tocar();
+
+  // 3 cliques ou segurar o logo tocam de novo; um clique só continua indo para a home
+  document.querySelectorAll('.nav__logo').forEach(logo => {
+    let cliques = 0, espera, segura, segurou = false;
+    logo.addEventListener('click', e => {
+      e.preventDefault();
+      if (segurou) { segurou = false; return; }
+      cliques++;
+      clearTimeout(espera);
+      if (cliques >= 3) { cliques = 0; tocar(); return; }
+      espera = setTimeout(() => { cliques = 0; location.href = logo.href; }, 420);
+    });
+    logo.addEventListener('pointerdown', () => { segura = setTimeout(() => { segurou = true; cliques = 0; clearTimeout(espera); tocar(); }, 650); });
+    ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => logo.addEventListener(ev, () => clearTimeout(segura)));
+    logo.addEventListener('contextmenu', e => e.preventDefault());  // segurar no celular não abre o menu do navegador
+  });
+})();

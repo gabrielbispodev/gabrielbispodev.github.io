@@ -47,3 +47,15 @@ html[data-theme=light]{--ouro-texto:#9a5b00;--dourado-claro:#f2b632}
 html[data-theme=light] .depo blockquote{background:#fff}
 /* tablet: sem a pilha de fotos, a lista de períodos ocupa a largura toda (no modelo ficava só na 1ª coluna) */
 @media (max-width:1023px){.periodos{grid-template-columns:1fr}}
+/* cardápio em livro: capa com a marca do bar */
+.capa__marca{text-transform:uppercase;font-weight:700;letter-spacing:-.02em}
+.capa__marca i{font-style:normal;color:var(--dourado)}
+.pag__titulo{text-transform:uppercase}
+.morder__titulo{text-transform:uppercase;font-weight:700}
+/* intro: letreiro de bar (fundo de balcão à noite, linha espelhada em amarelo chopp) */
+.intro{background:radial-gradient(90% 70% at 50% 45%,#2b1d0c,#120d07 70%,#0b0805)}
+.intro__linha{font-weight:700}
+.intro__linha--esp{color:var(--dourado)}
+.intro__marca b{text-transform:uppercase;font-weight:700;letter-spacing:-.02em;padding-bottom:.05em}
+.intro__marca b i{font-style:normal;color:var(--madeira)}
+.intro__marca span{color:var(--madeira)}
