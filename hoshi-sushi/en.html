@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hoshi Sushi · Japanese Cuisine</title>
+<meta name="description" content="All-you-can-eat sushi, à la carte, delivery and pickup. Sushi, sashimi, hand rolls and hot dishes made to order.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#a91110">
+<link rel="icon" href="assets/img/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@75..100,600..800&family=Bebas+Neue&family=Inria+Serif:wght@400;700&display=swap" rel="stylesheet">
+<!-- (2.4) tema: a escolha salva vale; sem escolha, segue o sistema. Roda antes do CSS para não piscar -->
+<script>try{var t=localStorage.getItem('hoshi-tema');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark'}catch(e){}</script>
+<link rel="stylesheet" href="assets/site.css?v=12">
+<script defer src="assets/site-en.js?v=8"></script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Restaurant","name":"Hoshi Sushi","servesCuisine":"Japonesa",
+ "address":{"@type":"PostalAddress","streetAddress":"100 Cherry Street","addressLocality":"Campinas","addressRegion":"SP","addressCountry":"BR"}}
+</script>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hoshi Sushi · website concept for a Japanese restaurant">
+<meta property="og:description" content="All-you-can-eat, full menu, dine-in and delivery. Demo website.">
+<meta property="og:url" content="https://gabrielbispodev.github.io/hoshi-sushi/en.html">
+<meta property="og:image" content="https://gabrielbispodev.github.io/hoshi-sushi-capa-en.jpg">
+<meta property="og:image:width" content="1024"><meta property="og:image:height" content="640">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+
+<!-- Intro (padrão Kaiseki, 2.0): fundo vermelho com ondas seigaiha; o pincel desenha o ensō, entram ホシ,
+     o selo com o logo e as letras HOSHI; depois as portas de shoji abrem para o site. Uma vez por sessão. -->
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="intro-porta esq"></div><div class="intro-porta dir"></div>
+  <div class="intro-cena">
+    <span class="intro-kana">ホシ</span>
+    <div class="intro-selo">
+      <svg class="enso" viewBox="0 0 200 200"><defs><filter id="pincel"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="7"/></filter></defs>
+        <path d="M112 20 A80 80 0 1 1 52 38" pathLength="1"/></svg>
+      <img src="assets/img/logo.svg" alt="" width="152" height="95">
+    </div>
+    <p class="intro-nome"><span>H</span><span>O</span><span>S</span><span>H</span><span>I</span></p>
+    <small class="intro-sub">Japanese cuisine</small>
+  </div>
+  <button type="button" class="intro-pular">Skip</button>
+</div>
+
+<header class="nav">
+  <nav class="nav-esq" aria-label="Sections">
+    <a href="cardapio-en.html">Menu</a><a href="#horarios">Hours</a><a href="#unidades">Find us</a>
+  </nav>
+  <a class="nav-logo" href="#topo" aria-label="Hoshi Sushi, home"><img src="assets/img/logo.svg" alt="Hoshi Sushi" width="152" height="95"></a>
+  <div class="nav-dir">
+    <a class="so-desk" href="#unidades">(555) 010-0100</a>
+    <button type="button" class="tema" aria-label="Switch light or dark theme"><svg class="tema-sol" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3M4.6 4.6l2.1 2.1M17.3 17.3l2.1 2.1M4.6 19.4l2.1-2.1M17.3 6.7l2.1-2.1"/></svg><svg class="tema-lua" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg></button>
+    <a class="btn btn-mini" href="#pedir">Order now</a>
+  </div>
+</header>
+
+<main id="topo">
+
+<!-- Herói -->
+<!-- (2.0) herói no estilo nanquim do Kigo: papel, sol vermelho e pinheiro desenhado (src/arvore.py, arte própria) -->
+<section class="heroi">
+  <div class="sol" aria-hidden="true"></div>
+  <img class="arvore pinheiro" src="assets/img/arvore.webp" alt="" width="900" height="964" fetchpriority="high">
+  <!-- (2.7) no tema escuro entra uma sakura em estilo bonsai (só baixa quando aparece) -->
+  <img class="arvore sakura" src="assets/img/sakura-bonsai.webp" alt="" width="1000" height="848" loading="lazy">
+  <span class="kanji-lado" aria-hidden="true">寿司</span>
+  <div class="heroi-txt">
+    <p class="selo">Japanese cuisine · Dine-in and delivery</p>
+    <h1>All-you-can-eat sushi<br>made to order</h1>
+    <p class="lead">Sushi, sashimi, hand rolls and hot dishes made at the counter: all-you-can-eat, à la carte, delivery and pickup.</p>
+    <div class="botoes">
+      <a class="btn" href="#pedir">Order online</a>
+      <a class="btn btn-linha" href="cardapio-en.html">See the menu</a>
+    </div>
+  </div>
+  <!-- o prato gira conforme a rolagem (site.js) -->
+  <img class="prato-giro" src="assets/img/prato-giro.webp" alt="Round plate of assorted sushi" width="760" height="760">
+  <!-- faixa corrida de pratos (Kaiseki); cada um abre a seção do cardápio -->
+  <nav class="faixa-pratos" aria-label="Dishes from the menu"><div class="faixa-trilho">
+    <a href="cardapio-en.html#sushis"><img src="assets/img/faixa/niguiri.webp" alt="" width="200" height="200">Niguiri</a>
+    <a href="cardapio-en.html#sushis"><img src="assets/img/faixa/sashimi.webp" alt="" width="200" height="200">Sashimi</a>
+    <a href="cardapio-en.html#sushis"><img src="assets/img/faixa/maki.webp" alt="" width="200" height="200">Maki</a>
+    <a href="cardapio-en.html#quentes"><img src="assets/img/faixa/tako.webp" alt="" width="200" height="200">Tako</a>
+    <a href="cardapio-en.html#rodizio"><img src="assets/img/faixa/camarao.webp" alt="" width="200" height="200">Shrimp</a>
+    <a href="cardapio-en.html#hotrolls"><img src="assets/img/faixa/hotroll.webp" alt="" width="200" height="200">Hot roll</a>
+    <a href="cardapio-en.html#combinados"><img src="assets/img/faixa/california.webp" alt="" width="200" height="200">California</a>
+    <a href="cardapio-en.html#temakis"><img src="assets/img/faixa/temaki.webp" alt="" width="200" height="200">Temaki</a>
+    <a href="cardapio-en.html#sushis"><img src="assets/img/faixa/hamachi.webp" alt="" width="200" height="200">Hamachi</a>
+  </div></nav>
+</section>
+
+<!-- Faixa de fotos -->
+<section class="faixa" data-galeria>
+  <img src="assets/img/salao-2.webp" alt="Dining room with paper lanterns" width="1200" height="800" loading="lazy">
+  <img src="assets/img/hotroll.webp" alt="Hot roll with sesame and teriyaki glaze" width="1200" height="800" loading="lazy">
+  <img src="assets/img/salao-1.webp" alt="Dining room with wooden tables" width="1200" height="800" loading="lazy">
+  <img src="assets/img/mesa.webp" alt="Sushi and sashimi platter on the table" width="1200" height="800" loading="lazy">
+</section>
+
+<!-- Painel vermelho -->
+<section class="painel-wrap">
+  <div class="painel">
+    <div>
+      <h2>A Japanese sushi bar<br>near you</h2>
+      <p>Fish sliced to order, hot plates straight from the kitchen and a team that knows guests by name. Grab a seat at the bar or order in.</p>
+    </div>
+    <!-- (2.5) vídeo de yakisoba sendo feito na chapa (Pexels 31384253), 14 s, sem som, em loop -->
+    <video class="painel-video" src="assets/video/yakisoba.mp4" poster="assets/video/yakisoba.webp" muted loop playsinline preload="metadata" aria-label="Yakisoba on the griddle" width="960" height="540"></video>
+  </div>
+</section>
+
+<!-- Formas de comer (Menu Packages da referência) -->
+<section class="secao" id="cardapio">
+  <p class="selo">From lunch to delivery</p>
+  <h2 class="titulo">A way to eat for every day</h2>
+  <div class="cards">
+    <!-- (2.2) cada card abre a seção do cardápio que combina com ele -->
+    <a class="card" href="cardapio-en.html#rodizio"><h3>All-you-can-eat</h3><p class="preco">Lunch and dinner</p><p>Sushi, sashimi, hand rolls and hot dishes until you say stop.</p><span class="card-ir">See on the menu →</span><img src="assets/img/barca.webp" alt="" width="1200" height="800" loading="lazy"></a>
+    <a class="card" href="cardapio-en.html#combinados"><h3>À la carte</h3><p class="preco">Lunch and dinner</p><p>Pick your favorites from the menu and order your way.</p><span class="card-ir">See on the menu →</span><img src="assets/img/hotroll.webp" alt="" width="1200" height="800" loading="lazy"></a>
+    <a class="card" href="cardapio-en.html#hotrolls"><h3>Delivery and pickup</h3><p class="preco">Every day</p><p>Order direct, no delivery-app fees. Pick up at the counter or get it delivered.</p><span class="card-ir">See on the menu →</span><img src="assets/img/delivery.webp" alt="" width="1200" height="800" loading="lazy"></a>
+    <a class="card" href="cardapio-en.html#temakis"><h3>Hand rolls</h3><p class="preco">Rolled to order</p><p>Salmon, salmon skin, shrimp and house specials, rolled when you order.</p><span class="card-ir">See on the menu →</span><img src="assets/img/travessa.webp" alt="" width="1200" height="800" loading="lazy"></a>
+    <a class="card" href="cardapio-en.html#executivo"><h3>Lunch specials</h3><p class="preco">Monday to Friday</p><p>A full plate with miso soup and salad, for a quick weekday lunch.</p><span class="card-ir">See on the menu →</span><img src="assets/img/mesa.webp" alt="" width="1200" height="800" loading="lazy"></a>
+    <a class="card" href="cardapio-en.html#bebidas"><h3>Drinks and cocktails</h3><p class="preco">On the side</p><p>Juices, fruit cocktails and cold draft beer.</p><span class="card-ir">See on the menu →</span><img src="assets/img/drink.webp" alt="" width="1000" height="1500" loading="lazy"></a>
+  </div>
+  <p class="centro-btn"><a class="btn" href="cardapio-en.html">Open the menu</a></p>
+</section>
+
+<!-- CTA escuro -->
+<section class="cta-escuro" id="pedir">
+  <img class="cta-foto esq" src="assets/img/chope.webp" alt="" width="1000" height="1500" loading="lazy">
+  <div>
+    <h2>Order direct from us,<br>no app fees</h2>
+    <div class="unid-botoes">
+      <a class="btn" href="#pedir">Order by text</a>
+      <a class="btn" href="cardapio-en.html">See the menu</a>
+    </div>
+  </div>
+  <img class="cta-foto dir" src="assets/img/salao-4.webp" alt="" width="1200" height="800" loading="lazy">
+</section>
+
+<!-- Como pedir (How It Works da referência) -->
+<section class="secao">
+  <p class="selo">How to order</p>
+  <h2 class="titulo">From order to your table</h2>
+  <ol class="passos">
+    <li><span>01</span><h3>Open the menu</h3><p>Platters, hand rolls and hot dishes with photos and prices.</p></li>
+    <li><span>02</span><h3>Build your order</h3><p>Send your order direct, no app fees.</p></li>
+    <li><span>03</span><h3>Pick up or delivery</h3><p>Pick up at the counter or get it delivered during delivery hours.</p></li>
+    <li><span>04</span><h3>Enjoy</h3><p>Chopsticks, soy sauce and wasabi included. Just open and eat.</p></li>
+  </ol>
+</section>
+
+<!-- Depoimentos -->
+<section class="secao">
+  <p class="selo">Reviews</p>
+  <h2 class="titulo">Guests keep coming back</h2>
+  <div class="depos">
+    <blockquote><div class="estrelas" aria-label="5 stars">★★★★★</div><p>“Friendly service and the all-you-can-eat comes out fast. I always come back.”</p><cite>Sample review</cite></blockquote>
+    <blockquote><div class="estrelas" aria-label="5 stars">★★★★★</div><p>“Super fresh fish and the best hot roll I've ever had. Delivery arrived still warm.”</p><cite>Sample review</cite></blockquote>
+    <blockquote><div class="estrelas" aria-label="5 stars">★★★★★</div><p>“Beautiful place, great for birthdays. The staff took care of everything.”</p><cite>Sample review</cite></blockquote>
+  </div>
+</section>
+
+<!-- (2.4) As nossas casas: carrossel 3D (ideia do componente "3D Service carousel" do Framer, estudado com o REA;
+     código próprio). O card da frente amplia ao clicar; os de lado vêm para a frente. -->
+<section class="secao colagem-sec">
+  <div class="colagem-topo">
+    <div><p class="selo">Our place</p><h2 class="titulo esq">A dinner worth<br>getting everyone together</h2></div>
+    <p>Birthdays, catch-ups with friends or Friday dinner: cozy rooms, low lights and the sushi boat arriving at your table.</p>
+  </div>
+  <div class="carrossel" data-galeria aria-roledescription="carrossel" aria-label="Photos of the restaurant">
+    <div class="carrossel-palco" tabindex="0">
+      <figure><img src="assets/img/salao-1.webp" alt="Dining room with wooden tables" width="1200" height="800" loading="lazy"><figcaption><small>Dining room</small>Tables for the whole group</figcaption></figure>
+      <figure><img src="assets/img/chef-1.webp" alt="Sushi chef rolling an uramaki" width="1200" height="800" loading="lazy"><figcaption><small>Sushi bar</small>Made in front of you</figcaption></figure>
+      <figure><img src="assets/img/barca.webp" alt="Sushi and sashimi boat" width="1200" height="800" loading="lazy"><figcaption><small>All-you-can-eat</small>The sushi boat arriving</figcaption></figure>
+      <figure><img src="assets/img/salao-2.webp" alt="Lit paper lanterns" width="1200" height="800" loading="lazy"><figcaption><small>Dining room</small>Low lights and lanterns</figcaption></figure>
+      <figure><img src="assets/img/chef-2.webp" alt="Sushi chef torching a piece" width="1200" height="800" loading="lazy"><figcaption><small>Sushi bar</small>Torched to order</figcaption></figure>
+      <figure><img src="assets/img/hotroll.webp" alt="Hot roll with sesame" width="1200" height="800" loading="lazy"><figcaption><small>Kitchen</small>Hot roll coming out now</figcaption></figure>
+      <figure><img src="assets/img/salao-3.webp" alt="Spacious room with wooden ceiling" width="1200" height="800" loading="lazy"><figcaption><small>Dining room</small>Spacious dining room</figcaption></figure>
+      <figure><img src="assets/img/mesa.webp" alt="Sushi and sashimi platter" width="1200" height="800" loading="lazy"><figcaption><small>All-you-can-eat</small>Everything on the table at once</figcaption></figure>
+      <figure><img src="assets/img/chef-3.webp" alt="Sushi chef slicing fresh fish" width="1200" height="800" loading="lazy"><figcaption><small>Kitchen</small>Fish sliced to order</figcaption></figure>
+      <figure><img src="assets/img/salao-4.webp" alt="Hallway with lamps" width="1200" height="800" loading="lazy"><figcaption><small>Dining room</small>Private corner</figcaption></figure>
+      <figure><img src="assets/img/travessa.webp" alt="Uramaki and fried rolls" width="1200" height="800" loading="lazy"><figcaption><small>Platters</small>House favorites</figcaption></figure>
+      <figure><img src="assets/img/salao-5.webp" alt="Tatami room with low tables" width="1200" height="800" loading="lazy"><figcaption><small>Dining room</small>Tatami room</figcaption></figure>
+      <figure><img src="assets/img/delivery.webp" alt="Japanese takeout" width="1200" height="800" loading="lazy"><figcaption><small>Delivery</small>At home too</figcaption></figure>
+      <figure><img src="assets/img/drink.webp" alt="Strawberry cocktail" width="1000" height="1500" loading="lazy"><figcaption><small>Bar</small>Strawberry cocktail</figcaption></figure>
+      <figure><img src="assets/img/chope.webp" alt="Cold draft beer" width="1000" height="1500" loading="lazy"><figcaption><small>Bar</small>Cold draft beer</figcaption></figure>
+    </div>
+    <div class="carrossel-nav">
+      <button type="button" class="carrossel-seta" data-dir="-1" aria-label="Previous photo">‹</button>
+      <div class="carrossel-pontos" role="tablist"></div>
+      <button type="button" class="carrossel-seta" data-dir="1" aria-label="Next photo">›</button>
+    </div>
+  </div>
+</section>
+
+<!-- Horários em abas (Full Menu da referência) -->
+<section class="secao" id="horarios">
+  <p class="selo">Hours</p>
+  <h2 class="titulo">When we're open</h2>
+  <div class="abas" role="tablist">
+    <button role="tab" aria-selected="true" data-aba="salao">Dining room</button>
+    <button role="tab" aria-selected="false" data-aba="delivery">Delivery</button>
+  </div>
+  <div class="quadro" data-painel="salao">
+    <div><h3>Lunch</h3><p>Tuesday to Sunday<b>11:30 am – 3:00 pm</b></p><small>À la carte · All-you-can-eat · Lunch specials</small></div>
+    <div><h3>Dinner</h3><p>Tuesday to Thursday<b>6:00 – 10:30 pm</b></p><p>Friday and Saturday<b>6:00 – 11:30 pm</b></p><small>À la carte · All-you-can-eat</small></div>
+    <div><h3>Monday</h3><p>Dining room closed<b>Delivery only</b></p><small>All-you-can-eat ends 30 min before closing</small></div>
+  </div>
+  <div class="quadro" data-painel="delivery" hidden>
+    <div><h3>Lunch</h3><p>Monday to Sunday<b>11:00 am – 3:00 pm</b></p></div>
+    <div><h3>Dinner</h3><p>Monday to Thursday<b>5:30 – 11:00 pm</b></p><p>Friday to Sunday<b>5:30 pm – midnight</b></p></div>
+    <div><h3>Pickup</h3><p>At the counter<b>No fees</b></p><small>Order ahead and pick up in 20 minutes</small></div>
+  </div>
+</section>
+
+<!-- Equipe (Chef Bio da referência) -->
+<section class="secao equipe">
+  <img src="assets/img/chef-1.webp" alt="Sushi chef making an uramaki" width="1200" height="800" loading="lazy">
+  <div>
+    <h2>A good meal isn't just served. It's made to order, for your table.</h2>
+    <p>Sushi chefs and kitchen work together so everything arrives fresh, hot and fast.</p>
+    <div class="numeros">
+      <div><b>60+</b><span>Dishes on the menu</span></div>
+      <div><b>2</b><span>All-you-can-eat options</span></div>
+      <div><b>7</b><span>Days a week</span></div>
+      <div><b>0%</b><span>App fees</span></div>
+    </div>
+    <a class="btn" href="#unidades">Get directions</a>
+  </div>
+</section>
+
+<!-- Unidades -->
+<section class="secao" id="unidades">
+  <p class="selo">Find us</p>
+  <h2 class="titulo">Come visit us</h2>
+  <div class="unidades">
+    <article>
+      <img src="assets/img/salao-3.webp" alt="Restaurant dining room" width="1200" height="800" loading="lazy">
+      <h3>Dining room</h3>
+      <p>100 Cherry Street · Downtown<br><small>Partner parking next door</small></p>
+      <p><a href="#unidades">(555) 010-0100</a> · <a href="#unidades">hello@yourrestaurant.com</a></p>
+      <div class="unid-acoes"><a class="btn btn-linha" href="#unidades">Get directions</a>
+      <a class="btn-insta" href="#unidades"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1" class="cheio"/></svg>Instagram</a></div>
+    </article>
+    <article>
+      <img src="assets/img/delivery.webp" alt="Japanese takeout" width="1200" height="800" loading="lazy">
+      <h3>Delivery and pickup</h3>
+      <p>Local delivery and counter pickup<br><small>Order direct, no app fees</small></p>
+      <p><a href="#pedir">Order by text</a></p>
+      <div class="unid-acoes"><a class="btn btn-linha" href="cardapio-en.html">See the menu</a></div>
+    </article>
+    <article>
+      <img src="assets/img/travessa.webp" alt="Platter of rolls" width="1200" height="800" loading="lazy">
+      <h3>Catering and events</h3>
+      <p>Sushi boats and platters for parties and meetings<br><small>Order 24 hours ahead</small></p>
+      <p><a href="#pedir">Place a catering order</a></p>
+      <div class="unid-acoes"><a class="btn btn-linha" href="#pedir">Talk to us</a></div>
+    </article>
+  </div>
+</section>
+
+<!-- CTA vermelho (Booking CTA da referência) -->
+<section class="painel-wrap">
+  <div class="painel centro">
+    <p class="selo claro">Hungry?</p>
+    <h2>Your sushi is one click away</h2>
+    <p>Order on the website, pick up at the counter or get it delivered.</p>
+    <div class="botoes centro-flex">
+      <a class="btn btn-claro" href="#pedir">Order now</a>
+      <a class="btn btn-claro btn-insta-grande" href="#unidades"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1" class="cheio"/></svg>Follow on Instagram</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="rodape">
+  <div class="rodape-grade">
+    <div>
+      <img src="assets/img/logo.svg" alt="Hoshi Sushi" width="152" height="95" loading="lazy">
+      <p>Japanese food, made to order.</p>
+      <p><a href="#pedir">WhatsApp</a> · <a href="#unidades">Instagram</a></p>
+    </div>
+    <div class="kanji" aria-hidden="true">寿<br>司</div>
+    <div><h4>Contact</h4><p>100 Cherry Street · Downtown</p><p>(555) 010-0100</p><p>hello@yourrestaurant.com</p></div>
+    <div><h4>Explore</h4><p><a href="cardapio-en.html">Menu</a></p><p><a href="#horarios">Hours</a></p><p><a href="#unidades">Find us</a></p><p><a href="#pedir">Order now</a></p></div>
+  </div>
+  <p class="rodape-fim">© 2026 Hoshi Sushi · Demo website · Photos: Pexels</p>
+</footer>
+
+<!-- (2.4) poucas agulhas (ou pétalas, no tema escuro) caindo pelo site todo -->
+<div class="agulhas" aria-hidden="true"></div>
+<!-- (2.4) visualizador: fotos com data-galeria ampliam ao clicar -->
+<dialog class="lupa" aria-label="Enlarged photo">
+  <button type="button" class="lupa-fechar" aria-label="Fechar">×</button>
+  <button type="button" class="lupa-seta" data-dir="-1" aria-label="Previous photo">‹</button>
+  <figure><img alt=""><figcaption></figcaption></figure>
+  <button type="button" class="lupa-seta" data-dir="1" aria-label="Next photo">›</button>
+</dialog>
+</body>
+</html>
