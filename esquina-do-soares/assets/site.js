@@ -79,20 +79,21 @@ document.querySelectorAll('.galeria').forEach(g => {
 const ioFaixas = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('parado', !e.isIntersecting)));
 document.querySelectorAll('.faixa, .galeria').forEach(el => ioFaixas.observe(el));
 
-// Formulário de encomenda: no modelo, só avisa onde a mensagem iria (nada vai para servidor)
+// Formulário de reserva: no modelo, só mostra a mensagem que iria para o WhatsApp da casa (nada vai para servidor)
 document.querySelector('#form-encomenda')?.addEventListener('submit', e => {
   e.preventDefault();
   const f = new FormData(e.target);
   const data = f.get('data') ? new Date(f.get('data') + 'T12:00').toLocaleDateString('pt-BR') : 'a combinar';
   const msg = [
-    'Olá! Quero fazer uma encomenda.',
+    'Olá! Quero reservar mesa no Esquina do Soares.',
     `Nome: ${f.get('nome')}`,
-    `Encomenda: ${f.get('tipo')}`,
-    `Para: ${data}`,
-    `Pessoas/quantidade: ${f.get('qtd') || 'a combinar'}`,
+    `Motivo: ${f.get('tipo')}`,
+    `Dia: ${data} · ${f.get('hora')}`,
+    `Pessoas: ${f.get('qtd') || 'a combinar'}`,
+    f.get('tel') ? `Telefone: ${f.get('tel')}` : '',
     f.get('obs') ? `Detalhes: ${f.get('obs')}` : '',
   ].filter(Boolean).join('\n');
-  alert('Modelo de demonstração. No site da padaria, esta mensagem abriria no WhatsApp:\n\n' + msg);
+  alert('Modelo de demonstração. No site do bar, esta mensagem abriria no WhatsApp da casa:\n\n' + msg);
 });
 
 // (leque) carrossel em leque: posição de cada card pelo afastamento do card ativo
