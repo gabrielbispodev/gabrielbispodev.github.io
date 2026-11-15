@@ -1,0 +1,49 @@
+/* Esquina do Soares — camada de marca sobre o CSS do modelo Trigal (mesma estrutura, outra cara).
+   Boteco de esquina que abre de noite: preto de balcão, amarelo de chopp, vermelho de placa e filetes de neon quente. */
+:root{
+  --carvao:#12100e; --carvao-2:#1c1916; --creme:#f4e9d3; --creme-2:#e6d6b6;
+  --dourado:#f2b632; --dourado-claro:#ffcf5c; --madeira:#b23a1f;
+  --texto:#f6efe2; --texto-2:rgba(246,239,226,.86); --texto-3:rgba(246,239,226,.64);
+  --tinta:#12100e; --ouro-texto:#f2b632; --vidro:rgba(18,16,14,.74);
+  --led:#ffd27a; --led-brilho:rgba(255,160,40,.5);
+  --serif:"Oswald","Arial Narrow",sans-serif; --sans:"DM Sans",system-ui,sans-serif;
+}
+h1,h2,h3{font-weight:700;letter-spacing:-.005em;text-transform:uppercase;line-height:1}
+h2{font-size:clamp(36px,4.8vw,66px)}
+.hero h1{font-size:clamp(36px,4.4vw,64px)}
+.nav__logo{font:700 24px/1 var(--serif);text-transform:uppercase;letter-spacing:.02em}
+.nav__logo i{font-style:normal;color:var(--ouro-texto)}
+.hero__marca,.rodape__marca b{font-weight:700;text-transform:uppercase;letter-spacing:-.02em;line-height:.85}
+.hero__marca{font-size:clamp(84px,12vw,190px)}
+.rodape__marca b{font-size:clamp(70px,12vw,190px)}
+.hero__marca i,.rodape__marca b i{font-style:normal;color:var(--ouro-texto)}
+.faixa span{font-weight:700;text-transform:uppercase}
+.faixa span i{color:var(--madeira)}
+.citados b,.passos li::before,.nota b{font-weight:700}
+.creme .eyebrow{color:var(--madeira)}
+.btn--ouro{color:#12100e}
+/* o LED do modelo era frio (janelas da padaria); aqui vira neon quente, como letreiro de bar */
+html:not([data-theme=light]) :is(.creme .card,.creme .visita img,.leque__card.ativo){box-shadow:0 0 0 2px var(--led),0 0 14px 2px var(--led-brilho),0 0 44px 6px rgba(255,150,30,.22)}
+@keyframes led-liga{0%,18%,30%{box-shadow:none}12%,24%,100%{box-shadow:0 0 0 2px var(--led),0 0 14px 2px var(--led-brilho),0 0 44px 6px rgba(255,150,30,.22)}}
+/* selo "aberto agora" calculado pelo horário (18h às 6h) */
+.aberto{display:inline-flex;align-items:center;gap:8px;margin-top:16px;font:700 12px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--texto-2)}
+.aberto::before{content:"";width:9px;height:9px;border-radius:50%;background:#8a8278}
+.aberto.sim::before{background:#3ddc6f;box-shadow:0 0 0 0 rgba(61,220,111,.6);animation:pulsa 2s infinite}
+@keyframes pulsa{70%{box-shadow:0 0 0 9px rgba(61,220,111,0)}100%{box-shadow:0 0 0 0 rgba(61,220,111,0)}}
+@media (prefers-reduced-motion:reduce){.aberto.sim::before{animation:none}}
+/* cardápio em lista (sem preço inventado: os preços ficam no iFood da casa) */
+.cardapio{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:46px}
+.cardapio section{border-top:2px solid var(--ouro-texto);padding-top:18px}
+.cardapio h3{font-size:22px}
+.cardapio ul{list-style:none;margin-top:14px;display:grid;gap:10px;font-size:15.5px;color:var(--texto-2)}
+.cardapio li b{color:var(--texto);font-weight:700}
+.cardapio small{display:block;margin-top:14px;font-size:13px;color:var(--texto-3)}
+.depo{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:46px}
+.depo blockquote{background:#fffaf0;color:var(--tinta);border-radius:18px;padding:26px 24px;font:500 19px/1.4 var(--sans)}
+.depo cite{display:block;margin-top:14px;font:700 12px/1.3 var(--sans);font-style:normal;letter-spacing:.08em;text-transform:uppercase;color:var(--madeira)}
+@media (max-width:1023px){.cardapio{grid-template-columns:1fr 1fr}.depo{grid-template-columns:1fr}}
+@media (max-width:767px){.cardapio{grid-template-columns:1fr}.nav__logo{font-size:20px}}
+html[data-theme=light]{--ouro-texto:#9a5b00;--dourado-claro:#f2b632}
+html[data-theme=light] .depo blockquote{background:#fff}
+/* tablet: sem a pilha de fotos, a lista de períodos ocupa a largura toda (no modelo ficava só na 1ª coluna) */
+@media (max-width:1023px){.periodos{grid-template-columns:1fr}}
