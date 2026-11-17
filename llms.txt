@@ -16,7 +16,44 @@ Domínio, hospedagem, Google Ads e SEO contínuo são orçados à parte.
 - WhatsApp: +55 19 99980-1423 (https://wa.me/5519999801423)
 - E-mail: gabriel@seeall.app.br
 
+## Como trabalho
+
+1. Conversa: entender o negócio, o cliente e o que a página precisa fazer.
+2. Proposta por escrito: o que está incluído, o que fica de fora e o valor.
+3. Criação com prévias para acompanhar e pedir ajustes.
+4. Publicação, com cada tela conferida no celular e no computador.
+
 ## Projetos
 
-- [Vida Selvagem](https://gabrielbispodev.github.io/vida-selvagem/): site com cartões que giram, carrosséis e vídeos de fundo.
-- [Sabores de Campinas](https://gabrielbispodev.github.io/sabores-de-campinas/): projeto conceito de restaurante do interior paulista.
+- [Oásis Assistência Técnica](https://gabrielbispodev.github.io/oasis-assistencia/): Modelo para ar-condicionado e assistência técnica.
+- [Navalha Barbearia](https://gabrielbispodev.github.io/navalha-barbearia/): Modelo de barbearia com 3 unidades e agendamento em dois toques.
+- [Trigal Paneteria](https://gabrielbispodev.github.io/trigal-paneteria/): Modelo de padaria 24 horas com cardápio em livro 3D.
+- [Hoshi Sushi](https://gabrielbispodev.github.io/hoshi-sushi/): Modelo de restaurante japonês com rodízio, salão e delivery.
+- [Vida Selvagem](https://gabrielbispodev.github.io/vida-selvagem/): Projeto com fotos premiadas, cartões que giram e vídeos de fundo.
+- [Sabores de Campinas](https://gabrielbispodev.github.io/sabores-de-campinas/): Projeto conceito de restaurante de comida do interior paulista.
+
+## Perguntas frequentes
+
+### Quanto custa uma landing page?
+
+O valor de referência é R$ 890. Inclui design personalizado, versão para celular, botões de ação, formulário simples ou WhatsApp, SEO técnico básico e a publicação inicial dentro do escopo combinado.
+
+### Qual a diferença entre landing page e site institucional?
+
+A landing page é uma página só, focada em um produto, serviço ou campanha (R$ 890). O site institucional tem até cinco páginas e apresenta a empresa, os serviços e o contato num só lugar (R$ 1.490). Projetos com mais páginas ou funcionalidades saem a partir de R$ 2.490, com preço final após a análise do escopo.
+
+### Domínio e hospedagem estão incluídos?
+
+Não. O domínio e a hospedagem são contratados em seu nome e pagos direto ao provedor, então o site é sempre seu. Colocar o site no ar e configurar o essencial já faz parte dos planos.
+
+### Como funciona o processo?
+
+São quatro etapas: uma conversa para entender o seu negócio, uma proposta por escrito com o que está e o que não está incluído, a criação com prévias para você acompanhar e pedir ajustes, e a publicação, com cada tela conferida no celular e no computador.
+
+### O site vai aparecer no Google?
+
+Todo plano inclui SEO técnico básico: títulos, descrições, sitemap e uma estrutura que o Google consegue ler, além da verificação no Google Search Console na publicação. Isso ajuda o Google a entender o site, mas ninguém pode garantir posição. SEO contínuo, Perfil da Empresa no Google e Google Ads são orçados à parte.
+
+### Vocês fazem manutenção depois que o site está no ar?
+
+Sim, de forma opcional, a partir de R$ 99 por mês: atualizações simples e suporte conforme as condições combinadas antes. Não inclui hospedagem, custos de terceiros nem desenvolvimento ilimitado.

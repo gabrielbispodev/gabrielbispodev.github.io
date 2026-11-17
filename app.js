@@ -28,8 +28,20 @@ const META = {
   pt: { titulo: document.title, descricao: document.querySelector('meta[name="description"]').content },
   en: { titulo: 'Gabriel Bispo — Web Developer', descricao: 'Portfolio — placeholder text.' },
 };
-traduziveis.forEach(el => { el.dataset.pt = el.innerHTML; });
-rotulosAria.forEach(el => { el.dataset.ptAriaLabel = el.getAttribute('aria-label'); });
+// (17/11) a página já vem em português: só reescreve os textos quando o idioma muda de fato
+// (reescrever tudo no carregamento custava ~200 ms de processador no celular)
+let idiomaNaTela = 'pt';
+const trocarIdioma = idioma => {
+  if (idioma === idiomaNaTela) return;
+  if (!('guardado' in raiz.dataset)) { // guarda o português original na primeira troca
+    traduziveis.forEach(el => { el.dataset.pt = el.innerHTML; });
+    rotulosAria.forEach(el => { el.dataset.ptAriaLabel = el.getAttribute('aria-label'); });
+    raiz.dataset.guardado = '';
+  }
+  traduziveis.forEach(el => { el.innerHTML = el.dataset[idioma]; });
+  rotulosAria.forEach(el => el.setAttribute('aria-label', idioma === 'en' ? el.dataset.enAriaLabel : el.dataset.ptAriaLabel));
+  idiomaNaTela = idioma;
+};
 
 // Botões "Pedir orçamento": com o número preenchido abrem o WhatsApp com a mensagem pronta;
 // sem número, continuam levando para a seção Contato.
@@ -51,8 +63,7 @@ function aplicarPrefs() {
   raiz.dataset.tema = prefs.tema;
   raiz.dataset.cor = prefs.cor;
   raiz.lang = prefs.idioma === 'en' ? 'en' : 'pt-BR';
-  traduziveis.forEach(el => { el.innerHTML = el.dataset[prefs.idioma]; });
-  rotulosAria.forEach(el => el.setAttribute('aria-label', prefs.idioma === 'en' ? el.dataset.enAriaLabel : el.dataset.ptAriaLabel));
+  trocarIdioma(prefs.idioma);
   document.dispatchEvent(new Event('frame:prefs')); // o placar do rodapé troca de idioma
   document.title = META[prefs.idioma].titulo;
   document.querySelector('meta[name="description"]').content = META[prefs.idioma].descricao;
@@ -123,29 +134,39 @@ document.addEventListener('keydown', e => {
       const [px, py] = pontos[Math.floor(sorteio(.2, .8) * pontos.length)];
       galhos.push(zigue(px, py, px + sorteio(-.25, .25) * W, py + sorteio(.05, .3) * H, Math.min(W, H) * .07, 4));
     }
-    return { pontos, galhos, nasce: agora, vida: sorteio(1200, 2000), largura: sorteio(7, 12) };
+    const raio = { pontos, galhos, nasce: agora, vida: sorteio(1200, 2000), largura: sorteio(7, 12) };
+    // (17/11) o brilho (shadowBlur) é caro: desenha o raio uma vez numa tela de rascunho e depois só a reaproveita
+    raio.img = document.createElement('canvas');
+    // em meia resolução: o brilho é macio e a tela é ampliada ao desenhar; cada raio novo fica abaixo de 50 ms no celular
+    raio.img.width = Math.round(W * .6); raio.img.height = Math.round(H * .6);
+    const c = raio.img.getContext('2d');
+    c.setTransform(.6, 0, 0, .6, 0, 0);
+    c.lineJoin = 'round'; c.lineCap = 'round';
+    for (const linha of [pontos, ...galhos]) {
+      const l = linha === pontos ? raio.largura : raio.largura * .5;
+      // brilho em camadas de traço largo e transparente: parecido com shadowBlur e muito mais barato
+      [[34, .05], [22, .09], [13, .18], [5, 1]].forEach(([extra, a]) => { c.globalAlpha = a; traco(c, linha, l + extra, cor, 0); });
+      c.globalAlpha = 1;
+      traco(c, linha, l, '#050505', 0);      // miolo preto
+    }
+    return raio;
   }
 
-  function traco(pontos, largura, estilo, brilho) {
-    ctx.beginPath();
-    pontos.forEach(([x, y], i) => (i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)));
-    ctx.lineWidth = largura; ctx.strokeStyle = estilo; ctx.shadowBlur = brilho; ctx.shadowColor = cor;
-    ctx.stroke();
+  function traco(c, pontos, largura, estilo, brilho) {
+    c.beginPath();
+    pontos.forEach(([x, y], i) => (i ? c.lineTo(x, y) : c.moveTo(x, y)));
+    c.lineWidth = largura; c.strokeStyle = estilo; c.shadowBlur = brilho;
+    c.stroke();
   }
 
   function desenhar(agora) {
     ctx.clearRect(0, 0, W, H);
-    ctx.lineJoin = 'miter'; ctx.lineCap = 'butt';
     raios = raios.filter(r => agora - r.nasce < r.vida);
     for (const r of raios) {
       const t = (agora - r.nasce) / r.vida;
       // clarão ao nascer, tremulação no meio, some no fim
       ctx.globalAlpha = (t < .08 ? 1 : (1 - t) * (.75 + .25 * Math.sin(agora / 70 + r.largura))) * .9;
-      for (const linha of [r.pontos, ...r.galhos]) {
-        const l = linha === r.pontos ? r.largura : r.largura * .5;
-        traco(linha, l + 5, cor, 30);       // borda brilhante
-        traco(linha, l, '#050505', 0);      // miolo preto
-      }
+      ctx.drawImage(r.img, 0, 0, W, H);
     }
     ctx.globalAlpha = 1;
   }
@@ -480,7 +501,9 @@ voltar.addEventListener('click', () => scrollTo({ top: 0, behavior: matchMedia('
 // (daí as bordas coloridas) e pow(…, 8) deixa só faixas finas de luz sobre #050505. Mesmos parâmetros:
 // densidade 5, contraste 8, velocidade 0,5 (0,0075 por quadro a 60 fps = 0,45 por segundo).
 // Fica fixo atrás do conteúdo; o hero tem fundo próprio e cobre a luz atrás dos raios de haki.
-(() => {
+// (17/11) No carregamento o hero cobre o fundo: o WebGL só é montado quando a pessoa mexe na página
+// (rolar, tocar, teclar), para não disputar o processador com a primeira pintura.
+const montarFundo = () => {
   const tela = document.querySelector('.fundo-luz');
   const gl = tela && tela.getContext('webgl', { antialias: false, premultipliedAlpha: true });
   if (!gl) return;
@@ -517,12 +540,18 @@ void main(){
   const uRes = gl.getUniformLocation(prog, 'uRes'), uTempo = gl.getUniformLocation(prog, 'uTempo');
 
   const ajustar = () => {
-    tela.width = innerWidth; tela.height = innerHeight;
+    tela.width = Math.round(innerWidth * .5); tela.height = Math.round(innerHeight * .5); // a luz é toda desfocada
     gl.viewport(0, 0, tela.width, tela.height); gl.uniform2f(uRes, tela.width, tela.height);
   };
   const desenhar = t => { gl.uniform1f(uTempo, t); gl.drawArrays(gl.TRIANGLES, 0, 3); };
   const laco = t => { desenhar(t / 1000); requestAnimationFrame(laco); };
   ajustar();
-  addEventListener('resize', () => { ajustar(); if (parado) desenhar(8); });
+  addEventListener('resize', () => { ajustar(); desenhar(8); });
   if (parado) desenhar(8); else requestAnimationFrame(laco);
-})();
+};
+{
+  let montado = false;
+  const uma = () => { if (!montado) { montado = true; montarFundo(); } };
+  ['scroll', 'pointerdown', 'keydown', 'touchstart', 'wheel'].forEach(ev => addEventListener(ev, uma, { once: true, passive: true }));
+  if (scrollY > 0) uma(); // recarregou já no meio da página
+}

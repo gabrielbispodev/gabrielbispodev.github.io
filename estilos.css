@@ -1,3 +1,7 @@
+/* (17/11) Inter e Space Grotesk (licença OFL) servidas daqui, subconjunto latino, com troca sem bloquear o texto */
+@font-face { font-family: Inter; font-style: normal; font-weight: 100 900; font-display: swap; src: url(fontes/inter-latin.woff2) format("woff2"); }
+@font-face { font-family: "Space Grotesk"; font-style: normal; font-weight: 300 700; font-display: swap; src: url(fontes/space-grotesk-latin.woff2) format("woff2"); }
+
 :root {
   /* fundo 100% preto; painéis e vidros sobem do preto no mesmo degrau de antes (leve tom azulado mantido) */
   --fundo: #000000;
@@ -225,7 +229,7 @@ a { color: inherit; }
   background:
     radial-gradient(40% 50% at 30% 40%, rgba(var(--acento-rgb), .35), transparent 70%),
     radial-gradient(35% 45% at 70% 65%, rgba(var(--acento-rgb), .18), transparent 70%);
-  filter: blur(40px);
+  /* (17/11) sem filter: blur: os gradientes já são suaves e o desfoque custava caro na primeira pintura */
   animation: deriva 18s ease-in-out infinite alternate;
   /* some aos poucos antes do fim do hero, para não marcar uma linha na passagem para o Sobre
      (a caixa vai de -20% a 120% da altura do hero; o fim do hero fica em ~86%) */
@@ -385,6 +389,19 @@ a.card:hover { border-color: rgba(var(--acento-rgb), .5); }
 .filtro [aria-pressed="true"] {
   color: var(--acento); border-color: rgba(var(--acento-rgb), .6); background: rgba(var(--acento-rgb), .08);
 }
+
+/* (17/11) Perguntas frequentes: respostas curtas e diretas (ajudam Google e IAs a citar o site) */
+.faq { max-width: 52rem; }
+.faq details { border-bottom: 1px solid var(--borda); }
+.faq summary {
+  display: flex; justify-content: space-between; gap: 1rem; padding: 1.15rem 0; cursor: pointer;
+  list-style: none; font-weight: 600; font-size: 1.05rem;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; color: var(--acento); font-size: 1.3rem; line-height: 1; transition: transform .3s var(--curva); }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq summary:focus-visible { outline: 2px solid var(--acento); outline-offset: 4px; border-radius: .25rem; }
+.faq details p { color: var(--suave); padding-bottom: 1.25rem; max-width: 46rem; }
 
 /* Projetos */
 .filtro { display: flex; gap: .5rem; margin-bottom: 2rem; }

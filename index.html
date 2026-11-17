@@ -15,34 +15,223 @@
   <meta property="og:image" content="https://gabrielbispodev.github.io/og.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Gabriel Bispo, desenvolvedor web: sites e landing pages sob medida">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Gabriel Bispo — Criação de Sites e Landing Pages">
+  <meta name="twitter:description" content="Sites e landing pages sob medida, rápidos e com o WhatsApp à vista. Peça um orçamento sem compromisso.">
+  <meta name="author" content="Gabriel Bispo">
   <!-- dados estruturados: ajudam Google e IAs a entender quem oferece o quê e por quanto -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    "name": "Gabriel Bispo — Desenvolvedor Web",
-    "url": "https://gabrielbispodev.github.io/",
-    "image": "https://gabrielbispodev.github.io/pessoa.webp",
-    "description": "Criação de sites e landing pages sob medida, com SEO técnico básico e integração com WhatsApp.",
-    "email": "gabriel@seeall.app.br",
-    "telephone": "+55-19-99980-1423",
-    "areaServed": "BR",
-    "founder": { "@type": "Person", "name": "Gabriel Bispo", "jobTitle": "Desenvolvedor Web" },
-    "makesOffer": [
-      { "@type": "Offer", "name": "Landing Page", "price": "890", "priceCurrency": "BRL" },
-      { "@type": "Offer", "name": "Site Institucional", "price": "1490", "priceCurrency": "BRL" },
-      { "@type": "Offer", "name": "Site sob medida", "priceSpecification": { "@type": "PriceSpecification", "minPrice": "2490", "priceCurrency": "BRL" } },
-      { "@type": "Offer", "name": "Manutenção", "priceSpecification": { "@type": "UnitPriceSpecification", "minPrice": "99", "priceCurrency": "BRL", "unitText": "MONTH" } }
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://gabrielbispodev.github.io/#site",
+        "url": "https://gabrielbispodev.github.io/",
+        "name": "Gabriel Bispo — Desenvolvedor Web",
+        "inLanguage": "pt-BR",
+        "publisher": {
+          "@id": "https://gabrielbispodev.github.io/#servico"
+        }
+      },
+      {
+        "@type": "ProfessionalService",
+        "name": "Gabriel Bispo — Desenvolvedor Web",
+        "url": "https://gabrielbispodev.github.io/",
+        "image": "https://gabrielbispodev.github.io/pessoa.webp",
+        "description": "Criação de sites e landing pages sob medida, com SEO técnico básico e integração com WhatsApp.",
+        "email": "gabriel@seeall.app.br",
+        "telephone": "+55-19-99980-1423",
+        "areaServed": "BR",
+        "founder": {
+          "@type": "Person",
+          "name": "Gabriel Bispo",
+          "jobTitle": "Desenvolvedor Web"
+        },
+        "makesOffer": [
+          {
+            "@type": "Offer",
+            "name": "Landing Page",
+            "price": "890",
+            "priceCurrency": "BRL"
+          },
+          {
+            "@type": "Offer",
+            "name": "Site Institucional",
+            "price": "1490",
+            "priceCurrency": "BRL"
+          },
+          {
+            "@type": "Offer",
+            "name": "Site sob medida",
+            "priceSpecification": {
+              "@type": "PriceSpecification",
+              "minPrice": "2490",
+              "priceCurrency": "BRL"
+            }
+          },
+          {
+            "@type": "Offer",
+            "name": "Manutenção",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "minPrice": "99",
+              "priceCurrency": "BRL",
+              "unitText": "MONTH"
+            }
+          }
+        ],
+        "@id": "https://gabrielbispodev.github.io/#servico"
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://gabrielbispodev.github.io/#perguntas",
+        "inLanguage": "pt-BR",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Quanto custa uma landing page?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "O valor de referência é R$ 890. Inclui design personalizado, versão para celular, botões de ação, formulário simples ou WhatsApp, SEO técnico básico e a publicação inicial dentro do escopo combinado."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Qual a diferença entre landing page e site institucional?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A landing page é uma página só, focada em um produto, serviço ou campanha (R$ 890). O site institucional tem até cinco páginas e apresenta a empresa, os serviços e o contato num só lugar (R$ 1.490). Projetos com mais páginas ou funcionalidades saem a partir de R$ 2.490, com preço final após a análise do escopo."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Domínio e hospedagem estão incluídos?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Não. O domínio e a hospedagem são contratados em seu nome e pagos direto ao provedor, então o site é sempre seu. Colocar o site no ar e configurar o essencial já faz parte dos planos."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Como funciona o processo?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "São quatro etapas: uma conversa para entender o seu negócio, uma proposta por escrito com o que está e o que não está incluído, a criação com prévias para você acompanhar e pedir ajustes, e a publicação, com cada tela conferida no celular e no computador."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "O site vai aparecer no Google?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Todo plano inclui SEO técnico básico: títulos, descrições, sitemap e uma estrutura que o Google consegue ler, além da verificação no Google Search Console na publicação. Isso ajuda o Google a entender o site, mas ninguém pode garantir posição. SEO contínuo, Perfil da Empresa no Google e Google Ads são orçados à parte."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Vocês fazem manutenção depois que o site está no ar?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sim, de forma opcional, a partir de R$ 99 por mês: atualizações simples e suporte conforme as condições combinadas antes. Não inclui hospedagem, custos de terceiros nem desenvolvimento ilimitado."
+            }
+          }
+        ]
+      },
+      {
+        "@type": "ItemList",
+        "@id": "https://gabrielbispodev.github.io/#projetos",
+        "name": "Projetos recentes",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "item": {
+              "@type": "CreativeWork",
+              "name": "Oásis Assistência Técnica",
+              "url": "https://gabrielbispodev.github.io/oasis-assistencia/",
+              "description": "Modelo para ar-condicionado e assistência técnica.",
+              "creator": {
+                "@id": "https://gabrielbispodev.github.io/#servico"
+              }
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "item": {
+              "@type": "CreativeWork",
+              "name": "Navalha Barbearia",
+              "url": "https://gabrielbispodev.github.io/navalha-barbearia/",
+              "description": "Modelo de barbearia com 3 unidades e agendamento em dois toques.",
+              "creator": {
+                "@id": "https://gabrielbispodev.github.io/#servico"
+              }
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "item": {
+              "@type": "CreativeWork",
+              "name": "Trigal Paneteria",
+              "url": "https://gabrielbispodev.github.io/trigal-paneteria/",
+              "description": "Modelo de padaria 24 horas com cardápio em livro 3D.",
+              "creator": {
+                "@id": "https://gabrielbispodev.github.io/#servico"
+              }
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "item": {
+              "@type": "CreativeWork",
+              "name": "Hoshi Sushi",
+              "url": "https://gabrielbispodev.github.io/hoshi-sushi/",
+              "description": "Modelo de restaurante japonês com rodízio, salão e delivery.",
+              "creator": {
+                "@id": "https://gabrielbispodev.github.io/#servico"
+              }
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 5,
+            "item": {
+              "@type": "CreativeWork",
+              "name": "Vida Selvagem",
+              "url": "https://gabrielbispodev.github.io/vida-selvagem/",
+              "description": "Projeto com fotos premiadas, cartões que giram e vídeos de fundo.",
+              "creator": {
+                "@id": "https://gabrielbispodev.github.io/#servico"
+              }
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 6,
+            "item": {
+              "@type": "CreativeWork",
+              "name": "Sabores de Campinas",
+              "url": "https://gabrielbispodev.github.io/sabores-de-campinas/",
+              "description": "Projeto conceito de restaurante de comida do interior paulista.",
+              "creator": {
+                "@id": "https://gabrielbispodev.github.io/#servico"
+              }
+            }
+          }
+        ]
+      }
     ]
   }
   </script>
   <meta name="color-scheme" content="dark light">
   <!-- Aplica tema e cor salvos antes da página aparecer (evita piscar no tema errado) -->
   <script>try { const p = JSON.parse(localStorage.getItem('frame-preferencias')) || {}; if (p.tema) document.documentElement.dataset.tema = p.tema; if (p.cor) document.documentElement.dataset.cor = p.cor; } catch (e) {}</script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap">
+  <!-- (17/11) fontes servidas pelo próprio site (pasta fontes/): sem ida ao Google antes da primeira pintura -->
+  <link rel="preload" href="fontes/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <!-- ícone: monograma GB (SVG nos navegadores atuais, PNG de reserva e para a tela inicial do iPhone) -->
   <link rel="icon" href="icone.svg" type="image/svg+xml">
   <link rel="icon" href="icone-32.png" type="image/png" sizes="32x32">
@@ -300,6 +489,21 @@
         <li class="projeto" data-tipo="web"><span class="projeto__capa"><img class="projeto__img" src="sabores-campinas-capa.jpg" alt="" width="1024" height="640" loading="lazy"></span><span class="selo">Web</span><h3><a href="sabores-de-campinas/" target="_blank" rel="noopener">Sabores de Campinas</a></h3><p data-en="Concept project for a restaurant with food from the São Paulo countryside: glass navigation bar, cards with physics and an animated carousel.">Projeto conceito de um restaurante de comida do interior paulista: barra de vidro, cartões com física e carrossel animado.</p></li>
       </ul>
       </div></div>
+    </section>
+
+    <section class="secao" id="perguntas">
+      <header class="secao__cab revelar">
+        <p class="rotulo" data-en="FAQ">Dúvidas</p>
+        <h2 data-en='Frequently asked <span class="contorno">questions</span>'>Perguntas <span class="contorno">frequentes</span></h2>
+      </header>
+      <div class="faq revelar">
+        <details><summary data-en="How much does a landing page cost?">Quanto custa uma landing page?</summary><p data-en="The reference price is R$ 890. It includes custom design, a mobile version, call-to-action buttons, a simple form or WhatsApp, basic technical SEO and the initial launch within the agreed scope.">O valor de referência é R$ 890. Inclui design personalizado, versão para celular, botões de ação, formulário simples ou WhatsApp, SEO técnico básico e a publicação inicial dentro do escopo combinado.</p></details>
+        <details><summary data-en="What is the difference between a landing page and a company website?">Qual a diferença entre landing page e site institucional?</summary><p data-en="A landing page is a single page focused on one product, service or campaign (R$ 890). A company website has up to five pages and presents the business, its services and contact details in one place (R$ 1,490). Projects with more pages or features start at R$ 2,490, with the final price set after reviewing the scope.">A landing page é uma página só, focada em um produto, serviço ou campanha (R$ 890). O site institucional tem até cinco páginas e apresenta a empresa, os serviços e o contato num só lugar (R$ 1.490). Projetos com mais páginas ou funcionalidades saem a partir de R$ 2.490, com preço final após a análise do escopo.</p></details>
+        <details><summary data-en="Are domain and hosting included?">Domínio e hospedagem estão incluídos?</summary><p data-en="No. The domain and hosting are registered in your name and paid directly to the provider, so the site is always yours. Launching the site and setting up the essentials is already part of every plan.">Não. O domínio e a hospedagem são contratados em seu nome e pagos direto ao provedor, então o site é sempre seu. Colocar o site no ar e configurar o essencial já faz parte dos planos.</p></details>
+        <details><summary data-en="How does the process work?">Como funciona o processo?</summary><p data-en="There are four steps: a conversation to understand your business, a written proposal with what is and is not included, the build with previews so you can follow along and ask for changes, and the launch, with every screen checked on phone and desktop.">São quatro etapas: uma conversa para entender o seu negócio, uma proposta por escrito com o que está e o que não está incluído, a criação com prévias para você acompanhar e pedir ajustes, e a publicação, com cada tela conferida no celular e no computador.</p></details>
+        <details><summary data-en="Will the site show up on Google?">O site vai aparecer no Google?</summary><p data-en="Every plan includes basic technical SEO: titles, descriptions, a sitemap and a structure Google can read, plus Google Search Console verification at launch. This helps Google understand the site, but nobody can guarantee a ranking. Ongoing SEO, Google Business Profile and Google Ads are quoted separately.">Todo plano inclui SEO técnico básico: títulos, descrições, sitemap e uma estrutura que o Google consegue ler, além da verificação no Google Search Console na publicação. Isso ajuda o Google a entender o site, mas ninguém pode garantir posição. SEO contínuo, Perfil da Empresa no Google e Google Ads são orçados à parte.</p></details>
+        <details><summary data-en="Do you offer maintenance after launch?">Vocês fazem manutenção depois que o site está no ar?</summary><p data-en="Yes, optionally, starting at R$ 99 per month: simple updates and support under conditions agreed beforehand. It does not include hosting, third-party costs or unlimited development.">Sim, de forma opcional, a partir de R$ 99 por mês: atualizações simples e suporte conforme as condições combinadas antes. Não inclui hospedagem, custos de terceiros nem desenvolvimento ilimitado.</p></details>
+      </div>
     </section>
 
     <section class="secao" id="contato">
