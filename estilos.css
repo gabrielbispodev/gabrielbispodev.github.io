@@ -430,60 +430,54 @@ img.projeto__img { display: block; width: 100%; height: auto; object-fit: cover;
 @media (min-width: 768px) { .projetos { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1024px) { .projetos { grid-template-columns: repeat(3, 1fr); } }
 /* (17/11) Galeria de projetos em painéis (inspirada no "Expanding Cards" do Framer): o projeto ativo abre com
-   capa, descrição e título; os outros viram tiras numeradas com uma fatia da capa. No computador fica na
-   horizontal, no celular na vertical. Navega com a roda do mouse, arrastando (mouse ou dedo), com as setas ou
-   clicando numa tira. Só vale com JS; sem ele fica a grade de cards acima. */
-.js .projetos {
-  display: flex; gap: .5rem; height: min(32rem, 66svh); counter-reset: projeto;
-  touch-action: pan-y; user-select: none; -webkit-user-select: none; /* arrasto horizontal é do JS; o vertical rola a página */
-}
+   a capa em cima e a descrição e o título embaixo, num painel próprio (texto nunca por cima da capa); os outros
+   viram tiras numeradas com uma fatia da capa. No computador fica na horizontal, no celular na vertical.
+   Abre clicando/tocando numa tira ou pelo teclado. Só vale com JS; sem ele fica a grade de cards acima. */
+.js .projetos { display: flex; gap: .5rem; height: min(32rem, 70svh); counter-reset: projeto; --texto-card: 7.25rem; }
 .js .projeto {
-  flex: 0 0 3.5rem; min-width: 0; padding: 1.25rem; overflow: hidden; border-radius: 14px; border: 0; cursor: pointer;
+  flex: 0 0 3.5rem; min-width: 0; padding: 0 1.25rem 1.1rem; overflow: hidden; border-radius: 14px; cursor: pointer;
   display: flex; flex-direction: column; justify-content: flex-end; counter-increment: projeto;
+  background: var(--painel); border: 1px solid var(--borda);
   transition: flex-grow .7s var(--curva), flex-basis .7s var(--curva);
 }
-.js .projeto.ativo { flex: 1 1 0; cursor: grab; }
-.js .projetos.arrastando .projeto { cursor: grabbing; }
+.js .projeto.ativo { flex: 1 1 0; cursor: auto; }
 .js .projeto:has(h3 a):hover { transform: none; box-shadow: none; }
-.js .projeto__capa { position: absolute; inset: 0; margin: 0; border-radius: 0; }
+.js .projeto__capa { position: absolute; inset: 0; margin: 0; border-radius: 0; transition: bottom .7s var(--curva); }
+.js .projeto.ativo .projeto__capa { bottom: var(--texto-card); } /* a capa para onde começa o texto */
 .js .projeto__capa .projeto__img {
-  width: 100%; height: 100%; aspect-ratio: auto; border-radius: 0; object-fit: cover;
-  -webkit-user-drag: none; pointer-events: none; filter: brightness(.55); transition: filter .7s, transform .6s var(--curva);
+  width: 100%; height: 100%; aspect-ratio: auto; border-radius: 0; object-fit: cover; object-position: top;
+  pointer-events: none; filter: brightness(.45); transition: filter .7s, transform .6s var(--curva);
 }
 .js .projeto.ativo .projeto__img { filter: none; }
-.js .projeto::before { /* escurece embaixo para o texto ler sobre qualquer capa */
-  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
-  background: linear-gradient(to top, #000000f0, #00000099 30%, transparent 60%);
-}
-.js .projeto::after { /* número do painel, como no modelo */
-  content: counter(projeto, decimal-leading-zero); position: absolute; top: 1rem; left: 1.1rem;
-  font-size: .8rem; font-weight: 700; color: #fff;
+.js .projeto::after { /* número do painel, como no modelo, numa pílula para ler sobre qualquer capa */
+  content: counter(projeto, decimal-leading-zero); position: absolute; top: .75rem; left: .6rem; z-index: 2;
+  padding: .15rem .45rem; border-radius: 999px; background: #000000b3; font-size: .75rem; font-weight: 700; color: #fff;
 }
 .js .projeto h3, .js .projeto p {
-  position: relative; z-index: 2; color: #fff; width: min(32rem, 70vw);
+  position: relative; z-index: 2; width: min(34rem, calc(100vw - 6rem));
   opacity: 0; transform: translateY(.5rem); transition: opacity .4s, transform .6s var(--curva);
 }
-.js .projeto p { order: -1; margin-bottom: .6rem; color: #ffffffcc; font-size: .95rem; }
-.js .projeto h3 { font-size: 1.05rem; }
-.js .projeto .selo { top: 1rem; right: 1rem; z-index: 2; opacity: 0; transition: opacity .4s; }
+.js .projeto p { order: -1; margin-bottom: .45rem; color: var(--suave); font-size: .9rem; line-height: 1.45; }
+.js .projeto h3 { font-size: 1.05rem; color: var(--texto); }
+.js .projeto .selo { top: .75rem; right: .75rem; z-index: 2; opacity: 0; transition: opacity .4s; }
 .js .projeto.ativo h3, .js .projeto.ativo p, .js .projeto.ativo .selo { opacity: 1; transform: none; transition-delay: .25s; }
 .js .projeto:not(.ativo) h3 a { pointer-events: none; } /* tira fechada: o clique abre o painel em vez de sair do site */
 .js .projeto:focus-visible { outline: 2px solid var(--acento); outline-offset: 3px; }
-/* celular: painéis empilhados; tira com número e nome, o ativo com a capa inteira */
+/* celular: painéis empilhados; a tira mostra número e nome, o ativo a capa inteira (16:10) e o texto embaixo */
 @media (max-width: 767px) {
-  .js .projetos { flex-direction: column; height: auto; touch-action: none; }
-  .js .projeto { flex: 0 0 3.25rem; padding: 1rem; transition: flex-basis .7s var(--curva); }
-  .js .projeto.ativo { flex: 0 0 min(26rem, 62svh); }
-  .js .projeto::after { top: 1.05rem; left: 1rem; }
+  .js .projetos { flex-direction: column; height: auto; --texto-card: 8.75rem; }
+  .js .projeto { flex: 0 0 3.25rem; padding: 0 1rem 1rem; transition: flex-basis .7s var(--curva); }
+  .js .projeto.ativo { flex: 0 0 calc((100vw - 2rem) * .625 + var(--texto-card)); }
+  .js .projeto::after { top: .8rem; left: .7rem; }
   .js .projeto:not(.ativo) h3 { /* nome do projeto ao lado do número, na tira fechada */
-    position: absolute; top: .95rem; left: 3.2rem; width: auto; opacity: .75; transform: none; font-size: .9rem;
+    position: absolute; top: .85rem; left: 3.4rem; width: auto; opacity: 1; transform: none; font-size: .9rem; color: #fff;
   }
-  .js .projeto:not(.ativo) .projeto__img { filter: brightness(.3); } /* tira mais escura: o nome lê bem */
+  .js .projeto:not(.ativo) .projeto__img { filter: brightness(.3); }
   .js .projeto p { font-size: .85rem; width: auto; }
-  .js .projeto h3 { width: auto; }
+  .js .projeto.ativo h3 { width: auto; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .js .projeto, .js .projeto h3, .js .projeto p, .js .projeto .selo, .js .projeto__capa .projeto__img { transition: none; }
+  .js .projeto, .js .projeto h3, .js .projeto p, .js .projeto .selo, .js .projeto__capa, .js .projeto__capa .projeto__img { transition: none; }
 }
 
 /* Contato */

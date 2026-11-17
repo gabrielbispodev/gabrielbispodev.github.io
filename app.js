@@ -267,14 +267,12 @@ if (matchMedia('(hover: hover) and (pointer: fine)').matches && !matchMedia('(pr
 
 
 // (17/11) Galeria de projetos em painéis: o ativo abre, os outros ficam em tiras numeradas.
-// Navega com a roda do mouse, arrastando (mouse ou dedo; horizontal no computador, vertical no celular),
-// com as setas do teclado ou clicando numa tira. No primeiro e no último painel a roda e o arrasto
-// voltam a rolar a página, para ninguém ficar preso na seção.
+// Abre um projeto clicando/tocando na tira ou pelo teclado (Tab + Enter, ou setas). A roda do mouse e o
+// arrasto ficam com a página, como em qualquer outra seção.
 (() => {
   const lista = document.querySelector('.projetos');
   const paineis = [...lista.children];
-  const celular = matchMedia('(max-width: 767px)');
-  let ativo = 0, espera = 0;
+  let ativo = 0;
 
   const abrir = i => {
     ativo = Math.max(0, Math.min(paineis.length - 1, i));
@@ -283,52 +281,9 @@ if (matchMedia('(hover: hover) and (pointer: fine)').matches && !matchMedia('(pr
       p.tabIndex = j === ativo ? -1 : 0; // tiras fechadas entram no Tab para poder abrir pelo teclado
     });
   };
-  // passo = +1 ou -1; devolve false no fim da lista (aí quem chamou deixa a página rolar)
-  const andar = passo => {
-    const alvo = ativo + passo;
-    if (alvo < 0 || alvo >= paineis.length) return false;
-    abrir(alvo); return true;
-  };
 
-  // Roda do mouse: um painel por "giro"; uma pausa curta evita pular vários de uma vez no touchpad
-  lista.addEventListener('wheel', e => {
-    const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
-    if (Math.abs(delta) < 4) return;
-    const r = lista.getBoundingClientRect(); // só segura a roda com a galeria quase toda na tela
-    if (r.top < -r.height * .15 || r.bottom > innerHeight + r.height * .15) return;
-    const passo = delta > 0 ? 1 : -1;
-    const alvo = ativo + passo;
-    if (alvo < 0 || alvo >= paineis.length) return; // fim da lista: a página rola normal
-    e.preventDefault();
-    if (performance.now() < espera) return;
-    espera = performance.now() + 450;
-    abrir(alvo);
-  }, { passive: false });
-
-  // Arrasto: a cada 60 px no eixo da galeria anda um painel; no fim da lista, o celular repassa o arrasto à página
-  let inicio = null, ultimo = 0, soma = 0, moveu = false;
-  const eixo = e => celular.matches ? e.clientY : e.clientX;
-  lista.addEventListener('pointerdown', e => {
-    if (e.button > 0) return;
-    inicio = eixo(e); ultimo = inicio; soma = 0; moveu = false;
-  });
-  addEventListener('pointermove', e => {
-    if (inicio === null) return;
-    const pos = eixo(e), d = pos - ultimo; ultimo = pos;
-    if (Math.abs(pos - inicio) > 8 && !moveu) { moveu = true; lista.classList.add('arrastando'); }
-    if (!moveu) return;
-    soma += d;
-    const passo = soma < 0 ? 1 : -1; // arrastar para a esquerda/cima traz o próximo
-    if (Math.abs(soma) >= 60) { if (andar(passo)) soma = 0; }
-    if (celular.matches && (ativo + passo < 0 || ativo + passo >= paineis.length)) { scrollBy(0, -d); soma = 0; }
-  });
-  const soltar = () => { inicio = null; lista.classList.remove('arrastando'); };
-  addEventListener('pointerup', soltar);
-  addEventListener('pointercancel', soltar);
-
-  // Clique: numa tira fechada abre o painel; depois de arrastar, o clique não abre o link
+  // Clique numa tira fechada abre o painel (o link só vale no painel aberto)
   lista.addEventListener('click', e => {
-    if (moveu) { e.preventDefault(); moveu = false; return; }
     const i = paineis.indexOf(e.target.closest('.projeto'));
     if (i >= 0 && i !== ativo) { e.preventDefault(); abrir(i); }
   });
@@ -336,7 +291,8 @@ if (matchMedia('(hover: hover) and (pointer: fine)').matches && !matchMedia('(pr
     const p = e.target.closest('.projeto');
     if ((e.key === 'Enter' || e.key === ' ') && p && !p.classList.contains('ativo')) { e.preventDefault(); abrir(paineis.indexOf(p)); return; }
     const tecla = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
-    if (tecla && andar(tecla)) e.preventDefault();
+    const alvo = ativo + (tecla || 0);
+    if (tecla && alvo >= 0 && alvo < paineis.length) { e.preventDefault(); abrir(alvo); }
   });
   abrir(0);
 })();
