@@ -250,7 +250,74 @@ filtros.forEach(botao => botao.addEventListener('click', () => {
   document.querySelectorAll('.projeto').forEach(p => {
     p.hidden = tipo !== 'todos' && p.dataset.tipo !== tipo;
   });
+  document.dispatchEvent(new Event('frame:filtro')); // a linha do tempo recalcula os projetos visíveis
 }));
+
+// Carrossel de projetos no formato linha do tempo: o card ativo abre e os outros viram tiras; a cada 4 s
+// abre sozinho o próximo (volta ao primeiro no fim). Pausa com o mouse em cima, com foco ou fora da tela.
+// Clicar numa tira ou num nome da régua abre aquele projeto.
+(() => {
+  const linha = document.querySelector('.linha');
+  const lista = linha.querySelector('.projetos');
+  const palco = linha.querySelector('.linha__palco');
+  const trilha = linha.querySelector('.regua__trilha');
+  const parado = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let visiveis = [], ativo = -1, relogio = 0, emCima = false, naTela = false;
+
+  const medidas = () => {
+    const celular = innerWidth < 768, w = palco.clientWidth;
+    return { tira: celular ? 28 : 72, vao: celular ? 6 : 12, aberto: Math.round(Math.min(celular ? w * .8 : w * .62, 560)) };
+  };
+  const posicionar = () => {
+    const m = medidas();
+    lista.style.setProperty('--tira', m.tira + 'px');
+    lista.style.setProperty('--vao', m.vao + 'px');
+    lista.style.setProperty('--aberto', m.aberto + 'px');
+    // o card aberto fica no meio; os anteriores (tiras) somam ativo × (tira + vão) antes dele
+    lista.style.setProperty('--x', ((palco.clientWidth - m.aberto) / 2 - ativo * (m.tira + m.vao)) + 'px');
+    const botao = trilha.children[0];
+    if (botao) trilha.style.setProperty('--rx', (trilha.parentElement.clientWidth / 2 - (ativo + .5) * botao.offsetWidth) + 'px');
+  };
+  const abrir = i => {
+    if (i === ativo) return;
+    ativo = i;
+    visiveis.forEach((p, j) => p.classList.toggle('ativo', j === i));
+    [...trilha.children].forEach((b, j) => b.setAttribute('aria-current', j === i));
+    posicionar();
+  };
+  const tocar = () => { // reinicia a contagem: depois de um clique o próximo também espera 4 s
+    clearInterval(relogio);
+    if (!parado && naTela && !emCima && visiveis.length > 1) relogio = setInterval(() => abrir((ativo + 1) % visiveis.length), 4000);
+  };
+  const escolher = i => { abrir(i); tocar(); };
+  const montar = () => {
+    visiveis = [...lista.children].filter(p => !p.hidden);
+    trilha.replaceChildren(...visiveis.map((p, i) => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.tabIndex = -1; b.textContent = p.querySelector('h3').textContent;
+      b.addEventListener('click', () => escolher(i));
+      return b;
+    }));
+    ativo = -1; abrir(0); tocar();
+  };
+
+  lista.addEventListener('click', e => {
+    const i = visiveis.indexOf(e.target.closest('.projeto'));
+    if (i >= 0 && i !== ativo) { e.preventDefault(); escolher(i); }
+  });
+  lista.addEventListener('focusin', e => { // Tab pelos links também anda no carrossel
+    const i = visiveis.indexOf(e.target.closest('.projeto'));
+    if (i >= 0) abrir(i);
+    emCima = true; tocar();
+  });
+  lista.addEventListener('focusout', () => { emCima = false; tocar(); });
+  palco.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') { emCima = true; tocar(); } });
+  palco.addEventListener('pointerleave', () => { emCima = false; tocar(); });
+  new IntersectionObserver(([e]) => { naTela = e.isIntersecting; tocar(); }).observe(palco);
+  document.addEventListener('frame:filtro', montar);
+  addEventListener('resize', posicionar);
+  montar();
+})();
 
 // Voltar ao topo: aparece depois de rolar uma tela
 const voltar = document.querySelector('.voltar-topo');
@@ -407,4 +474,56 @@ voltar.addEventListener('click', () => scrollTo({ top: 0, behavior: matchMedia('
     requestAnimationFrame(laco);
   }
   new IntersectionObserver(([e]) => { ativo = e.isIntersecting; if (ativo) { antes = 0; requestAnimationFrame(laco); } }).observe(tela);
+})();
+
+// Fundo do site todo: a mesma técnica do "Shader Labs Defy + Static" do Framer (componente "Kinetic Metal"),
+// reescrita aqui: o plano é torcido em 3 passos de seno/cosseno, cada canal (R, G, B) lê o campo 0,02 deslocado
+// (daí as bordas coloridas) e pow(…, 8) deixa só faixas finas de luz sobre #050505. Mesmos parâmetros:
+// densidade 5, contraste 8, velocidade 0,5 (0,0075 por quadro a 60 fps = 0,45 por segundo).
+// Fica fixo atrás do conteúdo; o hero tem fundo próprio e cobre a luz atrás dos raios de haki.
+(() => {
+  const tela = document.querySelector('.fundo-luz');
+  const gl = tela && tela.getContext('webgl', { antialias: false, premultipliedAlpha: true });
+  if (!gl) return;
+  const parado = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const vert = 'attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}';
+  const frag = `precision mediump float;
+uniform vec2 uRes; uniform float uTempo;
+// torce o ponto: cada passo empurra x pelo seno de y e y pelo cosseno de x, com metade da força do anterior
+float campo(vec2 q, float desloca){
+  q += desloca;
+  float t = uTempo * .45;
+  for (int k = 1; k < 4; k++) {
+    float n = float(k);
+    q.x += .3 / n * sin(n * 3. * q.y + t);
+    q.y += .3 / n * cos(n * 3. * q.x + t);
+  }
+  return sin(q.x * 5.) * .5 + .5; // densidade 5
+}
+void main(){
+  vec2 uv = gl_FragCoord.xy / uRes; // sem corrigir a proporção, como no original
+  vec3 cor = pow(vec3(campo(uv, 0.), campo(uv, .02), campo(uv, .04)), vec3(8.)); // contraste 8
+  gl_FragColor = vec4(mix(vec3(.0196), cor, .8), 1.);
+}`;
+  const sh = (tipo, src) => { const s = gl.createShader(tipo); gl.shaderSource(s, src); gl.compileShader(s); return s; };
+  const prog = gl.createProgram();
+  gl.attachShader(prog, sh(gl.VERTEX_SHADER, vert)); gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, frag));
+  gl.linkProgram(prog);
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { console.warn('fundo de luz:', gl.getProgramInfoLog(prog)); return; }
+  gl.useProgram(prog);
+  gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+  gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+  const uRes = gl.getUniformLocation(prog, 'uRes'), uTempo = gl.getUniformLocation(prog, 'uTempo');
+
+  const ajustar = () => {
+    tela.width = innerWidth; tela.height = innerHeight;
+    gl.viewport(0, 0, tela.width, tela.height); gl.uniform2f(uRes, tela.width, tela.height);
+  };
+  const desenhar = t => { gl.uniform1f(uTempo, t); gl.drawArrays(gl.TRIANGLES, 0, 3); };
+  const laco = t => { desenhar(t / 1000); requestAnimationFrame(laco); };
+  ajustar();
+  addEventListener('resize', () => { ajustar(); if (parado) desenhar(8); });
+  if (parado) desenhar(8); else requestAnimationFrame(laco);
 })();

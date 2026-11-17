@@ -54,6 +54,7 @@
   <script data-goatcounter="https://gabrielbispodev.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </head>
 <body>
+  <canvas class="fundo-luz" aria-hidden="true"></canvas>
   <a class="pular" href="#conteudo" data-en="Skip to content">Pular para o conteúdo</a>
 
   <header class="topo">
@@ -289,12 +290,13 @@
         <p class="rotulo" data-en="Work">Trabalhos</p>
         <h2 data-en='Recent <span class="contorno">projects</span>'>Projetos <span class="contorno">recentes</span></h2>
       </header>
+      <div class="linha"><div class="linha__palco">
       <div class="filtro revelar" role="group" aria-label="Filtrar projetos" data-en-aria-label="Filter projects">
         <button type="button" data-filtro="todos" aria-pressed="true" data-en="All">Todos</button>
         <button type="button" data-filtro="web" aria-pressed="false">Web</button>
         <button type="button" data-filtro="app" aria-pressed="false">App</button>
       </div>
-      <ul class="projetos revelar">
+      <ul class="projetos">
         <li class="projeto" data-tipo="web"><span class="projeto__capa"><img class="projeto__img" src="oasis-assistencia-capa.jpg" alt="" width="1024" height="640" loading="lazy"></span><span class="selo">Web</span><h3><a href="oasis-assistencia/" target="_blank" rel="noopener">Oásis Assistência Técnica</a></h3><p data-en="Template for air conditioning and appliance repair: 3D logo intro, an air conditioner that comes apart as you scroll and a service wheel.">Modelo para ar-condicionado e assistência técnica: intro com logo em 3D, ar-condicionado que se desmonta ao rolar e roda de serviços.</p></li>
         <li class="projeto" data-tipo="web"><span class="projeto__capa"><img class="projeto__img" src="navalha-barbearia-capa.jpg" alt="" width="1024" height="640" loading="lazy"></span><span class="selo">Web</span><h3><a href="navalha-barbearia/" target="_blank" rel="noopener">Navalha Barbearia</a></h3><p data-en="Template for a barbershop with 3 locations: two-tap booking, 3D services carousel, team panels and a map.">Modelo de barbearia com 3 unidades: agendamento em dois toques, carrossel 3D de serviços, painéis da equipe e mapa.</p></li>
         <li class="projeto" data-tipo="web"><span class="projeto__capa"><img class="projeto__img" src="trigal-paneteria-capa.jpg" alt="" width="1024" height="640" loading="lazy"></span><span class="selo">Web</span><h3><a href="trigal-paneteria/" target="_blank" rel="noopener">Trigal Paneteria</a></h3><p data-en="Template for a 24-hour bakery: sign-style intro, a 3D book menu and an online order form.">Modelo de padaria 24 horas: intro com letreiro, cardápio em livro 3D e formulário de encomendas.</p></li>
@@ -303,6 +305,8 @@
         <li class="projeto" data-tipo="app"><span class="projeto__capa"><img class="projeto__img" src="seeall.png" alt="" width="1024" height="500" loading="lazy"></span><span class="selo">App</span><h3><a href="https://seeall.app.br" target="_blank" rel="noopener">SeeAll</a></h3><p data-en="Finance app that reads your bank notifications and statements and sorts your spending on its own. Android and web.">App de finanças que lê as notificações e os extratos do banco e organiza seus gastos sozinho. Android e navegador.</p></li>
         <li class="projeto" data-tipo="web"><span class="projeto__capa"><img class="projeto__img" src="sabores-campinas-capa.jpg" alt="" width="1024" height="640" loading="lazy"></span><span class="selo">Web</span><h3><a href="sabores-de-campinas/" target="_blank" rel="noopener">Sabores de Campinas</a></h3><p data-en="Concept project for a restaurant with food from the São Paulo countryside: glass navigation bar, cards with physics and an animated carousel.">Projeto conceito de um restaurante de comida do interior paulista: barra de vidro, cartões com física e carrossel animado.</p></li>
       </ul>
+      <div class="regua" aria-hidden="true"><div class="regua__trilha"></div></div>
+      </div></div>
     </section>
 
     <section class="secao" id="contato">
