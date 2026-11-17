@@ -408,70 +408,61 @@ img.projeto__img { display: block; width: 100%; height: auto; object-fit: cover;
 .selo { position: absolute; top: 1.75rem; right: 1.75rem; padding: .2rem .7rem; border-radius: 999px; font-size: .7rem; font-weight: 700; text-transform: uppercase; background: var(--fundo); color: var(--acento); border: 1px solid rgba(var(--acento-rgb), .5); }
 @media (min-width: 768px) { .projetos { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1024px) { .projetos { grid-template-columns: repeat(3, 1fr); } }
-.regua { display: none; } /* sem JS fica a grade de cards acima */
-
-/* Carrossel de projetos no formato linha do tempo (inspirado no "Modern Timeline" do Framer): o ativo abre,
-   os outros viram tiras com a capa recortada, e uma régua embaixo mostra onde você está. Avança sozinho.
-   --tira, --vao, --aberto e --x vêm do app.js; só vale com JS. */
-.js .linha__palco { overflow: hidden; padding-block: .5rem; }
+/* (17/11) Galeria de projetos em painéis (inspirada no "Expanding Cards" do Framer): o projeto ativo abre com
+   capa, descrição e título; os outros viram tiras numeradas com uma fatia da capa. No computador fica na
+   horizontal, no celular na vertical. Navega com a roda do mouse, arrastando (mouse ou dedo), com as setas ou
+   clicando numa tira. Só vale com JS; sem ele fica a grade de cards acima. */
 .js .projetos {
-  display: flex; gap: var(--vao); height: calc(var(--aberto) * .625); /* 16:10, a proporção das capas: a capa aparece inteira */
-  transform: translateX(var(--x, 0px)); transition: transform 1.1s var(--curva);
+  display: flex; gap: .5rem; height: min(32rem, 66svh); counter-reset: projeto;
+  touch-action: pan-y; user-select: none; -webkit-user-select: none; /* arrasto horizontal é do JS; o vertical rola a página */
 }
 .js .projeto {
-  flex: 0 0 var(--tira); padding: 1.25rem; overflow: hidden; border-radius: 14px; border: 0; cursor: pointer;
-  display: flex; flex-direction: column; justify-content: flex-end; opacity: .6;
-  transition: flex-basis 1.1s var(--curva), opacity .8s;
+  flex: 0 0 3.5rem; min-width: 0; padding: 1.25rem; overflow: hidden; border-radius: 14px; border: 0; cursor: pointer;
+  display: flex; flex-direction: column; justify-content: flex-end; counter-increment: projeto;
+  transition: flex-grow .7s var(--curva), flex-basis .7s var(--curva);
 }
-.js .projeto[hidden] { display: none; }
-.js .projeto.ativo { flex-basis: var(--aberto); opacity: 1; cursor: auto; }
-.js .projeto:hover { opacity: 1; }
-.js .projeto:has(h3 a):hover { transform: none; box-shadow: none; } /* sem o "sobe" da grade: a tira abre no lugar */
+.js .projeto.ativo { flex: 1 1 0; cursor: grab; }
+.js .projetos.arrastando .projeto { cursor: grabbing; }
+.js .projeto:has(h3 a):hover { transform: none; box-shadow: none; }
 .js .projeto__capa { position: absolute; inset: 0; margin: 0; border-radius: 0; }
-/* a capa tem a largura do card aberto e fica presa à esquerda: a tira mostra só uma fatia dela */
-.js .projeto__capa .projeto__img { width: var(--aberto); max-width: none; height: 100%; aspect-ratio: auto; border-radius: 0; }
+.js .projeto__capa .projeto__img {
+  width: 100%; height: 100%; aspect-ratio: auto; border-radius: 0; object-fit: cover;
+  -webkit-user-drag: none; pointer-events: none; filter: brightness(.55); transition: filter .7s, transform .6s var(--curva);
+}
+.js .projeto.ativo .projeto__img { filter: none; }
 .js .projeto::before { /* escurece embaixo para o texto ler sobre qualquer capa */
   content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
-  background: linear-gradient(to top, #000000f2, #000000a6 35%, transparent 65%);
+  background: linear-gradient(to top, #000000f0, #00000099 30%, transparent 60%);
 }
-.js .projeto h3, .js .projeto p, .js .projeto .selo {
-  position: relative; width: calc(var(--aberto) - 2.5rem); color: #fff; /* largura fixa: o texto não quebra enquanto a tira abre */
-  opacity: 0; transform: translateY(.5rem); transition: opacity .5s, transform .8s var(--curva);
+.js .projeto::after { /* número do painel, como no modelo */
+  content: counter(projeto, decimal-leading-zero); position: absolute; top: 1rem; left: 1.1rem;
+  font-size: .8rem; font-weight: 700; color: #fff;
 }
-.js .projeto p { color: #ffffffbf; max-width: 32rem; }
-.js .projeto .selo { position: absolute; top: 1rem; left: 1rem; right: auto; width: auto; color: var(--acento); }
+.js .projeto h3, .js .projeto p {
+  position: relative; z-index: 2; color: #fff; width: min(32rem, 70vw);
+  opacity: 0; transform: translateY(.5rem); transition: opacity .4s, transform .6s var(--curva);
+}
+.js .projeto p { order: -1; margin-bottom: .6rem; color: #ffffffcc; font-size: .95rem; }
+.js .projeto h3 { font-size: 1.05rem; }
+.js .projeto .selo { top: 1rem; right: 1rem; z-index: 2; opacity: 0; transition: opacity .4s; }
 .js .projeto.ativo h3, .js .projeto.ativo p, .js .projeto.ativo .selo { opacity: 1; transform: none; transition-delay: .25s; }
-.js .projeto:not(.ativo) h3 a { pointer-events: none; } /* tira fechada: o clique abre o card em vez de sair do site */
-.js .regua {
-  display: block; position: relative; margin-top: 2rem; height: 3.25rem; overflow: hidden;
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 20%, #000 80%, transparent);
-  mask-image: linear-gradient(to right, transparent, #000 20%, #000 80%, transparent);
-}
-.js .regua::before { content: ""; position: absolute; left: 50%; top: 0; width: 1px; height: 1rem; background: var(--acento); }
-.js .regua__trilha {
-  display: flex; height: 100%; transform: translateX(var(--rx, 0px)); transition: transform 1.1s var(--curva);
-  background: repeating-linear-gradient(to right, var(--borda) 0 1px, transparent 1px 12px) top / 100% .45rem no-repeat;
-}
-.js .regua__trilha button {
-  flex: 0 0 9rem; padding: 1.4rem .5rem 0; border: 0; background: none; cursor: pointer;
-  font: inherit; font-size: .75rem; color: var(--suave); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  transition: color .4s;
-}
-.js .regua__trilha button[aria-current="true"] { color: var(--texto); font-weight: 600; }
+.js .projeto:not(.ativo) h3 a { pointer-events: none; } /* tira fechada: o clique abre o painel em vez de sair do site */
+.js .projeto:focus-visible { outline: 2px solid var(--acento); outline-offset: 3px; }
+/* celular: painéis empilhados; tira com número e nome, o ativo com a capa inteira */
 @media (max-width: 767px) {
-  /* celular: capa inteira em cima e texto embaixo, no painel (sobre a capa pequena o texto não caberia) */
-  .js .projetos { height: calc(var(--aberto) * .625 + 8.5rem); }
-  .js .projeto__capa { bottom: auto; height: calc(var(--aberto) * .625); }
-  .js .projeto::before { display: none; }
-  .js .projeto h3 { color: var(--texto); }
-  .js .projeto p { color: var(--suave); }
-  .js .projeto { padding: 1rem; }
-  .js .projeto h3 { font-size: 1.05rem; }
-  .js .projeto p { font-size: .85rem; }
-  .js .regua__trilha button { flex-basis: 7rem; }
+  .js .projetos { flex-direction: column; height: auto; touch-action: none; }
+  .js .projeto { flex: 0 0 3.25rem; padding: 1rem; transition: flex-basis .7s var(--curva); }
+  .js .projeto.ativo { flex: 0 0 min(26rem, 62svh); }
+  .js .projeto::after { top: 1.05rem; left: 1rem; }
+  .js .projeto:not(.ativo) h3 { /* nome do projeto ao lado do número, na tira fechada */
+    position: absolute; top: .95rem; left: 3.2rem; width: auto; opacity: .75; transform: none; font-size: .9rem;
+  }
+  .js .projeto:not(.ativo) .projeto__img { filter: brightness(.3); } /* tira mais escura: o nome lê bem */
+  .js .projeto p { font-size: .85rem; width: auto; }
+  .js .projeto h3 { width: auto; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .js .projetos, .js .projeto, .js .regua__trilha, .js .projeto h3, .js .projeto p, .js .projeto .selo { transition: none; }
+  .js .projeto, .js .projeto h3, .js .projeto p, .js .projeto .selo, .js .projeto__capa .projeto__img { transition: none; }
 }
 
 /* Contato */

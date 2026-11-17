@@ -242,81 +242,80 @@ if (matchMedia('(hover: hover) and (pointer: fine)').matches && !matchMedia('(pr
   }
 }
 
-// Filtro de projetos
-const filtros = document.querySelectorAll('[data-filtro]');
-filtros.forEach(botao => botao.addEventListener('click', () => {
-  const tipo = botao.dataset.filtro;
-  filtros.forEach(b => b.setAttribute('aria-pressed', b === botao));
-  document.querySelectorAll('.projeto').forEach(p => {
-    p.hidden = tipo !== 'todos' && p.dataset.tipo !== tipo;
-  });
-  document.dispatchEvent(new Event('frame:filtro')); // a linha do tempo recalcula os projetos visíveis
-}));
 
-// Carrossel de projetos no formato linha do tempo: o card ativo abre e os outros viram tiras; a cada 4 s
-// abre sozinho o próximo (volta ao primeiro no fim). Pausa com o mouse em cima, com foco ou fora da tela.
-// Clicar numa tira ou num nome da régua abre aquele projeto.
+// (17/11) Galeria de projetos em painéis: o ativo abre, os outros ficam em tiras numeradas.
+// Navega com a roda do mouse, arrastando (mouse ou dedo; horizontal no computador, vertical no celular),
+// com as setas do teclado ou clicando numa tira. No primeiro e no último painel a roda e o arrasto
+// voltam a rolar a página, para ninguém ficar preso na seção.
 (() => {
-  const linha = document.querySelector('.linha');
-  const lista = linha.querySelector('.projetos');
-  const palco = linha.querySelector('.linha__palco');
-  const trilha = linha.querySelector('.regua__trilha');
-  const parado = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let visiveis = [], ativo = -1, relogio = 0, emCima = false, naTela = false;
+  const lista = document.querySelector('.projetos');
+  const paineis = [...lista.children];
+  const celular = matchMedia('(max-width: 767px)');
+  let ativo = 0, espera = 0;
 
-  const medidas = () => {
-    const celular = innerWidth < 768, w = palco.clientWidth;
-    return { tira: celular ? 28 : 72, vao: celular ? 6 : 12, aberto: Math.round(Math.min(celular ? w * .8 : w * .62, 560)) };
-  };
-  const posicionar = () => {
-    const m = medidas();
-    lista.style.setProperty('--tira', m.tira + 'px');
-    lista.style.setProperty('--vao', m.vao + 'px');
-    lista.style.setProperty('--aberto', m.aberto + 'px');
-    // o card aberto fica no meio; os anteriores (tiras) somam ativo × (tira + vão) antes dele
-    lista.style.setProperty('--x', ((palco.clientWidth - m.aberto) / 2 - ativo * (m.tira + m.vao)) + 'px');
-    const botao = trilha.children[0];
-    if (botao) trilha.style.setProperty('--rx', (trilha.parentElement.clientWidth / 2 - (ativo + .5) * botao.offsetWidth) + 'px');
-  };
   const abrir = i => {
-    if (i === ativo) return;
-    ativo = i;
-    visiveis.forEach((p, j) => p.classList.toggle('ativo', j === i));
-    [...trilha.children].forEach((b, j) => b.setAttribute('aria-current', j === i));
-    posicionar();
+    ativo = Math.max(0, Math.min(paineis.length - 1, i));
+    paineis.forEach((p, j) => {
+      p.classList.toggle('ativo', j === ativo);
+      p.tabIndex = j === ativo ? -1 : 0; // tiras fechadas entram no Tab para poder abrir pelo teclado
+    });
   };
-  const tocar = () => { // reinicia a contagem: depois de um clique o próximo também espera 4 s
-    clearInterval(relogio);
-    if (!parado && naTela && !emCima && visiveis.length > 1) relogio = setInterval(() => abrir((ativo + 1) % visiveis.length), 4000);
-  };
-  const escolher = i => { abrir(i); tocar(); };
-  const montar = () => {
-    visiveis = [...lista.children].filter(p => !p.hidden);
-    trilha.replaceChildren(...visiveis.map((p, i) => {
-      const b = document.createElement('button');
-      b.type = 'button'; b.tabIndex = -1; b.textContent = p.querySelector('h3').textContent;
-      b.addEventListener('click', () => escolher(i));
-      return b;
-    }));
-    ativo = -1; abrir(0); tocar();
+  // passo = +1 ou -1; devolve false no fim da lista (aí quem chamou deixa a página rolar)
+  const andar = passo => {
+    const alvo = ativo + passo;
+    if (alvo < 0 || alvo >= paineis.length) return false;
+    abrir(alvo); return true;
   };
 
+  // Roda do mouse: um painel por "giro"; uma pausa curta evita pular vários de uma vez no touchpad
+  lista.addEventListener('wheel', e => {
+    const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+    if (Math.abs(delta) < 4) return;
+    const r = lista.getBoundingClientRect(); // só segura a roda com a galeria quase toda na tela
+    if (r.top < -r.height * .15 || r.bottom > innerHeight + r.height * .15) return;
+    const passo = delta > 0 ? 1 : -1;
+    const alvo = ativo + passo;
+    if (alvo < 0 || alvo >= paineis.length) return; // fim da lista: a página rola normal
+    e.preventDefault();
+    if (performance.now() < espera) return;
+    espera = performance.now() + 450;
+    abrir(alvo);
+  }, { passive: false });
+
+  // Arrasto: a cada 60 px no eixo da galeria anda um painel; no fim da lista, o celular repassa o arrasto à página
+  let inicio = null, ultimo = 0, soma = 0, moveu = false;
+  const eixo = e => celular.matches ? e.clientY : e.clientX;
+  lista.addEventListener('pointerdown', e => {
+    if (e.button > 0) return;
+    inicio = eixo(e); ultimo = inicio; soma = 0; moveu = false;
+  });
+  addEventListener('pointermove', e => {
+    if (inicio === null) return;
+    const pos = eixo(e), d = pos - ultimo; ultimo = pos;
+    if (Math.abs(pos - inicio) > 8 && !moveu) { moveu = true; lista.classList.add('arrastando'); }
+    if (!moveu) return;
+    soma += d;
+    const passo = soma < 0 ? 1 : -1; // arrastar para a esquerda/cima traz o próximo
+    if (Math.abs(soma) >= 60) { if (andar(passo)) soma = 0; }
+    if (celular.matches && (ativo + passo < 0 || ativo + passo >= paineis.length)) { scrollBy(0, -d); soma = 0; }
+  });
+  const soltar = () => { inicio = null; lista.classList.remove('arrastando'); };
+  addEventListener('pointerup', soltar);
+  addEventListener('pointercancel', soltar);
+
+  // Clique: numa tira fechada abre o painel; depois de arrastar, o clique não abre o link
   lista.addEventListener('click', e => {
-    const i = visiveis.indexOf(e.target.closest('.projeto'));
-    if (i >= 0 && i !== ativo) { e.preventDefault(); escolher(i); }
+    if (moveu) { e.preventDefault(); moveu = false; return; }
+    const i = paineis.indexOf(e.target.closest('.projeto'));
+    if (i >= 0 && i !== ativo) { e.preventDefault(); abrir(i); }
   });
-  lista.addEventListener('focusin', e => { // Tab pelos links também anda no carrossel
-    const i = visiveis.indexOf(e.target.closest('.projeto'));
-    if (i >= 0) abrir(i);
-    emCima = true; tocar();
+  lista.addEventListener('keydown', e => {
+    const p = e.target.closest('.projeto');
+    if ((e.key === 'Enter' || e.key === ' ') && p && !p.classList.contains('ativo')) { e.preventDefault(); abrir(paineis.indexOf(p)); return; }
+    const tecla = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+    if (tecla && andar(tecla)) e.preventDefault();
   });
-  lista.addEventListener('focusout', () => { emCima = false; tocar(); });
-  palco.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') { emCima = true; tocar(); } });
-  palco.addEventListener('pointerleave', () => { emCima = false; tocar(); });
-  new IntersectionObserver(([e]) => { naTela = e.isIntersecting; tocar(); }).observe(palco);
-  document.addEventListener('frame:filtro', montar);
-  addEventListener('resize', posicionar);
-  montar();
+  abrir(0);
 })();
 
 // Voltar ao topo: aparece depois de rolar uma tela

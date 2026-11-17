@@ -18,6 +18,5 @@ Domínio, hospedagem, Google Ads e SEO contínuo são orçados à parte.
 
 ## Projetos
 
-- [SeeAll](https://seeall.app.br): app de finanças que lê notificações e extratos do banco no próprio celular.
 - [Vida Selvagem](https://gabrielbispodev.github.io/vida-selvagem/): site com cartões que giram, carrosséis e vídeos de fundo.
 - [Sabores de Campinas](https://gabrielbispodev.github.io/sabores-de-campinas/): projeto conceito de restaurante do interior paulista.
