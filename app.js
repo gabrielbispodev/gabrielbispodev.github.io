@@ -1,4 +1,6 @@
 document.documentElement.classList.add('js');
+// (17/11) efeitos caros do hero entram depois da primeira pintura (ver .pronto no CSS)
+addEventListener('load', () => (window.requestIdleCallback || setTimeout)(() => document.documentElement.classList.add('pronto'), { timeout: 1500 }));
 
 // Menu do celular
 const abrir = document.querySelector('.nav__abrir');

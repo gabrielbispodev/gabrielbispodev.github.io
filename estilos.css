@@ -244,6 +244,10 @@ a { color: inherit; }
 }
 .hero__texto { text-shadow: 0 0 .3rem var(--fundo), 0 0 1rem var(--fundo); } /* texto legível quando um raio passa atrás */
 .hero__texto .botao { text-shadow: none; }
+/* (17/11) o brilho atrás do hero e a luz sobre a foto são caros na primeira pintura: entram com um
+   esmaecer logo depois que a página carrega (classe .pronto, posta pelo app.js) */
+.hero__fundo, .retrato__luz { transition: opacity .9s ease; }
+.js:not(.pronto) .hero__fundo, .js:not(.pronto) .retrato__luz { visibility: hidden; opacity: 0; }
 @keyframes deriva { to { transform: translate(6%, -4%) rotate(8deg) scale(1.1); } }
 .hero__texto { position: relative; text-align: center; max-width: 40rem; }
 .hero h1 { font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 700; line-height: 1.05; color: var(--acento); margin-top: 1rem; }
