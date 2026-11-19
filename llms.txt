@@ -27,7 +27,6 @@ Domínio, hospedagem, Google Ads e SEO contínuo são orçados à parte.
 
 - [Oásis Assistência Técnica](https://gabrielbispodev.github.io/oasis-assistencia/): Modelo para ar-condicionado e assistência técnica.
 - [Navalha Barbearia](https://gabrielbispodev.github.io/navalha-barbearia/): Modelo de barbearia com 3 unidades e agendamento em dois toques.
-- [Trigal Paneteria](https://gabrielbispodev.github.io/trigal-paneteria/): Modelo de padaria 24 horas com cardápio em livro 3D.
 - [Hoshi Sushi](https://gabrielbispodev.github.io/hoshi-sushi/): Modelo de restaurante japonês com rodízio, salão e delivery.
 - [Vida Selvagem](https://gabrielbispodev.github.io/vida-selvagem/): Projeto com fotos premiadas, cartões que giram e vídeos de fundo.
 - [Sabores de Campinas](https://gabrielbispodev.github.io/sabores-de-campinas/): Projeto conceito de restaurante de comida do interior paulista.
