@@ -1,0 +1,42 @@
+# Padoca Casa de Pães (Padoca Goiânia)
+
+> Padaria, confeitaria e restaurante no Setor Bueno, em Goiânia (GO), desde 2014. Buffets de café da manhã, almoço e lanche (R$ 89,90/kg), jantar à la carte, padaria com produção própria e Kit Festa.
+
+## Fatos
+- Endereço: Av. T-1, 2139, Setor Bueno, Goiânia/GO, CEP 74215-110
+- Funcionamento: todos os dias, das 6h às 21h
+- WhatsApp: (62) 98187-6020
+- Delivery: iFood e WhatsApp
+- Estacionamento próprio
+- 4º lugar entre as padarias no Prêmio Curta Mais 2026; nota 4,4 no Google
+- Instagram: @padocagoiania
+
+## Horários por serviço
+- Padaria e confeitaria: Todos os dias, 6h às 21h
+- Buffet de café da manhã: Seg a sex 7h–10h30 · sáb 7h–11h · dom e feriados 7h–13h
+- Buffet de almoço: Seg a sex 11h–14h
+- Almoço à la carte: Sáb, dom e feriados 11h–16h
+- Buffet de lanche: Seg a sex 15h–20h
+- Jantar à la carte: Todos os dias 16h–20h
+
+## Kit Festa (pedidos com 48h de antecedência)
+- Kit Festa Tradicional: R$ 275,00 (Para 25 pessoas)
+- Kit Festa Doces: R$ 390,00 (Valor promocional)
+- Kit Festa Premium: R$ 394,00 (Torta, docinhos, salgados e bebidas)
+
+## Cardápio com preços (junho de 2026)
+- Cafés: Cappuccino Padoca R$ 16,00; Cappuccino tradicional R$ 11,00; Café expresso R$ 8,00; Café expresso duplo R$ 10,00; Café expresso com leite R$ 12,00; Macchiato Padoca R$ 14,00; Macchiato com chocolate R$ 16,00; Chocolate quente tradicional R$ 14,00; Achocolatado quente R$ 9,00; Xícara de leite R$ 6,00
+- Frios e milk shakes: Chocolate gelado R$ 14,00; Achocolatado frio R$ 11,00; Milk shake de Ovomaltine R$ 16,00; Frappuccino R$ 18,00; Milk shake de baunilha ou chocolate R$ 14,00
+- Sucos e detox: Suco tradicional R$ 12,00; Suco especial R$ 14,00; Detox Tropical R$ 18,00; Detox Fitness R$ 18,00; Detox Energizante R$ 18,00; Detox Refrescante R$ 18,00
+- Matinal: Pão com manteiga R$ 4,50; Pão com manteiga na chapa R$ 6,50; Pão com requeijão na chapa R$ 14,00; Pão com mortadela defumada e muçarela R$ 13,00; Pão com queijo minas, presunto, tomate e orégano R$ 17,00; Pão com ovo R$ 8,00; Bauru R$ 13,00; Bauru com ovo R$ 16,00; Bauru especial R$ 20,00; Monte seu sanduíche R$ 25,00
+- Tapiocas e omeletes: Tapioca Nordestina R$ 28,00; Tapioca Light R$ 25,00; Tapioca Mineira R$ 22,00; Tapioca Goiana R$ 24,00; Omelete Goiana R$ 28,00; Omelete Light R$ 29,00; Omelete Mineira R$ 26,00; Omelete Nordestina R$ 28,00
+- Hamburgueria e petiscos: Cheeseburger R$ 32,00; X-Padoca R$ 44,90; Carpaccio de carne R$ 35,00; Porção de fritas com cheddar e bacon R$ 39,00
+- Refeições: Prato executivo R$ 26,90; Combo R$ 35,90; Parmegiana de filé mignon R$ 42,90; Parmegiana de frango R$ 35,90; Estrogonofe de filé mignon R$ 42,90; Picadinho de filé ao molho madeira e champignon R$ 39,90; Bife de filé acebolado R$ 39,90; Tilápia grelhada R$ 39,90; Bife de filé à milanesa R$ 39,90
+- Pizzas: Pizza de calabresa R$ 35,00; Pizza marguerita R$ 35,00; Pizza de muçarela R$ 35,00
+- Sorvete italiano: Casquinha ou copinho R$ 5,00; Casquinha com Nutella R$ 8,00; Cascão R$ 7,50; Cascão com Nutella R$ 12,00; Sundae R$ 9,00; Sundae Nutella R$ 12,00
+
+## Páginas
+- [Início](https://gabrielbispodev.github.io/padoca-casa-de-paes/)
+- [Cardápio](https://gabrielbispodev.github.io/padoca-casa-de-paes/cardapio.html)
+- [Kit Festa](https://gabrielbispodev.github.io/padoca-casa-de-paes/kit-festa.html)
+- [A Padoca](https://gabrielbispodev.github.io/padoca-casa-de-paes/sobre.html)
