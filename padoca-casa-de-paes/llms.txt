@@ -12,11 +12,11 @@
 - Instagram: @padocagoiania
 
 ## Horários por serviço
-- Padaria e confeitaria: Todos os dias, 6h às 21h
-- Buffet de café da manhã: Seg a sex 7h–10h30 · sáb 7h–11h · dom e feriados 7h–13h
-- Buffet de almoço: Seg a sex 11h–14h
+- Padaria e confeitaria: Todos os dias, 6h–21h
+- Buffet de café da manhã: Seg–sex 7h–10h30 · Sáb 7h–11h · Dom e feriados 7h–13h
+- Buffet de almoço: Seg–sex 11h–14h
 - Almoço à la carte: Sáb, dom e feriados 11h–16h
-- Buffet de lanche: Seg a sex 15h–20h
+- Buffet de lanche: Seg–sex 15h–20h
 - Jantar à la carte: Todos os dias 16h–20h
 
 ## Kit Festa (pedidos com 48h de antecedência)
@@ -37,6 +37,6 @@
 
 ## Páginas
 - [Início](https://gabrielbispodev.github.io/padoca-casa-de-paes/)
-- [Cardápio](https://gabrielbispodev.github.io/padoca-casa-de-paes/cardapio.html)
-- [Kit Festa](https://gabrielbispodev.github.io/padoca-casa-de-paes/kit-festa.html)
-- [A Padoca](https://gabrielbispodev.github.io/padoca-casa-de-paes/sobre.html)
+- [Cardápio](https://gabrielbispodev.github.io/padoca-casa-de-paes/cardapios.html)
+- [Kit Festa](https://gabrielbispodev.github.io/padoca-casa-de-paes/encomendas.html)
+- [A Padoca](https://gabrielbispodev.github.io/padoca-casa-de-paes/a-casa.html)
